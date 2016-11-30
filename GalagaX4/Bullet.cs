@@ -48,7 +48,7 @@ namespace GalagaX4
         {
             if (this.point.Y >= 0)
             {
-                this.point.Y -= 10;
+                this.point.Y -= 3;
                 this.image.Source = UtilityMethods.LoadImage("pics/bullet.png");
                 Canvas.SetTop(this.image, this.point.Y);
 
@@ -60,7 +60,7 @@ namespace GalagaX4
             }
             else
             {
-                stopMove();
+                Stop();
                 this.canvas.Children.Remove(this.image);
                 for(int i = 0; i<this.enemies.Count(); i++)
                 {
@@ -87,7 +87,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 600)
             {
-                this.point.Y += 10;
+                this.point.Y += 3;
                 this.image.Source = UtilityMethods.LoadImage("pics/bulletFlip180.png");
                 Canvas.SetTop(this.GetImage(), this.point.Y);
 
@@ -95,13 +95,13 @@ namespace GalagaX4
             }
             else
             {
-                stopMove();
+                Stop();
                 this.canvas.Children.Remove(this.GetImage());
 
             }
         }
 
-        public void stopMove()
+        public void Stop()
         {
             timer.Stop();
            // timer = null;
@@ -153,7 +153,7 @@ namespace GalagaX4
 
         public void destroy(GameObject gameObject)
         {
-            this.stopMove(); //bullet gone 
+            this.Stop(); //bullet gone 
             this.Die(); //remove bullet image
             if (gameObject is Enemies)
             {

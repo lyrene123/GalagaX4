@@ -74,5 +74,10 @@ namespace GalagaX4
         {
             this.image.Source = UtilityMethods.LoadImage(path);
         }
+
+        public void SetCanvas(Canvas canvas)
+        {
+            this.canvas = canvas;
+        }
     }
 }
