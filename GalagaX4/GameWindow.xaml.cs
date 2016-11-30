@@ -197,6 +197,7 @@ namespace GalagaX4
 
             //label1.Content = "num1 : " + num1;
             //oldNum = num1;
+            /////
            
 
             int num2 = rand.Next(4);
