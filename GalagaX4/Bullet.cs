@@ -78,8 +78,10 @@ namespace GalagaX4
             }
         }
 
-        public void ShootDown()
+        public void ShootDown(String path)
         {
+            this.image.Source = UtilityMethods.LoadImage(path);
+
             timer.Tick += new EventHandler(ShootDown);
         }
 
@@ -88,7 +90,6 @@ namespace GalagaX4
             if (this.point.Y <= 600)
             {
                 this.point.Y += 10;
-                this.image.Source = UtilityMethods.LoadImage("pics/bulletFlip180.png");
                 Canvas.SetTop(this.GetImage(), this.point.Y);
 
                 OnCollision(this.player);
@@ -100,6 +101,49 @@ namespace GalagaX4
 
             }
         }
+
+        public void ShootLeftSide(String path)
+        {
+            this.image.Source = UtilityMethods.LoadImage(path);
+            timer.Tick += new EventHandler(ShootLeftSide);
+        }
+        void ShootLeftSide(Object sender, EventArgs e)
+        {
+            if (this.point.Y <= 600)
+            {
+                this.point.Y += 10;
+                this.point.X -= 10;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                Canvas.SetLeft(this.GetImage(), this.point.X);
+            }
+            else
+            {
+                stopMove();
+                this.canvas.Children.Remove(this.GetImage());
+            }
+        }
+
+        public void ShootRightSide(String path)
+        {
+            this.image.Source = UtilityMethods.LoadImage(path);
+            timer.Tick += new EventHandler(ShootRightSide);
+        }
+        void ShootRightSide(Object sender, EventArgs e)
+        {
+            if (this.point.Y <= 600)
+            {
+                this.point.Y += 10;
+                this.point.X += 10;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                Canvas.SetLeft(this.GetImage(), this.point.X);
+            }
+            else
+            {
+                stopMove();
+                this.canvas.Children.Remove(this.GetImage());
+            }
+        }
+
 
         public void stopMove()
         {

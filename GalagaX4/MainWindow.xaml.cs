@@ -27,5 +27,7 @@ namespace GalagaX4
             gameWindow.Show();
             this.Close();
         }
+
+
     }
 }
