@@ -65,7 +65,6 @@ namespace GalagaX4
         {
             this.points = morePoints;
             updatePoints();
-            MessageBox.Show("" + this.points);
         }
 
         public void SetEnemyTarget(List<Enemies> enemies)
