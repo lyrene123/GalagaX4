@@ -56,7 +56,6 @@ namespace GalagaX4
                 {
                     OnCollision(enemies[i]);
                 }
-
             }
             else
             {

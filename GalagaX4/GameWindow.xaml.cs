@@ -39,10 +39,8 @@ namespace GalagaX4
         List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
         bool exists1 = false;
         bool exists2 = false;
-        /*
-        int oldNum;
-        int oldNum2;
-        */
+        List<Enemies> enemies;
+        
         double shootFrequency = 0.001;
         public GameWindow()
         {
@@ -61,7 +59,7 @@ namespace GalagaX4
             playerPoint.Y = 490;
             player = new Player(playerPoint, playerPic, MyCanvas, playerSpeed);
 
-            List<Enemies> enemies = new List<Enemies>();
+            this.enemies = new List<Enemies>();
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -153,7 +151,7 @@ namespace GalagaX4
         void Update()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += new EventHandler(ShootUpdate);
             timer.Start();
             label.Content = "shootFrequency : " + shootFrequency;
@@ -170,14 +168,43 @@ namespace GalagaX4
             if(commanders[oldNum2].isShoot() == true)
             {
                 commanders[oldNum2].stopShoot();
+            }
+
+            Random rand = new Random();
+            int num1 = rand.Next(ships.Length);
+            oldNum = num1;
+            if(ships[num1].IsShoot() == true)
+            {
+                ships[num1].StopShoot();
+            }
+            else
+            {
+                if(ships[num1].IsDead() != true)
+                {
+                    ships[num1].Shoot(10);
+                }
+            }
+
+            int num2 = rand.Next(commanders.Length);
+            oldNum2 = num2;
+            if (commanders[num2].isShoot() == true)
+            {
+                commanders[num2].stopShoot();
+            }
+            else
+            {
+                if (commanders[num2].IsDead() != true)
+                {
+                    commanders[num2].Shoot(10);
+                }
             }*/
-      
+            
             Random rand = new Random();
             int num1 = rand.Next(ships.Length);//8      
                 if (arr1.Contains(num1))
                 {
                     this.arr1.Remove(num1);
-                this.exists1 = true;
+                    this.exists1 = true;
                 }
             
 
@@ -195,6 +222,13 @@ namespace GalagaX4
                 this.exists1 = false;
             }
 
+            for(int i=0; i<ships.Length; i++)
+            {
+                if(ships[i].IsDead() == true)
+                {
+                    this.arr1.Remove(i);
+                }
+            }
             //label1.Content = "num1 : " + num1;
             //oldNum = num1;
             /////
@@ -222,13 +256,24 @@ namespace GalagaX4
                  }
                 this.exists2 = false;
             }
+            for (int i = 0; i < commanders.Length; i++)
+            {
+                if (commanders[i].IsDead() == true)
+                {
+                    this.arr2.Remove(i);
+                }
+            }
 
             // oldNum2 = num2;
-
-
             shootFrequency = 8;
             label.Content = "shootFrequency : " + shootFrequency;
             timer.Interval = TimeSpan.FromSeconds(shootFrequency);
+
+            label.Content = "size : " + arr1.Count;
+            if (this.enemies.Count == 0)
+            {
+                this.timer.Stop();
+            }
         }
 
         void MyCanvas_KeyDown(object sender, KeyEventArgs e)

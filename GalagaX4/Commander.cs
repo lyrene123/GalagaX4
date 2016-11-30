@@ -88,7 +88,7 @@ namespace GalagaX4
 
             if(this.moveDown == true)
             {
-                this.point.Y += 10;
+                this.point.Y += 30;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 moveDown = false;
             }
