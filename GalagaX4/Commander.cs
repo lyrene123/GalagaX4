@@ -20,6 +20,7 @@ namespace GalagaX4
 
         int shotCounter;
         bool isShot;
+        bool isShooting;
         bool dead;
 
         DispatcherTimer timer;
@@ -30,13 +31,15 @@ namespace GalagaX4
         {
             this.isShot = false;
             this.dead = false;
+            this.isShooting = false;
         }
 
         public bool isShoot()
         {
-            return this.isShot;
+            return this.isShooting;
 
         }
+
         public bool IsDead()
         {
             return this.dead;
@@ -44,7 +47,7 @@ namespace GalagaX4
 
         public override void Die()
         {
-            dead = true;
+            this.dead = true;
             this.target.addPoints(250);
             //this.isShot = true;
             BitmapImage[] explosions =
@@ -55,10 +58,8 @@ namespace GalagaX4
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp3.png")
             };
             this.stopMove();
-           
-                this.stopShoot();
-            
-            
+            this.stopShoot();
+
             this.animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(this.animation, 40);
         }
@@ -66,7 +67,6 @@ namespace GalagaX4
         public override void Fly(double frequency)
         {
             Animation.Initiate(this.animation, 500);
-
             startFly(frequency);
         }
 
@@ -133,7 +133,7 @@ namespace GalagaX4
                 this.timerShoot.Stop();
             }
             
-            this.isShot = false;
+            this.isShooting = false;
         }
 
         public override void Shoot(double frequency)
@@ -146,7 +146,7 @@ namespace GalagaX4
 
         void Shoot(Object sender, EventArgs e)
         {
-            this.isShot = true;
+            this.isShooting = true;
             double position = Canvas.GetLeft(this.GetImage());
             double midOfImgae = this.GetImage().Width / 2;
 
@@ -155,7 +155,7 @@ namespace GalagaX4
             bullet.setPlayerTarget(this.target);
             Canvas.SetLeft(bullet.GetImage(), (position + midOfImgae - 3.5));
 
-            bullet.ShootDown();
+            bullet.ShootDown("pics/bulletFlip180.png");
         }
 
         public void changeImage()

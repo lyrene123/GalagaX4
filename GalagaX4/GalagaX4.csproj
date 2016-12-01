@@ -143,14 +143,22 @@
     <Resource Include="pics\redBug0.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\GameTitle_Blue.png" />
-    <Resource Include="pics\GameTitle_lightBlue.png" />
-    <Resource Include="pics\GameTitle_Red.png" />
-    <Resource Include="pics\newGame_lightBlue.png" />
-    <Resource Include="pics\newGame_white.png" />
+    <Resource Include="pics\bossExplosions\explosion1.png" />
+    <Resource Include="pics\bossExplosions\explosion2.png" />
+    <Resource Include="pics\bossExplosions\explosion3.png" />
+    <Resource Include="pics\bossExplosions\explosion4.png" />
+    <Resource Include="pics\bossExplosions\explosion5.png" />
+    <Resource Include="pics\bossExplosions\explosion6.png" />
+    <Resource Include="pics\bossExplosions\explosion7.png" />
+    <Resource Include="pics\bossExplosions\explosion8.png" />
+    <Resource Include="pics\bossExplosions\explosion9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\gameOver.png" />
+    <Resource Include="pics\boss\boss1.png" />
+    <Resource Include="pics\boss\boss2.png" />
+    <Resource Include="pics\boss\boss3.png" />
+    <Resource Include="pics\boss\bossLeft.png" />
+    <Resource Include="pics\boss\bossRight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

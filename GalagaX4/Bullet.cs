@@ -77,8 +77,9 @@ namespace GalagaX4
             }
         }
 
-        public void ShootDown()
+        public void ShootDown(String path)
         {
+            this.image.Source = UtilityMethods.LoadImage(path);
             timer.Tick += new EventHandler(ShootDown);
         }
 
@@ -87,7 +88,6 @@ namespace GalagaX4
             if (this.point.Y <= 600)
             {
                 this.point.Y += 3;
-                this.image.Source = UtilityMethods.LoadImage("pics/bulletFlip180.png");
                 Canvas.SetTop(this.GetImage(), this.point.Y);
 
                 OnCollision(this.player);
@@ -96,13 +96,12 @@ namespace GalagaX4
             {
                 Stop();
                 this.canvas.Children.Remove(this.GetImage());
-
             }
         }
 
         public void Stop()
         {
-            timer.Stop();
+            this.timer.Stop();
            // timer = null;
         }
 
@@ -131,7 +130,7 @@ namespace GalagaX4
                     if (gameObject.GetType() == typeof(Commander))
                     {
                         OnCollisionCommander((Commander)gameObject);
-                        this.Die();
+                        this.Die(); //bullet gone
                     }
                     else
                     {
