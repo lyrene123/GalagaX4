@@ -26,7 +26,7 @@ namespace GalagaX4
         DispatcherTimer timer;
         DispatcherTimer timerShoot;
 
-        public Commander(Point point, Image image, Canvas canvas, Animation animation) 
+        public Commander(Point point, Image image, Canvas canvas, Animation animation)
             : base(point, image, canvas, animation)
         {
             this.isShot = false; //if shot once already
@@ -86,7 +86,7 @@ namespace GalagaX4
         {
             double commanderX = this.GetPoint().X;
 
-            if(this.moveDown == true)
+            if (this.moveDown == true)
             {
                 this.point.Y += 25;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
@@ -128,7 +128,7 @@ namespace GalagaX4
 
         public void stopShoot()
         {
-            if(this.timerShoot != null)
+            if (this.timerShoot != null)
             {
                 this.timerShoot.Stop();
             }
@@ -161,7 +161,7 @@ namespace GalagaX4
             this.animation.Stop();
             BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commanderGreen0.png"),
                     UtilityMethods.LoadImage("pics/commanderGreen1.png") };
-           this.animation = new Animation(this.image, commanderImages, true);
+            this.animation = new Animation(this.image, commanderImages, true);
             Animation.Initiate(animation, 500);
         }
 

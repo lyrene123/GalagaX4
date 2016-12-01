@@ -18,7 +18,7 @@ namespace GalagaX4
 
         public Bullet() : base()
         {
-           
+
         }
 
         public Bullet(Point point, Image image, Canvas canvas) : base(point, image, canvas)
@@ -61,7 +61,7 @@ namespace GalagaX4
             {
                 StopShootUp(); //stop bullet up
                 this.canvas.Children.Remove(this.image); //remove bullet up
-                
+
             }
         }
 
@@ -149,13 +149,13 @@ namespace GalagaX4
                 if (enemies[i].GetType() == typeof(Commander))
                 {
                     Commander commander = (Commander)enemies[i];*/
-                    if (commander.getShotValue() > 1 && commander.getIsShot() == false)
-                    {
-                        commander.setIsShot(true);
-                        commander.changeImage();
-                    }
-               // }
-           // }
+            if (commander.getShotValue() > 1 && commander.getIsShot() == false)
+            {
+                commander.setIsShot(true);
+                commander.changeImage();
+            }
+            // }
+            // }
         }
 
         public void destroy(GameObject gameObject)

@@ -19,12 +19,6 @@ namespace GalagaX4
             this.animation = null;
         }
 
-        public Enemies(Point point, Image image, Canvas canvas)
-            : base(point, image, canvas)
-        {
-            this.animation = null;
-        }
-
         public Enemies(Point point, Image image, Canvas canvas
             , Animation animation) : base(point, image, canvas)
         {

@@ -21,28 +21,23 @@ namespace GalagaX4
         DispatcherTimer timerFly;
         DispatcherTimer timerShoot;
 
-        bool isShooting;
-        bool dead;
-        //Bullet bullet;
+        bool isShooting; //if shooting already
+        bool dead; //if destroyed already
 
         public SpaceShip() : base()
         {
-            //timer = new DispatcherTimer(DispatcherPriority.Normal);
-            /*timer.Interval = TimeSpan.FromSeconds(frequency);
-            timer.Start();*/
-            isShot = false;
         }
 
-        public SpaceShip(Point point, Image image, Canvas canvas) 
-            : base(point, image, canvas)
+        public SpaceShip(Point point, Image image, Canvas canvas
+            , Animation animation) : base(point, image, canvas, animation)
         {
-            isShot = false;
-            dead = false;
+            this.isShooting = false;
+            this.dead = false;
         }
 
         public override void Fly(double frequency)
         {
-            //for moving:
+            //boundaries for moving:
             this.minX = this.GetPoint().X - 130;
             this.maxX = this.GetPoint().X + 130;
 
@@ -56,7 +51,7 @@ namespace GalagaX4
         {
             double x = Canvas.GetLeft(this.GetImage());
 
-            if(moveDown == true)
+            if (moveDown == true)
             {
                 this.point.Y += 30;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
@@ -91,9 +86,9 @@ namespace GalagaX4
             }
         }
 
-        public bool IsShoot()
+        public bool isShoot()
         {
-            return this.isShot;
+            return this.isShooting;
         }
 
         public bool IsDead()
@@ -111,17 +106,13 @@ namespace GalagaX4
 
         void Shoot(Object sender, EventArgs e)
         {
-            this.isShot = true;
+            this.isShooting = true;
 
             double position = Canvas.GetLeft(this.GetImage());
             double midOfImgae = this.GetImage().Width / 2;
 
             Image bulletPic = new Image();
             Bullet bullet = new Bullet(this.point, bulletPic, canvas);
-            //bullet = new Bullet(this.point, bulletPic, canvas);
-           /* bullet.SetPoint(this.point);
-            bullet.SetImage(bulletPic);
-            bullet.SetCanvas(canvas);*/
             bullet.setPlayerTarget(this.target);
             Canvas.SetLeft(bullet.GetImage(), (position + midOfImgae - 3.5));
 
@@ -135,17 +126,17 @@ namespace GalagaX4
 
         public void StopShoot()
         {
-            if(this.timerShoot != null)
+            if (this.timerShoot != null)
             {
-                 this.timerShoot.Stop();
+                this.timerShoot.Stop();
             }
 
-            this.isShot = false;
+            // this.isShot = false;
         }
 
         public override void Die()
         {
-            dead = true;
+            this.dead = true;
             this.target.addPoints(200);
             //this.isShot = true;
             BitmapImage[] explosions =
@@ -156,15 +147,10 @@ namespace GalagaX4
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp3.png")
             };
             this.stopMove();
-            
-                this.StopShoot();
-            
-
+            this.StopShoot();
             Animation explode = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(explode, 40);
 
-            //bullet.Stop();
         }
-
     }
 }

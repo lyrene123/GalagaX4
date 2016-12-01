@@ -17,7 +17,7 @@ namespace GalagaX4
         double maxX;
         double minX;
         bool moveDown = false;
-        
+
         DispatcherTimer timer; //timer for moving
 
         public Bug(Point point, Image image, Canvas canvas, Animation animation)
@@ -42,7 +42,7 @@ namespace GalagaX4
             this.timer.Tick += new EventHandler(this.updateMoveTimer_Tick);
             this.timer.Start();
         }
-        
+
         private void updateMoveTimer_Tick(object sender, EventArgs e)
         {
             double beeX = this.GetPoint().X;
@@ -100,7 +100,7 @@ namespace GalagaX4
 
         public override void Shoot(double frequency)
         {
-           //bugs do not implement shooting
+            //bugs do not implement shooting
         }
 
         public override void Die()

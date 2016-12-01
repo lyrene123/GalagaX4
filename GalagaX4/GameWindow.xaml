@@ -6,53 +6,8 @@
         xmlns:local="clr-namespace:GalagaX4"
         mc:Ignorable="d"
         Title="GameWindow" Height="650" Width="860" Background="Black">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="860*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="650*" />
-        </Grid.RowDefinitions>
-        <Canvas x:Name="MyCanvas" Grid.Column="0" Grid.Row="0" KeyDown="MyCanvas_KeyDown">
-
-
-            <Image x:Name="beePic" Height="26" Canvas.Left="181" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic1" Height="26" Canvas.Left="243" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic2" Height="26" Canvas.Left="309" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic3" Height="26" Canvas.Left="371" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic4" Height="26" Canvas.Left="436" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic5" Height="26" Canvas.Left="498" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic6" Height="26" Canvas.Left="562" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-            <Image x:Name="beePic7" Height="26" Canvas.Left="624" Canvas.Top="185" Width="34" Source="pics/bee0.png"/>
-
-            <Image x:Name="redBugPic" Height="26" Canvas.Left="154" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic1" Height="26" Canvas.Left="217" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic2" Height="26" Canvas.Left="282" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic3" Height="26" Canvas.Left="345" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic4" Height="26" Canvas.Left="410" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic5" Height="26" Canvas.Left="473" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic6" Height="26" Canvas.Left="538" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic7" Height="26" Canvas.Left="601" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-            <Image x:Name="redBugPic8" Height="26" Canvas.Left="664" Canvas.Top="137" Width="34" Source="pics/redBug0.png"/>
-
-            <Image x:Name="spaceShipPic" Height="26" Canvas.Left="181" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic1" Height="26" Canvas.Left="243" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic2" Height="26" Canvas.Left="309" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic3" Height="26" Canvas.Left="371" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic4" Height="26" Canvas.Left="434" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic5" Height="26" Canvas.Left="496" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic6" Height="26" Canvas.Left="562" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-            <Image x:Name="spaceShipPic7" Height="26" Canvas.Left="624" Canvas.Top="86" Width="34" Source="pics/spaceShip.png"/>
-
-            <Image x:Name="commanderPic" Height="26" Canvas.Left="259" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
-            <Image x:Name="commanderPic1" Height="26" Canvas.Left="348" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
-            <Image x:Name="commanderPic2" Height="26" Canvas.Left="450" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
-            <Image x:Name="commanderPic3" Height="26" Canvas.Left="539" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
-            <Label x:Name="label" Content="Label" Canvas.Left="664" Canvas.Top="352" Foreground="#FFFDF6F6"/>
-            <Label x:Name="label1" Content="Label" Canvas.Left="664" Canvas.Top="408" Foreground="#FFF9F1F1"/>
-
-
-
-        </Canvas>
+    <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
+        <Canvas x:Name="lv1Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Canvas x:Name="lv2Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </Window>
