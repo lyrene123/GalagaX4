@@ -12,33 +12,28 @@ namespace GalagaX4
 {
     class Bug : Enemies
     {
-        //int imageCounter = 1;
         // 1=left 2=right
         int moveCounter = 1;
         double maxX;
         double minX;
         bool moveDown = false;
         
-        DispatcherTimer timer;
-        //Animation animation;
+        DispatcherTimer timer; //timer for moving
 
         public Bug(Point point, Image image, Canvas canvas, Animation animation)
             : base(point, image, canvas, animation)
         {
-            //this.animation = animation;
-            this.setTarget(this.target);
         }
 
         public override void Fly(double frequency)
         {
             Animation.Initiate(this.animation, 200);
-
             startFly(frequency);
         }
 
         public void startFly(double frequency)
         {
-            //for moving:
+            //boundaries for moving:
             this.minX = this.GetPoint().X - 130;
             this.maxX = this.GetPoint().X + 130;
 
@@ -56,9 +51,10 @@ namespace GalagaX4
             {
                 if (this.moveDown == true)
                 {
-                    this.point.Y += 30;
+                    this.point.Y += 35;
                     Canvas.SetTop(this.GetImage(), this.point.Y);
                     this.moveDown = false;
+                    playerCollision();
                 }
 
                 if (moveCounter == 1)
@@ -87,6 +83,7 @@ namespace GalagaX4
                         moveDown = true;
                     }
                 }
+                playerCollision();
             }
             else
             {
@@ -97,13 +94,13 @@ namespace GalagaX4
 
         public void stopMove()
         {
-            this.timer.Stop();
-            this.animation.Stop();
+            this.timer.Stop(); //stop moving
+            this.animation.Stop(); //stop animation
         }
 
         public override void Shoot(double frequency)
         {
-           //bugs do not implement shoot
+           //bugs do not implement shooting
         }
 
         public override void Die()
@@ -115,13 +112,11 @@ namespace GalagaX4
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp1.png"),
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp2.png"),
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp3.png")
-
             };
 
             this.stopMove();
             this.animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(this.animation, 40);
-
         }
     }
 }

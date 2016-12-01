@@ -48,8 +48,7 @@
             <Image x:Name="commanderPic1" Height="26" Canvas.Left="348" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
             <Image x:Name="commanderPic2" Height="26" Canvas.Left="450" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
             <Image x:Name="commanderPic3" Height="26" Canvas.Left="539" Canvas.Top="35" Width="34" Source="pics/commander.png"/>
-            <Label x:Name="label" Content="Label" Canvas.Left="664" Canvas.Top="352" Foreground="#FFFDF6F6"/>
-            <Label x:Name="label1" Content="Label" Canvas.Left="664" Canvas.Top="408" Foreground="#FFF9F1F1"/>
+
 
 
 

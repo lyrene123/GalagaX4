@@ -20,30 +20,15 @@ namespace GalagaX4
 
         Player player;
         Boss boss = null;
-        Point playerPoint;
-        double playerSpeed = 15;
-        //Animation playerAnimation;
-        /*
-        SpaceShip spaceShip;
-        Animation spaceShipAnim;
-        Point spaceShipPoint;
-        int spaceShipShootFrequency = 3;
 
-        //Bug bee;
-        //Animation beeAnimation;
-        Animation commanderAnimation;
-       // Point beePos;
-        Commander commander;
-        */
         SpaceShip[] ships;
         Commander[] commanders;
-        List<int> arr1 = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
-        List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
+        List<Enemies> enemies;
+        // double shootFrequency;
+        List<int> arr1 = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };//spaceships
+        List<int> arr2 = new List<int>() { 0, 1, 2, 3 };//commanders
         bool exists1 = false;
         bool exists2 = false;
-        List<Enemies> enemies;
-        
-        double shootFrequency = 0.001;
         public GameWindow()
         {
             InitializeComponent();
@@ -57,10 +42,14 @@ namespace GalagaX4
             MyCanvas.Children.Add(playerPic);
             Canvas.SetLeft(playerPic, 405);
             Canvas.SetTop(playerPic, 500);
+
+            Point playerPoint = new Point();
             playerPoint.X = 27;
             playerPoint.Y = 490;
+            double playerSpeed = 15;
             player = new Player(playerPoint, playerPic, MyCanvas, playerSpeed);
 
+            //create list of all enemies
             this.enemies = new List<Enemies>();
 
             //bee creation
@@ -70,7 +59,7 @@ namespace GalagaX4
             Image[] beesPic = new Image[] {this.beePic, this.beePic1, this.beePic2,
                                         this.beePic3, this.beePic4, this.beePic5,
                                         this.beePic6, this.beePic7};
-            Bug[] bees = new Bug[8];
+            Bug[] bees = new Bug[beesPic.Length];
             for(int i =0; i< beesPic.Length; i++)
             {
                 Point beePos = new Point();
@@ -91,7 +80,7 @@ namespace GalagaX4
             Image[] bugsPic = new Image[] {this.redBugPic, this.redBugPic1, this.redBugPic2,
                                         this.redBugPic3, this.redBugPic4, this.redBugPic5,
                                         this.redBugPic6, this.redBugPic7, this.redBugPic8};
-            Bug[] redbugs = new Bug[9];
+            Bug[] redbugs = new Bug[bugsPic.Length];
             for (int i = 0; i < bugsPic.Length; i++)
             {
                 Point bugPos = new Point();
@@ -111,7 +100,7 @@ namespace GalagaX4
                                         this.spaceShipPic3, this.spaceShipPic4, this.spaceShipPic5,
                                         this.spaceShipPic6, this.spaceShipPic7};
             this. ships = new SpaceShip[shipsPic.Length];
-            for (int i = 0; i < ships.Length; i++)
+            for (int i = 0; i < shipsPic.Length; i++)
             {
                 Point shipPos = new Point();
                 shipPos.X = Canvas.GetLeft(shipsPic[i]);
@@ -122,14 +111,14 @@ namespace GalagaX4
                 enemies.Add(ships[i]);
                 ships[i].setTarget(player);
                 ships[i].Fly(200);
-               // ships[i].Shoot(200);
             }
 
-            //commander
-            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"), UtilityMethods.LoadImage("pics/commander2.png") };
+            //commander creation
+            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"),
+                                                UtilityMethods.LoadImage("pics/commander2.png") };
             Image[] commanderPic = new Image[] {this.commanderPic, this.commanderPic1, this.commanderPic2,
                                         this.commanderPic3};
-            this.commanders = new Commander[4];
+            this.commanders = new Commander[commanderPic.Length];
             for (int i = 0; i < commanderPic.Length; i++)
             {
                 Point commanderPos = new Point();
@@ -143,7 +132,8 @@ namespace GalagaX4
                 commanders[i].Fly(200);
             }
 
-            Point bossPos = new Point();
+            //boss creation
+            /*Point bossPos = new Point();
             bossPos.X = 400;
             bossPos.Y = 200;
             Animation bossAnimation;
@@ -152,151 +142,98 @@ namespace GalagaX4
             MyCanvas.Children.Add(bossPic);
 
             BitmapImage[] bossImages = { UtilityMethods.LoadImage("pics/boss/boss1.png"),
-                    UtilityMethods.LoadImage("pics/boss/boss2.png"), UtilityMethods.LoadImage("pics/boss/boss3.png"),};
+                                         UtilityMethods.LoadImage("pics/boss/boss2.png"),
+                                        UtilityMethods.LoadImage("pics/boss/boss3.png"),};
             bossAnimation = new Animation(bossPic, bossImages, true);
             this.boss = new Boss(bossPos, bossPic, MyCanvas, bossAnimation);
             Animation.Initiate(bossAnimation, 500);
 
             enemies.Add(boss);
-
             this.boss.Fly(200);
-            this.boss.Shoot(200);
+            this.boss.Shoot(200);*/
         
-
-
-
-
-
-
-
-
-
-        player.SetEnemyTarget(enemies);
-             Update();
-
-            //ships[1].Shoot(600);
-
+            //set player's target
+            player.SetEnemyTarget(enemies);
+            Update(); //update random shooting of enemies
         }
 
         void Update()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromSeconds(4);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += new EventHandler(ShootUpdate);
             timer.Start();
-            label.Content = "shootFrequency : " + shootFrequency;
+            //label.Content = "shootFrequency : " + shootFrequency;
         }
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            /*label.Content = "oldNum : " + oldNum;
-            if(ships[oldNum].IsShoot() == true)
-            {
-                ships[oldNum].StopShoot();
-               
-            }
-            if(commanders[oldNum2].isShoot() == true)
-            {
-                commanders[oldNum2].stopShoot();
-            }
-
-            Random rand = new Random();
-            int num1 = rand.Next(ships.Length);
-            oldNum = num1;
-            if(ships[num1].IsShoot() == true)
-            {
-                ships[num1].StopShoot();
-            }
-            else
-            {
-                if(ships[num1].IsDead() != true)
-                {
-                    ships[num1].Shoot(10);
-                }
-            }
-
-            int num2 = rand.Next(commanders.Length);
-            oldNum2 = num2;
-            if (commanders[num2].isShoot() == true)
-            {
-                commanders[num2].stopShoot();
-            }
-            else
-            {
-                if (commanders[num2].IsDead() != true)
-                {
-                    commanders[num2].Shoot(10);
-                }
-            }*/
-
-            Random rand = new Random();
-            int num1 = rand.Next(ships.Length);//8      
-            if (arr1.Contains(num1))
-            {
-                this.arr1.Remove(num1);
-                this.exists1 = true;
-            }
-
-
-            if (this.exists1 == true)
-            {
-                // this.arr1.Add(num1);
-                if (ships[num1].IsShoot() == true)
-                {
-                    ships[num1].StopShoot();
-                }
-                else
-                {
-                    ships[num1].Shoot(10);
-                }
-                this.exists1 = false;
-            }
-
+           //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
                 if (ships[i].IsDead() == true)
                 {
-                    this.arr1.Remove(i);
+                    arr1.Remove(i);
                 }
             }
-            //label1.Content = "num1 : " + num1;
-            //oldNum = num1;
-            /////
 
-
-            int num2 = rand.Next(4);
-
-            if (arr2.Contains(num2))
-            {
-                this.exists2 = true;
-                this.arr2.Remove(num2);
-            }
-
-
-            if (this.exists2 == true)
-            {
-                if (commanders[num2].isShoot() == true)
-                {
-                    commanders[num2].stopShoot();
-                }
-                else
-                {
-                    commanders[num2].Shoot(20);
-
-                }
-                this.exists2 = false;
-            }
             for (int i = 0; i < commanders.Length; i++)
             {
                 if (commanders[i].IsDead() == true)
                 {
-                    this.arr2.Remove(i);
+                    arr2.Remove(i);
                 }
             }
 
+            //--------------------------------
+            Random rand = new Random();
+            int num1 = rand.Next(ships.Length);//8      
+            if (arr1.Contains(num1))
+            {
+                arr1.Remove(num1);
+                exists1 = true;
+            }
+            if (exists1 == true)
+            {
+                if (ships[num1].IsDead() == true)
+                {
+                    arr1.Remove(num1);
+                }
+                else
+                {
+                    if (ships[num1].isShoot() == false)
+                    {
+                        ships[num1].Shoot(10);
+                    }
+                }
 
-            label.Content = "size : " + arr1.Count;
-            label.Content = "enemies : " + this.enemies.Count;
+                exists1 = false;
+            }
+
+            //------------------------------------
+            int num2 = rand.Next(4);
+            if (arr2.Contains(num2))
+            {
+                exists2 = true;
+                arr2.Remove(num2);
+            }
+            if (exists2 == true)
+            {
+                if (commanders[num2].IsDead() == true)
+                {
+                    arr2.Remove(num2);
+                }
+                else
+                {
+                    if (commanders[num2].isShoot() == false)
+                    {
+                        commanders[num2].Shoot(20);
+                    }
+                }
+                exists2 = false;
+            }
+
+            //----------------------------------------
             if (this.enemies.Count == 0)
             {
                 this.timer.Stop();

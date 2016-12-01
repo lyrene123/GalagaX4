@@ -119,7 +119,7 @@ namespace GalagaX4
 
         public override void Die()
         {
-            lives--; //lives xx xx
+            decrementLives();
 
             BitmapImage[] explosions =
             {
@@ -133,6 +133,11 @@ namespace GalagaX4
             Animation.Initiate(animation, 100);
             live();
 
+        }
+
+        public void decrementLives()
+        {
+            this.lives--;
         }
 
         public void live()

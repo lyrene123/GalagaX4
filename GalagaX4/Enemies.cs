@@ -11,14 +11,11 @@ namespace GalagaX4
     //testing 101
     abstract class Enemies : GameObject
     {
-        //test
-        //protected int frequency;
         protected Animation animation;
         protected Player target;
 
         public Enemies() : base()
         {
-           // this.frequency = 0;
             this.animation = null;
         }
 
@@ -38,6 +35,22 @@ namespace GalagaX4
         public void setTarget(Player player)
         {
             this.target = player;
+        }
+
+        public void playerCollision()
+        {
+            double currentX = Canvas.GetLeft(this.image);
+            double currentY = Canvas.GetTop(this.image);
+            double playerX = Canvas.GetLeft(this.target.GetImage());
+            double playerY = Canvas.GetTop(this.target.GetImage());
+
+            Rect current = new Rect(currentX, currentY, this.image.Width - 5, this.image.Height - 5);
+            Rect player = new Rect(playerX, playerY, this.image.Width - 5, this.image.Height - 5);
+
+            if (current.IntersectsWith(player))
+            {
+                target.Die();
+            }
         }
 
         /*
