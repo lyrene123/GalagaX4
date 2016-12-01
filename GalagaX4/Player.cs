@@ -29,7 +29,12 @@ namespace GalagaX4
             setDisplayLives();
             updateLives();
             setDisplayPoints();
-            updatePoints();        
+            updatePoints();
+        }
+
+        public int GetLives()
+        {
+            return this.lives;
         }
 
         public void setDisplayLives()
@@ -39,16 +44,6 @@ namespace GalagaX4
             this.displayLives.Text = "LIVES: ";
             this.displayLives.Foreground = new SolidColorBrush(Colors.Red);
             this.displayLives.FontSize = 20;
-        }
-
-        public double GetSpeed()
-        {
-            return this.speed;
-        }
-
-        public int GetLives()
-        {
-            return this.lives;
         }
 
         public void updateLives()
@@ -122,9 +117,14 @@ namespace GalagaX4
             bullet.ShootUp();
         }
 
+        public double GetSpeed()
+        {
+            return this.speed;
+        }
+
         public override void Die()
         {
-            lives--; //lives xx xx
+            decrementLives();
 
             BitmapImage[] explosions =
             {
@@ -136,22 +136,27 @@ namespace GalagaX4
 
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
-            Respawn();
+            live();
 
         }
 
-        public void Respawn()
+        public void decrementLives()
         {
-            if (lives>0)
-            {              
-               this.image = new Image();
+            this.lives--;
+        }
+
+        public void live()
+        {
+            if (lives > 0)
+            {
+                this.image = new Image();
                 this.image.Height = 46;
                 this.image.Width = 42;
                 this.canvas.Children.Add(this.image);
                 Canvas.SetTop(this.image, 500);
                 Canvas.SetLeft(this.image, 405);
                 this.SetPointX(27);
-                this.SetPointY(490);         
+                this.SetPointY(490);
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else
@@ -164,6 +169,7 @@ namespace GalagaX4
                 Canvas.SetLeft(gameOver, 300);
                 gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
             }
+
 
             updateLives();
         }

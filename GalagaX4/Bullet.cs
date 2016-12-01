@@ -11,22 +11,19 @@ namespace GalagaX4
 {
     class Bullet : GameObject
     {
-        DispatcherTimer timer;
+        DispatcherTimer timerShootUp;
+        DispatcherTimer timerShootDown;
         List<Enemies> enemies;
         Player player;
 
         public Bullet() : base()
         {
-           
+
         }
 
         public Bullet(Point point, Image image, Canvas canvas) : base(point, image, canvas)
         {
             this.canvas.Children.Add(image);
-
-            timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromMilliseconds(1);
-            timer.Start();
         }
 
         public void setEnemyTarget(List<Enemies> enemies)
@@ -41,7 +38,10 @@ namespace GalagaX4
 
         public void ShootUp()
         {
-            timer.Tick += new EventHandler(ShootUp);
+            this.timerShootUp = new DispatcherTimer(DispatcherPriority.Normal);
+            this.timerShootUp.Interval = TimeSpan.FromMilliseconds(1);
+            this.timerShootUp.Start();
+            this.timerShootUp.Tick += new EventHandler(ShootUp);
         }
 
         void ShootUp(Object sender, EventArgs e)
@@ -59,28 +59,20 @@ namespace GalagaX4
             }
             else
             {
-                Stop();
-                this.canvas.Children.Remove(this.image);
-                for(int i = 0; i<this.enemies.Count(); i++)
-                {
-                    if(enemies[i].GetType() == typeof(Commander))
-                    {
-                        Commander commander = (Commander)enemies[i];
+                StopShootUp(); //stop bullet up
+                this.canvas.Children.Remove(this.image); //remove bullet up
 
-                        if (commander.getShotValue() > 1 && commander.getIsShot() == false)
-                        {
-                            commander.setIsShot(true);
-                            commander.changeImage();
-                        }
-                    }
-                }
             }
         }
 
         public void ShootDown(String path)
         {
             this.image.Source = UtilityMethods.LoadImage(path);
-            timer.Tick += new EventHandler(ShootDown);
+
+            this.timerShootDown = new DispatcherTimer(DispatcherPriority.Normal);
+            this.timerShootDown.Interval = TimeSpan.FromMilliseconds(1);
+            this.timerShootDown.Start();
+            this.timerShootDown.Tick += new EventHandler(ShootDown);
         }
 
         void ShootDown(Object sender, EventArgs e)
@@ -94,15 +86,19 @@ namespace GalagaX4
             }
             else
             {
-                Stop();
-                this.canvas.Children.Remove(this.GetImage());
+                StopShootDown(); //stop bullet down
+                Die(); //remove bullet down
             }
         }
 
-        public void Stop()
+        public void StopShootDown()
         {
-            this.timer.Stop();
-           // timer = null;
+            this.timerShootDown.Stop();
+        }
+
+        public void StopShootUp()
+        {
+            this.timerShootUp.Stop();
         }
 
         public override void Die()
@@ -119,18 +115,18 @@ namespace GalagaX4
 
             Rect gameObjectRect = new Rect(gameObjectX, gameObjectY, gameObject.GetImage().Width - 5
                 , gameObject.GetImage().Height - 5);
-
             Rect bulletRect = new Rect(bulletX, bulletY, this.GetImage().ActualWidth
                 , this.GetImage().ActualHeight);
 
-            if (gameObject.GetImage().IsLoaded == true)
+            if (gameObject.GetImage().IsLoaded == true) //if exists only
             {
-                if (bulletRect.IntersectsWith(gameObjectRect))
+                if (bulletRect.IntersectsWith(gameObjectRect)) //check intersection
                 {
                     if (gameObject.GetType() == typeof(Commander))
                     {
                         OnCollisionCommander((Commander)gameObject);
-                        this.Die(); //bullet gone
+                        StopShootUp();
+                        Die();
                     }
                     else
                     {
@@ -146,18 +142,35 @@ namespace GalagaX4
             if (commander.getIsShot() == true)
             {
                 destroy(commander);
-            }        
+            }
+
+            /*for (int i = 0; i < this.enemies.Count(); i++)
+            {
+                if (enemies[i].GetType() == typeof(Commander))
+                {
+                    Commander commander = (Commander)enemies[i];*/
+            if (commander.getShotValue() > 1 && commander.getIsShot() == false)
+            {
+                commander.setIsShot(true);
+                commander.changeImage();
+            }
+            // }
+            // }
         }
 
         public void destroy(GameObject gameObject)
         {
-            this.Stop(); //bullet gone 
-            this.Die(); //remove bullet image
             if (gameObject is Enemies)
             {
+                StopShootUp(); //stop player's bullet               
                 Enemies defeated = (Enemies)gameObject;
                 enemies.Remove(defeated); //remove enemy from list
             }
+            else
+            {
+                StopShootDown(); //stop enemy bullet
+            }
+            Die();//remove bullet
             gameObject.Die(); //player or enemy gone
         }
     }

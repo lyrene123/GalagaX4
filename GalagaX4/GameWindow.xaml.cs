@@ -196,109 +196,106 @@ namespace GalagaX4
             //ships[1].Shoot(600);
 
         }
-        
-       void Update()
-       {
-           timer = new DispatcherTimer(DispatcherPriority.Normal);
-           timer.Interval = TimeSpan.FromSeconds(1);
-           timer.Tick += new EventHandler(ShootUpdate);
-           timer.Start();
-       }
-
-       private void ShootUpdate(object sender, EventArgs e)
-       {
-           DisplayGameOver();
-
-          // label.Content = "lives : " + player.GetLives();
-
-           Random rand = new Random();
-           int num1 = rand.Next(ships.Length);//8      
-               if (arr1.Contains(num1))
-               {
-                   this.arr1.Remove(num1);
-                   this.exists1 = true;
-               }
 
 
-           if (this.exists1 == true)
-           {
-               if (ships[num1].IsShoot() == true)
-               {
-                    ships[num1].StopShoot();
-               }
-               else
-               {
-                   ships[num1].Shoot(1);       
-               }
-               this.exists1 = false;
-           }
+        void Update()
+        {
+            timer = new DispatcherTimer(DispatcherPriority.Normal);
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += new EventHandler(ShootUpdate);
+            timer.Start();
+        }
 
-           for(int i=0; i<ships.Length; i++)
-           {
-               if(ships[i].IsDead() == true)
-               {
-                   this.arr1.Remove(i);
-               }
-           }
-
-           int num2 = rand.Next(4);
-
-               if (arr2.Contains(num2))
-               {
-                   this.exists2 = true;
-                   this.arr2.Remove(num2);
-               }
-
-
-           if(this.exists2 == true)
-           {
-               if (commanders[num2].isShoot() == true)
-               {
-                   commanders[num2].stopShoot();
-               }
-               else
-               {
-                     commanders[num2].Shoot(1);
-
+        private void ShootUpdate(object sender, EventArgs e)
+        {
+            BackToMainWindown();
+            //-------------------------------
+            for (int i = 0; i < ships.Length; i++)
+            {
+                if (ships[i].IsDead() == true)
+                {
+                    arr1.Remove(i);
                 }
-               this.exists2 = false;
-           }
-           for (int i = 0; i < commanders.Length; i++)
-           {
-               if (commanders[i].IsDead() == true)
-               {
-                   this.arr2.Remove(i);
-               }
-           }
+            }
 
-           shootFrequency = 8;
-           timer.Interval = TimeSpan.FromSeconds(shootFrequency);
+            for (int i = 0; i < commanders.Length; i++)
+            {
+                if (commanders[i].IsDead() == true)
+                {
+                    arr2.Remove(i);
+                }
+            }
 
-           if (this.enemies.Count == 0)
-           {
-               this.timer.Stop();
-           }
-       }
+            //--------------------------------
+            Random rand = new Random();
+            int num1 = rand.Next(ships.Length);//8      
+            if (arr1.Contains(num1))
+            {
+                arr1.Remove(num1);
+                exists1 = true;
+            }
+            if (exists1 == true)
+            {
+                if (ships[num1].IsDead() == true)
+                {
+                    arr1.Remove(num1);
+                }
+                else
+                {
+                    if (ships[num1].isShoot() == false)
+                    {
+                        ships[num1].Shoot(10);
+                    }
+                }
 
-       void MyCanvas_KeyDown(object sender, KeyEventArgs e)
-       {
-           this.player.Move(sender, e);
-           this.player.Shoot(sender, e);
-       }
+                exists1 = false;
+            }
 
-       void DisplayGameOver()
-       {
-           if(player.GetLives() == 0)
-           {
-               this.Hide();
-               var mainWindow = new MainWindow();
-               mainWindow.Show();
-               this.timer.Stop();
-               this.Close();
-           }
+            //------------------------------------
+            int num2 = rand.Next(4);
+            if (arr2.Contains(num2))
+            {
+                exists2 = true;
+                arr2.Remove(num2);
+            }
+            if (exists2 == true)
+            {
+                if (commanders[num2].IsDead() == true)
+                {
+                    arr2.Remove(num2);
+                }
+                else
+                {
+                    if (commanders[num2].isShoot() == false)
+                    {
+                        commanders[num2].Shoot(20);
+                    }
+                }
+                exists2 = false;
+            }
 
+            //----------------------------------------
+            if (this.enemies.Count == 0)
+            {
+                this.timer.Stop();
+            }
+        }
 
-       }
-       
+        void MyGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            this.player.Move(sender, e);
+            this.player.Shoot(sender, e);
+        }
+        void BackToMainWindown()
+        {
+            if (player.GetLives() == 0)
+            {
+                this.Hide();
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.timer.Stop();
+                this.Close();
+            }
+        }
     }
 }
