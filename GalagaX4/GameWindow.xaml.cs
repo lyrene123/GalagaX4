@@ -28,7 +28,7 @@ namespace GalagaX4
         bool exists2 = false;
         List<Enemies> enemies;
 
-        double shootFrequency = 0.001;
+        //double shootFrequency = 0.001;
         /*
         Player player;
         Point playerPoint;
@@ -296,6 +296,27 @@ namespace GalagaX4
                 this.timer.Stop();
                 this.Close();
             }
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            /*TimeSpan ts = new TimeSpan(0, 0, 0, 0, 6);
+            GameWindow media = new GameWindow();
+            media.mediaElement.Position = ts;
+            media.mediaElement.Volume = 6.6;
+            media.mediaElement.SpeedRatio = 1.5;
+            media.mediaElement.Source = new Uri(@"D:\GalagaX4_Backup\GalagaX4\audio\mainbacksound.wav", UriKind.Absolute);
+            media.mediaElement.Play();
+            */
+        }
+        private void Element_MediaEnded(object sender, EventArgs e)
+        {
+            /*TimeSpan ts = new TimeSpan(0, 0, 0, 0, 0);
+            mediaElement.Position = ts;
+            mediaElement.Volume = 6.6;
+            //mediaElement.SpeedRatio = 0.0001;
+            mediaElement.Source = new Uri(@"D:\GalagaX4_Backup\GalagaX4\audio\mainbacksound.wav", UriKind.Absolute);
+            mediaElement.Play();
+            */
         }
     }
 }

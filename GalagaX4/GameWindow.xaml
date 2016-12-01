@@ -8,6 +8,8 @@
         Title="GameWindow" Height="650" Width="860" Background="Black">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
         <Canvas x:Name="lv1Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <MediaElement x:Name="mediaElement" Canvas.Left="841" Canvas.Top="10" UnloadedBehavior="Manual"
+                          MediaEnded="Element_MediaEnded" Source="main2.wav" Margin="823,25,23.6,588"/>
         <Canvas x:Name="lv2Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </Window>

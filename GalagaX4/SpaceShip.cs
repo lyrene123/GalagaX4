@@ -29,7 +29,7 @@ namespace GalagaX4
         }
 
         public SpaceShip(Point point, Image image, Canvas canvas
-            , Animation animation) : base(point, image, canvas, animation)
+            ) : base(point, image, canvas)
         {
             this.isShooting = false;
             this.dead = false;
