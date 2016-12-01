@@ -77,9 +77,8 @@ namespace GalagaX4
             }
         }
 
-        public void ShootDown(String path)
+        public void ShootDown()
         {
-            this.image.Source = UtilityMethods.LoadImage(path);
             timer.Tick += new EventHandler(ShootDown);
         }
 
@@ -88,6 +87,7 @@ namespace GalagaX4
             if (this.point.Y <= 600)
             {
                 this.point.Y += 3;
+                this.image.Source = UtilityMethods.LoadImage("pics/bulletFlip180.png");
                 Canvas.SetTop(this.GetImage(), this.point.Y);
 
                 OnCollision(this.player);

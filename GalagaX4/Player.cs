@@ -63,7 +63,7 @@ namespace GalagaX4
 
         public void addPoints(int morePoints)
         {
-            this.points = morePoints;
+            this.points += morePoints;
             updatePoints();
         }
 

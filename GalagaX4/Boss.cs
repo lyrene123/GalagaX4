@@ -21,7 +21,7 @@ namespace Galaga
         DispatcherTimer timer;
         int moveCounter = 1;
 
-        public Boss(Point point, Image image, Canvas canvas, Animation animation) 
+        public Boss(Point point, Image image, Canvas canvas, Animation animation)
             : base(point, image, canvas, animation)
         {
 
@@ -96,19 +96,19 @@ namespace Galaga
             Bullet bullet = new Bullet(this.point, bulletPic, canvas);
 
             Canvas.SetLeft(bullet.GetImage(), (position + midOfImage + midOfHeight));
-            bullet.ShootRightSide("pics/fireball.png");
+            //bullet.ShootRightSide("pics/fireball.png");
 
             Image bulletPic1 = new Image();
             Bullet bullet1 = new Bullet(this.point, bulletPic1, canvas);
 
             Canvas.SetLeft(bullet1.GetImage(), (position + midOfImage + midOfHeight));
-            bullet1.ShootLeftSide("pics/fireball.png");
+            //bullet1.ShootLeftSide("pics/fireball.png");
 
             Image bulletPic2 = new Image();
             Bullet bullet2 = new Bullet(this.point, bulletPic2, canvas);
 
-            Canvas.SetLeft(bullet2.GetImage(),(position + midOfImage + midOfHeight));
-            bullet2.ShootDown("pics/fireball.png");
+            Canvas.SetLeft(bullet2.GetImage(), (position + midOfImage + midOfHeight));
+            //bullet2.ShootDown("pics/fireball.png");
 
 
         }

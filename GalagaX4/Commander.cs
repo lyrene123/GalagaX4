@@ -20,6 +20,7 @@ namespace GalagaX4
 
         int shotCounter;
         bool isShot;
+        bool dead;
 
         DispatcherTimer timer;
         DispatcherTimer timerShoot;
@@ -27,11 +28,25 @@ namespace GalagaX4
         public Commander(Point point, Image image, Canvas canvas, Animation animation) 
             : base(point, image, canvas, animation)
         {
+            this.isShot = false;
+            this.dead = false;
+        }
+
+        public bool isShoot()
+        {
+            return this.isShot;
+
+        }
+        public bool IsDead()
+        {
+            return this.dead;
         }
 
         public override void Die()
         {
+            dead = true;
             this.target.addPoints(250);
+            //this.isShot = true;
             BitmapImage[] explosions =
            {
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp0.png"),
@@ -40,7 +55,10 @@ namespace GalagaX4
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp3.png")
             };
             this.stopMove();
-            this.stopShoot();
+           
+                this.stopShoot();
+            
+            
             this.animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(this.animation, 40);
         }
@@ -70,7 +88,7 @@ namespace GalagaX4
 
             if(this.moveDown == true)
             {
-                this.point.Y += 8;
+                this.point.Y += 30;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 moveDown = false;
             }
@@ -110,7 +128,12 @@ namespace GalagaX4
 
         public void stopShoot()
         {
-            this.timerShoot.Stop();
+            if(this.timerShoot != null)
+            {
+                this.timerShoot.Stop();
+            }
+            
+            this.isShot = false;
         }
 
         public override void Shoot(double frequency)
@@ -123,6 +146,7 @@ namespace GalagaX4
 
         void Shoot(Object sender, EventArgs e)
         {
+            this.isShot = true;
             double position = Canvas.GetLeft(this.GetImage());
             double midOfImgae = this.GetImage().Width / 2;
 
