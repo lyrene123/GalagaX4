@@ -1,5 +1,4 @@
-﻿using GalagaX4;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -190,16 +189,12 @@ namespace GalagaX4
                 commanders[i].setTarget(player);
                 commanders[i].Fly(200);
             }
+            
             player.SetEnemyTarget(enemies);
-            spaceX = 0;
+             Update();
 
-            Update();
-        }
+            //ships[1].Shoot(600);
 
-        private void MyGrid_KeyDown(object sender, KeyEventArgs e)
-        {
-            this.player.Move(sender, e);
-            this.player.Shoot(sender, e);
         }
         
        void Update()
