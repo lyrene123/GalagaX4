@@ -31,6 +31,7 @@ namespace GalagaX4
 
             this.image = image;
             this.canvas = canvas;
+
         }
 
         public abstract void Die();

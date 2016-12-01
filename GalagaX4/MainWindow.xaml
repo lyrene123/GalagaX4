@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="860" Background="Black">
     <Grid>
-        <Button x:Name="button" Content="New game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="61" Margin="286,303,0,0" Click="button_Click"/>
+        <Button x:Name="NewGameBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="61" Margin="297,333,0,0" Click="button_Click" BorderBrush="{x:Null}" FontSize="36" Foreground="{x:Null}" Background="{x:Null}">
+            <Image x:Name="newGamePic" Source="pics/newGame_lightBlue.png"/>
+        </Button>
+        <Image x:Name="titlePic" HorizontalAlignment="Left" Height="123" Margin="123,165,0,0" VerticalAlignment="Top" Width="613" Source="pics/GameTitle_lightBlue.png"/>
 
     </Grid>
 </Window>
