@@ -131,7 +131,7 @@ namespace GalagaX4
             bullet.setPlayerTarget(this.target);
             Canvas.SetLeft(bullet.GetImage(), (position + midOfImgae - 3.5));
 
-            bullet.ShootDown();
+            bullet.ShootDown("pics/bulletFlip180.png");
         }
 
         public void changeImage()

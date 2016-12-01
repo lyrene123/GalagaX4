@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Galaga;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ namespace GalagaX4
     {
 
         Player player;
+        Boss boss = null;
         Point playerPoint;
         double playerSpeed = 15;
         //Animation playerAnimation;
@@ -134,11 +136,42 @@ namespace GalagaX4
                 commanders[i].setTarget(player);
                 commanders[i].Fly(200);
             }
-            
-            player.SetEnemyTarget(enemies);
+
+            Point bossPos = new Point();
+            bossPos.X = 400;
+            bossPos.Y = 200;
+            Animation bossAnimation;
+            Image bossPic = new Image();
+            bossPic.Source = UtilityMethods.LoadImage("pics/boss/boss1.png");
+            MyCanvas.Children.Add(bossPic);
+
+            BitmapImage[] bossImages = { UtilityMethods.LoadImage("pics/boss/boss1.png"),
+                    UtilityMethods.LoadImage("pics/boss/boss2.png"), UtilityMethods.LoadImage("pics/boss/boss3.png"),};
+            bossAnimation = new Animation(bossPic, bossImages, true);
+            this.boss = new Boss(bossPos, bossPic, MyCanvas, bossAnimation);
+            Animation.Initiate(bossAnimation, 500);
+
+            enemies.Add(boss);
+
+            this.boss.Fly(200);
+            this.boss.Shoot(200);
+        
+
+
+
+
+
+
+
+
+
+        player.SetEnemyTarget(enemies);
              Update();
 
             //ships[1].Shoot(600);
+
+
+
 
         }
 
