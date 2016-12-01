@@ -19,6 +19,16 @@ namespace GalagaX4
         public MainWindow()
         {
             InitializeComponent();
+
+            BitmapImage[] newGameSources = { UtilityMethods.LoadImage("pics/newGame_white.png")
+                    , UtilityMethods.LoadImage("pics/newGame_lightBlue.png") };
+            Animation newGameAnimation = new Animation(newGamePic, newGameSources, true);
+            Animation.Initiate(newGameAnimation, 100);
+
+            BitmapImage[] titleSources = { UtilityMethods.LoadImage("pics/GameTitle_Blue.png")
+                    , UtilityMethods.LoadImage("pics/GameTitle_lightBlue.png") };
+            Animation titleAnimation = new Animation(titlePic, titleSources, true);
+            Animation.Initiate(titleAnimation, 150);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

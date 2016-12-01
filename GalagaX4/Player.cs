@@ -41,6 +41,16 @@ namespace GalagaX4
             this.displayLives.FontSize = 20;
         }
 
+        public double GetSpeed()
+        {
+            return this.speed;
+        }
+
+        public int GetLives()
+        {
+            return this.lives;
+        }
+
         public void updateLives()
         {
             this.displayLives.Text = "LIVES: " + this.lives;
@@ -112,14 +122,9 @@ namespace GalagaX4
             bullet.ShootUp();
         }
 
-        public double GetSpeed()
-        {
-            return this.speed;
-        }
-
         public override void Die()
         {
-            decrementLives();
+            lives--; //lives xx xx
 
             BitmapImage[] explosions =
             {
@@ -131,16 +136,11 @@ namespace GalagaX4
 
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
-            live();
+            Respawn();
 
         }
 
-        public void decrementLives()
-        {
-            this.lives--;
-        }
-
-        public void live()
+        public void Respawn()
         {
             if (lives>0)
             {              
@@ -153,6 +153,16 @@ namespace GalagaX4
                 this.SetPointX(27);
                 this.SetPointY(490);         
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+            }
+            else
+            {
+                Image gameOver = new Image();
+                gameOver.Height = 200;
+                gameOver.Width = 250;
+                this.canvas.Children.Add(gameOver);
+                Canvas.SetTop(gameOver, 200);
+                Canvas.SetLeft(gameOver, 300);
+                gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
             }
 
             updateLives();
