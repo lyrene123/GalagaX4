@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Galaga;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ namespace GalagaX4
         DispatcherTimer timer;
 
         Player player;
+        Boss boss = null;
         Point playerPoint;
         double playerSpeed = 15;
         //Animation playerAnimation;
@@ -140,16 +142,49 @@ namespace GalagaX4
                 commanders[i].setTarget(player);
                 commanders[i].Fly(200);
             }
-            
-            player.SetEnemyTarget(enemies);
 
-            Update();
+            Point bossPos = new Point();
+            bossPos.X = 400;
+            bossPos.Y = 200;
+            Animation bossAnimation;
+            Image bossPic = new Image();
+            bossPic.Source = UtilityMethods.LoadImage("pics/boss/boss1.png");
+            MyCanvas.Children.Add(bossPic);
+
+            BitmapImage[] bossImages = { UtilityMethods.LoadImage("pics/boss/boss1.png"),
+                    UtilityMethods.LoadImage("pics/boss/boss2.png"), UtilityMethods.LoadImage("pics/boss/boss3.png"),};
+            bossAnimation = new Animation(bossPic, bossImages, true);
+            this.boss = new Boss(bossPos, bossPic, MyCanvas, bossAnimation);
+            Animation.Initiate(bossAnimation, 500);
+
+            enemies.Add(boss);
+
+            this.boss.Fly(200);
+            this.boss.Shoot(200);
+        
+
+
+
+
+
+
+
+
+
+        player.SetEnemyTarget(enemies);
+             Update();
+
+            //ships[1].Shoot(600);
+
+
+
+
         }
 
         void Update()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromSeconds(4);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += new EventHandler(ShootUpdate);
             timer.Start();
             label.Content = "shootFrequency : " + shootFrequency;
@@ -196,33 +231,33 @@ namespace GalagaX4
                     commanders[num2].Shoot(10);
                 }
             }*/
-
+            
             Random rand = new Random();
             int num1 = rand.Next(ships.Length);//8      
-            if (arr1.Contains(num1))
-            {
-                this.arr1.Remove(num1);
-                this.exists1 = true;
-            }
-
+                if (arr1.Contains(num1))
+                {
+                    this.arr1.Remove(num1);
+                    this.exists1 = true;
+                }
+            
 
             if (this.exists1 == true)
             {
-                // this.arr1.Add(num1);
+               // this.arr1.Add(num1);
                 if (ships[num1].IsShoot() == true)
                 {
-                    ships[num1].StopShoot();
+                     ships[num1].StopShoot();
                 }
                 else
                 {
-                    ships[num1].Shoot(10);
+                    ships[num1].Shoot(10);       
                 }
                 this.exists1 = false;
             }
 
-            for (int i = 0; i < ships.Length; i++)
+            for(int i=0; i<ships.Length; i++)
             {
-                if (ships[i].IsDead() == true)
+                if(ships[i].IsDead() == true)
                 {
                     this.arr1.Remove(i);
                 }
@@ -230,18 +265,18 @@ namespace GalagaX4
             //label1.Content = "num1 : " + num1;
             //oldNum = num1;
             /////
-
+           
 
             int num2 = rand.Next(4);
+           
+                if (arr2.Contains(num2))
+                {
+                    this.exists2 = true;
+                    this.arr2.Remove(num2);
+                }
+            
 
-            if (arr2.Contains(num2))
-            {
-                this.exists2 = true;
-                this.arr2.Remove(num2);
-            }
-
-
-            if (this.exists2 == true)
+            if(this.exists2 == true)
             {
                 if (commanders[num2].isShoot() == true)
                 {
@@ -249,9 +284,9 @@ namespace GalagaX4
                 }
                 else
                 {
-                    commanders[num2].Shoot(20);
+                      commanders[num2].Shoot(20);
 
-                }
+                 }
                 this.exists2 = false;
             }
             for (int i = 0; i < commanders.Length; i++)
@@ -262,9 +297,12 @@ namespace GalagaX4
                 }
             }
 
+            // oldNum2 = num2;
+            shootFrequency = 8;
+            label.Content = "shootFrequency : " + shootFrequency;
+            timer.Interval = TimeSpan.FromSeconds(shootFrequency);
 
             label.Content = "size : " + arr1.Count;
-            label.Content = "enemies : " + this.enemies.Count;
             if (this.enemies.Count == 0)
             {
                 this.timer.Stop();
