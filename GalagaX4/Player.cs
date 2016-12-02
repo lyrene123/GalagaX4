@@ -22,6 +22,8 @@ namespace GalagaX4
         TextBlock displayPoints;
         int points = 0;
 
+        
+
         public Player(Point point, Image image, Canvas canvas
             , double speed) : base(point, image, canvas)
         {
@@ -95,17 +97,22 @@ namespace GalagaX4
 
         public void Shoot(object sender, KeyEventArgs e)
         {
+            
+            
             if (this.image.IsLoaded == true)
             {
                 if (e.Key == Key.Space)
                 {
                     Shoot();
+                    
                 }
             }
         }
 
         void Shoot()
         {
+            GameSound shootSound = new GameSound();
+            
             double position = Canvas.GetLeft(this.GetImage());
             double midOfImage = this.GetImage().Width / 2;
 
@@ -115,6 +122,7 @@ namespace GalagaX4
             Canvas.SetLeft(bullet.GetImage(), position + midOfImage - 3.5);
 
             bullet.ShootUp();
+            shootSound.playShootSound();
         }
 
         public double GetSpeed()
