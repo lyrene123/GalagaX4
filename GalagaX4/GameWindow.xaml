@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GalagaX4"
         mc:Ignorable="d"
-        Title="GameWindow" Height="650" Width="860" Background="Black">
+        Title="GameWindow" Height="650" Width="860" Background="Black" Loaded="Page_Loaded">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
         <Canvas x:Name="lv1Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        <MediaElement x:Name="mediaElement" Canvas.Left="841" Canvas.Top="10" UnloadedBehavior="Manual"
-                          MediaEnded="Element_MediaEnded" Source="main2.wav" Margin="823,25,23.6,588"/>
+
         <Canvas x:Name="lv2Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="14" Margin="835,10,0,0" VerticalAlignment="Top" Width="9"
+                      UnloadedBehavior="Manual" MediaEnded="Element_MediaEnded" Source="main2.wav"/>
     </Grid>
 </Window>
