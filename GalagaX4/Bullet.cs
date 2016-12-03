@@ -55,13 +55,9 @@ namespace GalagaX4
                 this.image.Source = UtilityMethods.LoadImage("pics/bullet.png");
                 Canvas.SetTop(this.image, this.point.Y);
 
-
-                if (enemies != null)
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    for (int i = 0; i < enemies.Count; i++)
-                    {
-                        OnCollision(enemies[i]);
-                    }
+                    OnCollision(enemies[i]);
                 }
             }
             else
@@ -87,7 +83,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 600)
             {
-                this.point.Y += 3;
+                this.point.Y += 5;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
 
                 OnCollision(this.player);

@@ -12,7 +12,7 @@ namespace GalagaX4
 {
     class Bug : Enemies
     {
-        
+
         DispatcherTimer timerFly; //timer for moving
 
         public Bug(Point point, Image image, Canvas canvas, Animation animation)
@@ -55,7 +55,7 @@ namespace GalagaX4
                     {
                         Random rand = new Random();
                         int randNum = rand.Next(20);
-                        if (randNum % 3 == 0)
+                        if (randNum % 2 == 0)
                         {
                             this.timerFly.Stop();
                             this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
@@ -106,7 +106,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 550)
             {
-                this.point.Y += 3;
+                this.point.Y += 8;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 playerCollision();
             }

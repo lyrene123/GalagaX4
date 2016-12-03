@@ -55,7 +55,7 @@ namespace GalagaX4
                     {
                         Random rand = new Random();
                         int randNum = rand.Next(20);
-                        if (randNum % 10 == 0)
+                        if (randNum % 3 == 0)
                         {
                             this.timerFly.Stop();
                             this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
@@ -105,7 +105,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 550)
             {
-                this.point.Y += 3;
+                this.point.Y += 8;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 playerCollision();
             }
