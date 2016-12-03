@@ -24,7 +24,7 @@ namespace GalagaX4
             this.audiosource = uriPath;
             this.repeated = repeat;
             Uri uri = new Uri(audiosource);
-            audioSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
+           // audioSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
 
         }
         public GameSound(string uriPath)
@@ -39,7 +39,7 @@ namespace GalagaX4
 
         public void playSound()
         {
-            audioSound.Play();
+           // audioSound.Play();
         }
         public void playSoundMediaElement(string str)
         {

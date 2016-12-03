@@ -12,35 +12,26 @@ namespace GalagaX4
 {
     class SpaceShip : Enemies
     {
-        // 1=left 2=right
-        int moveCounter = 1;
-        double maxX;
-        double minX;
-        bool moveDown = false;
-
         DispatcherTimer timerFly;
         DispatcherTimer timerShoot;
-
-        bool isShooting; //if shooting already
-        bool dead; //if destroyed already
 
         public SpaceShip() : base()
         {
         }
 
-        public SpaceShip(Point point, Image image, Canvas canvas
-            ) : base(point, image, canvas)
+        public SpaceShip(Point point, Image image, Canvas canvas)
+            : base(point, image, canvas)
         {
+            this.moveCounter = 1;
+            this.moveDown = false;
+            this.dive = false;
+
             this.isShooting = false;
             this.dead = false;
         }
 
         public override void Fly(double frequency)
         {
-            //boundaries for moving:
-            this.minX = this.GetPoint().X - 130;
-            this.maxX = this.GetPoint().X + 130;
-
             timerFly = new DispatcherTimer(DispatcherPriority.Normal);
             timerFly.Interval = TimeSpan.FromMilliseconds(frequency);
             timerFly.Tick += new EventHandler(MoveHorizontal);
@@ -49,40 +40,85 @@ namespace GalagaX4
 
         void MoveHorizontal(Object sender, EventArgs e)
         {
-            double x = Canvas.GetLeft(this.GetImage());
+            double x =this.GetPoint().X;
 
-            if (moveDown == true)
+            if (this.point.Y <= 550)
             {
-                this.point.Y += 30;
-                Canvas.SetTop(this.GetImage(), this.point.Y);
-                moveDown = false;
-            }
-
-            if (moveCounter == 1)
-            {
-                if (x >= minX)
+                if (moveDown == true)
                 {
-                    this.point.X -= 10;
-                    Canvas.SetLeft(this.GetImage(), this.point.X);
+                    this.point.Y += 20;
+                    Canvas.SetTop(this.GetImage(), this.point.Y);
+                    moveDown = false;
+                    playerCollision();
+
+                    if (dive == true)
+                    {
+                        Random rand = new Random();
+                        int randNum = rand.Next(20);
+                        if (randNum % 10 == 0)
+                        {
+                            this.timerFly.Stop();
+                            this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
+                            this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
+                            this.timerFly.Tick += new EventHandler(this.updateMoveDown);
+                            this.timerFly.Start();
+                        }
+                    }
+                }
+
+                if (moveCounter == 1)
+                {
+                    if (x >= minX)
+                    {
+                        this.point.X -= 10;
+                        Canvas.SetLeft(this.GetImage(), this.point.X);
+                    }
+                    else
+                    {
+                        moveCounter = 2;
+                        moveDown = true;
+                    }
                 }
                 else
                 {
-                    moveCounter = 2;
-                    moveDown = true;
+                    if (x <= maxX)
+                    {
+                        this.point.X += 10;
+                        Canvas.SetLeft(this.GetImage(), this.point.X);
+                    }
+                    else
+                    {
+                        moveCounter = 1;
+                        moveDown = true;
+                    }
                 }
+                playerCollision();
             }
             else
             {
-                if (x <= maxX)
-                {
-                    this.point.X += 10;
-                    Canvas.SetLeft(this.GetImage(), this.point.X);
-                }
-                else
-                {
-                    moveCounter = 1;
-                    moveDown = true;
-                }
+                canvas.Children.Remove(this.image);
+                returnToTheTop();
+            }
+        }
+
+        private void updateMoveDown(object sender, EventArgs e)
+        {
+            if (this.point.Y <= 550)
+            {
+                this.point.Y += 3;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                playerCollision();
+            }
+            else
+            {
+                canvas.Children.Remove(this.image);
+                returnToTheTop();
+                dive = false;
+                this.timerFly.Stop();
+                this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
+                this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
+                this.timerFly.Tick += new EventHandler(this.MoveHorizontal);
+                this.timerFly.Start();
             }
         }
 

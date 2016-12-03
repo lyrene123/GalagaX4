@@ -172,42 +172,8 @@
     <Resource Include="pics\newGame_lightBlue.png" />
     <Resource Include="pics\newGame_white.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="audio\01-stage-intro.wav" />
-    <Resource Include="audio\bossgalaga_destroyed.wav" />
-    <Resource Include="audio\bossgalaga_destroyed2.wav" />
-    <Resource Include="audio\bossgalaga_hatch.wav" />
-    <Resource Include="audio\bossgalaga_injured.wav" />
-    <Resource Include="audio\bossgalaga_injured2.wav" />
-    <Resource Include="audio\captured_ship_destroyed.wav" />
-    <Resource Include="audio\coin_credit.wav" />
-    <Resource Include="audio\explosion.wav" />
-    <Resource Include="audio\extra_ship.wav" />
-    <Resource Include="audio\fighter_captured.wav" />
-    <Resource Include="audio\fighter_destroyed.wav" />
-    <Resource Include="audio\fighter_rescued.wav" />
-    <Resource Include="audio\Firing.wav" />
-    <Resource Include="audio\galaga_destroyed.wav" />
-    <Resource Include="audio\galaga_destroyed2.wav" />
-    <Resource Include="audio\galaga_dive.wav" />
-    <Resource Include="audio\galaga_grumble.wav" />
-    <Resource Include="audio\galaspark_groan.wav" />
-    <Resource Include="audio\galaspark_injured.wav" />
-    <Resource Include="audio\intro.wav" />
-    <Resource Include="audio\laser.wav" />
-    <Resource Include="audio\laser_default.wav" />
-    <Resource Include="audio\laser_fastshot.wav" />
-    <Resource Include="audio\laser_ricochetshot.wav" />
-    <Resource Include="audio\laser_widebeam.wav" />
-    <Resource Include="audio\main2.wav" />
-    <Resource Include="audio\mainbacksound.wav" />
-    <Resource Include="audio\powerup.wav" />
-    <Resource Include="audio\result_screen_beep.wav" />
-    <Resource Include="audio\shoot.wav" />
-    <Resource Include="audio\tractor_beam1.wav" />
-    <Resource Include="audio\tractor_beam2.wav" />
-    <Resource Include="audio\tractor_beam3.wav" />
+    <Resource Include="pics\UFO.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,17 +12,15 @@ namespace GalagaX4
 {
     class Bug : Enemies
     {
-        // 1=left 2=right
-        int moveCounter = 1;
-        double maxX;
-        double minX;
-        bool moveDown = false;
-
-        DispatcherTimer timer; //timer for moving
+        
+        DispatcherTimer timerFly; //timer for moving
 
         public Bug(Point point, Image image, Canvas canvas, Animation animation)
             : base(point, image, canvas, animation)
         {
+            this.moveCounter = 1;
+            this.moveDown = false;
+            this.dive = false;
         }
 
         public override void Fly(double frequency)
@@ -33,30 +31,42 @@ namespace GalagaX4
 
         public void startFly(double frequency)
         {
-            //boundaries for moving:
-            this.minX = this.GetPoint().X - 130;
-            this.maxX = this.GetPoint().X + 130;
-
-            this.timer = new DispatcherTimer(DispatcherPriority.Render);
-            this.timer.Interval = TimeSpan.FromMilliseconds(frequency);
-            this.timer.Tick += new EventHandler(this.updateMoveTimer_Tick);
-            this.timer.Start();
+            this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
+            this.timerFly.Interval = TimeSpan.FromMilliseconds(frequency);
+            this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
+            this.timerFly.Start();
         }
 
-        private void updateMoveTimer_Tick(object sender, EventArgs e)
+        private void updateMoveHorizontal(object sender, EventArgs e)
         {
             double beeX = this.GetPoint().X;
 
             if (this.point.Y <= 550)
             {
+                //move down
                 if (this.moveDown == true)
                 {
                     this.point.Y += 35;
                     Canvas.SetTop(this.GetImage(), this.point.Y);
                     this.moveDown = false;
                     playerCollision();
+
+                    if (dive == true)
+                    {
+                        Random rand = new Random();
+                        int randNum = rand.Next(20);
+                        if (randNum % 3 == 0)
+                        {
+                            this.timerFly.Stop();
+                            this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
+                            this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
+                            this.timerFly.Tick += new EventHandler(this.updateMoveDown);
+                            this.timerFly.Start();
+                        }
+                    }
                 }
 
+                //move horizontal
                 if (moveCounter == 1)
                 {
                     if (beeX >= minX)
@@ -87,14 +97,35 @@ namespace GalagaX4
             }
             else
             {
-                this.stopMove();
                 canvas.Children.Remove(this.image);
+                returnToTheTop();
+            }
+        }
+
+        private void updateMoveDown(object sender, EventArgs e)
+        {
+            if (this.point.Y <= 550)
+            {
+                this.point.Y += 3;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                playerCollision();
+            }
+            else
+            {
+                canvas.Children.Remove(this.image);
+                returnToTheTop();
+                dive = false;
+                this.timerFly.Stop();
+                this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
+                this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
+                this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
+                this.timerFly.Start();
             }
         }
 
         public void stopMove()
         {
-            this.timer.Stop(); //stop moving
+            this.timerFly.Stop(); //stop moving
             this.animation.Stop(); //stop animation
         }
 

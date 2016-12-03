@@ -8,21 +8,33 @@ using System.Windows.Controls;
 
 namespace GalagaX4
 {
-    //testing 101
+    
     abstract class Enemies : GameObject
     {
         protected Animation animation;
         protected Player target;
+
+        protected int moveCounter;
+        protected double maxX;
+        protected double minX;
+        protected  bool moveDown;
+        protected bool dive;
+
+        protected bool isShooting; //if shooting already
+        protected bool dead; //if destroyed already
 
         public Enemies() : base()
         {
             this.animation = null;
         }
 
-        public Enemies(Point point, Image image, Canvas canvas) 
+        public Enemies(Point point, Image image, Canvas canvas)
             : base(point, image, canvas)
         {
             this.animation = null;
+            //boundaries for moving:
+            this.minX = this.GetPoint().X - 130;
+            this.maxX = this.GetPoint().X + 130;
         }
 
         public Enemies(Point point, Image image, Canvas canvas
@@ -33,9 +45,12 @@ namespace GalagaX4
                 throw new NullReferenceException();
             }
 
-            //this.frequency = shootFrequency;
             this.animation = new Animation(animation.getImage()
                 , animation.getBitmapImageArray(), animation.IsRepeated());
+
+            //boundaries for moving:
+            this.minX = this.GetPoint().X - 130;
+            this.maxX = this.GetPoint().X + 130;
         }
 
         public void setTarget(Player player)
@@ -43,7 +58,17 @@ namespace GalagaX4
             this.target = player;
         }
 
-        public void playerCollision()
+        public void setMoveCounter(int counter)
+        {
+            this.moveCounter = counter;
+        }
+
+        public void setDive(bool dive)
+        {
+            this.dive = dive;
+        }
+
+        protected void playerCollision()
         {
             double currentX = Canvas.GetLeft(this.image);
             double currentY = Canvas.GetTop(this.image);
@@ -59,17 +84,13 @@ namespace GalagaX4
             }
         }
 
-        /*
-        public int getShootFrequency()
+        protected void returnToTheTop()
         {
-            return this.frequency;
+            this.point.Y = 10;
+            Canvas.SetTop(this.image, this.point.Y);
+            canvas.Children.Add(this.image);
         }
 
-        public void setShootFrequency(int shootFrequency)
-        {
-            this.frequency = shootFrequency;
-        }
-        */
         public abstract void Fly(double frequency);
 
         public abstract void Shoot(double frequency);
