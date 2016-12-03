@@ -232,10 +232,9 @@ namespace GalagaX4
             if (this.enemies.Count == 0)
             {
                 this.timer.Stop();
-                //label.Content = "size : " + lv1.getListEnemiesSize();
 
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
-                // Level4 lv4 = new Level4(this.window, this.canvas, this.player);
+                lv2.Play();
             }
         }
 

@@ -35,15 +35,48 @@ namespace GalagaX4
             lv1.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-
-            label.Content = "Cold down : " + Player.ColdDown;
+            DecrementColdDown();
         }
 
         
         public void MyGrid_KeyDown(object sender, KeyEventArgs e)
         {
             player.Move();
-            player.Shoot();
+
+            if(Player.ColdDown < progressBar.Maximum)
+            {
+                player.Shoot();
+            }
+            else
+            {
+                Player.ColdDown = 10;
+            }
+            
+            //label.Content = "Cold down : " + Player.ColdDown;
+            //progressBar.Value = Player.ColdDown;
+        }
+
+        void DecrementColdDown()
+        {
+            DispatcherTimer coldDownTimer = new DispatcherTimer();
+            coldDownTimer.Interval = TimeSpan.FromMilliseconds(250);
+            coldDownTimer.Tick += new EventHandler(DecrementColdDown);
+            coldDownTimer.Start();
+        }
+
+        void DecrementColdDown(Object sender, EventArgs e)
+        {
+            if(Player.ColdDown > 0)
+            {
+                Player.ColdDown -= 0.1;
+            }
+            else
+            {
+                Player.ColdDown = 0;
+            }
+            
+            label.Content = "Cold down : " + Player.ColdDown;
+            progressBar.Value = Player.ColdDown;
         }
        
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -68,9 +101,5 @@ namespace GalagaX4
             */
         }
 
-        private void progressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            progressBar.Value = Player.ColdDown;
-        }
     }
 }

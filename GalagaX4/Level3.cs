@@ -32,10 +32,13 @@ namespace GalagaX4
         {
             this.window = window;
             this.canvas = canvas;
+            this.player = player;
 
             enemies = new List<Enemies>();
+        }
 
-            this.player = player;
+        public void Play()
+        {
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -145,9 +148,6 @@ namespace GalagaX4
 
             player.SetEnemyTarget(enemies);
             Update();
-
-            //ships[1].Shoot(600);
-
         }
 
         void Update()
@@ -231,6 +231,7 @@ namespace GalagaX4
             {
                 this.timer.Stop();
                 Level4 lv4 = new Level4(this.window, this.canvas, this.player);
+                lv4.Play();
             }
         }
 

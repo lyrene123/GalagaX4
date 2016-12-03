@@ -33,11 +33,13 @@ namespace GalagaX4
         {
             this.window = window;
             this.canvas = canvas;
-            
-            enemies = new List<Enemies>();
-
             this.player = player;
 
+            enemies = new List<Enemies>();
+        }
+
+        public void Play()
+        {
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
                     UtilityMethods.LoadImage("pics/bee1.png") };
@@ -229,6 +231,7 @@ namespace GalagaX4
             {
                 this.timer.Stop();
                 Level3 lv3 = new Level3(this.window, this.canvas, this.player);
+                lv3.Play();
             }
         }
 

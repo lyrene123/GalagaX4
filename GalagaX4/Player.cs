@@ -13,8 +13,10 @@ namespace GalagaX4
 {
     class Player : GameObject
     {
-        static int coldDown;
-        public static int ColdDown
+        static double coldDown;
+        Bullet bullet;
+
+        public static double ColdDown
         {
             get { return coldDown; }
             set { coldDown = value; }
@@ -99,12 +101,6 @@ namespace GalagaX4
             Canvas.SetLeft(this.image, this.point.X * speed);
         }
 
-        public void StopMove(Object sender, KeyEventArgs e)
-        {
-            this.point.X = UtilityMethods.Clamp(this.point.X, 2, 52);
-            Canvas.SetLeft(this.image, this.point.X * speed);
-        }
-
         public void Shoot()
         {            
             if (this.image.IsLoaded == true)
@@ -112,12 +108,7 @@ namespace GalagaX4
                 if (Keyboard.IsKeyDown(Key.Space))
                 {
                     ShootUpdate();
-
                     coldDown++;
-                }
-                if (Keyboard.IsKeyUp(Key.Space))
-                {
-                    coldDown--;
                 }
             }
         }
@@ -130,12 +121,18 @@ namespace GalagaX4
             double midOfImage = this.GetImage().Width / 2;
 
             Image bulletPic = new Image();
-            Bullet bullet = new Bullet(this.point, bulletPic, canvas);
+            bullet = new Bullet(this.point, bulletPic, canvas);
             bullet.setEnemyTarget(enemies);
             Canvas.SetLeft(bullet.GetImage(), position + midOfImage - 3.5);
 
             bullet.ShootUp();
             shootSound.playShootSound();
+        }
+
+        public void StopShootUp()
+        {
+            if(bullet != null)
+                bullet.StopShootUp();
         }
 
         public double GetSpeed()

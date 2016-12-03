@@ -68,6 +68,7 @@ namespace GalagaX4
             }
         }
 
+
         public void ShootDown(String path)
         {
             this.image.Source = UtilityMethods.LoadImage(path);

@@ -22,22 +22,19 @@ namespace GalagaX4
 
         Boss boss;
 
-        /*
-        List<int> arr1 = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
-        List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
-        bool exists1 = false;
-        bool exists2 = false;
-        */
         List<Enemies> enemies;
 
         public Level4(Window window, Canvas canvas, Player player)
         {
-
             this.window = window;
             this.canvas = canvas;
+            this.player = player;
 
             enemies = new List<Enemies>();
-            this.player = player;
+        }
+
+        public void Play()
+        {
 
             Point bossPos = new Point();
             bossPos.X = 300;
