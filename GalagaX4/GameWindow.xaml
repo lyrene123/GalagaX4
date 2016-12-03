@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="GameWindow" Height="650" Width="860" Background="Black" Loaded="Page_Loaded">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
-        <Canvas x:Name="lv1Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-
-        <Canvas x:Name="lv2Canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Label x:Name="label" Content="Label" Canvas.Left="674" Canvas.Top="354" Foreground="#FFF9F1F1" Height="28" Width="118"/>
+        </Canvas>
         <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="14" Margin="835,10,0,0" VerticalAlignment="Top" Width="9"
                       UnloadedBehavior="Manual" MediaEnded="Element_MediaEnded" Source="main2.wav"/>
+        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="10" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="411" Margin="10,579,0,0" ValueChanged="progressBar_ValueChanged"/>
     </Grid>
 </Window>

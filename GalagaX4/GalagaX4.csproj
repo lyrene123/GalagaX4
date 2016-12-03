@@ -60,6 +60,10 @@
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Level1.cs" />
+    <Compile Include="Level2.cs" />
+    <Compile Include="Level3.cs" />
+    <Compile Include="Level4.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Utilities.cs" />

@@ -13,6 +13,9 @@ namespace GalagaX4
     {
         DispatcherTimer timerShootUp;
         DispatcherTimer timerShootDown;
+        DispatcherTimer timerShootRightSide;
+        DispatcherTimer timerShootLeftSide;
+
         List<Enemies> enemies;
         Player player;
 
@@ -90,6 +93,67 @@ namespace GalagaX4
                 Die(); //remove bullet down
             }
         }
+
+        public void ShootLeftSide(String path)
+        {
+            this.image.Source = UtilityMethods.LoadImage(path);
+            this.timerShootLeftSide = new DispatcherTimer(DispatcherPriority.Normal);
+            this.timerShootLeftSide.Interval = TimeSpan.FromMilliseconds(1);
+            timerShootLeftSide.Tick += new EventHandler(ShootLeftSide);
+        }
+        void ShootLeftSide(Object sender, EventArgs e)
+        {
+            if (this.point.Y <= 600)
+            {
+                this.point.Y += 10;
+                this.point.X -= 10;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                Canvas.SetLeft(this.GetImage(), this.point.X);
+                OnCollision(this.player);
+
+            }
+            else
+            {
+                StopShootLeft();
+                this.canvas.Children.Remove(this.GetImage());
+            }
+        }
+
+        public void ShootRightSide(String path)
+        {
+            this.image.Source = UtilityMethods.LoadImage(path);
+            timerShootRightSide = new DispatcherTimer(DispatcherPriority.Normal);
+            timerShootRightSide.Interval = TimeSpan.FromSeconds(1);
+            timerShootRightSide.Tick += new EventHandler(ShootRightSide);
+        }
+        void ShootRightSide(Object sender, EventArgs e)
+        {
+            if (this.point.Y <= 600)
+            {
+                this.point.Y += 10;
+                this.point.X += 10;
+                Canvas.SetTop(this.GetImage(), this.point.Y);
+                Canvas.SetLeft(this.GetImage(), this.point.X);
+                OnCollision(this.player);
+
+            }
+            else
+            {
+                StopShootRight();
+                this.canvas.Children.Remove(this.GetImage());
+            }
+        }
+
+        public void StopShootLeft()
+        {
+            this.timerShootLeftSide.Stop();
+        }
+
+        public void StopShootRight()
+        {
+            this.timerShootRightSide.Stop();
+        }
+
 
         public void StopShootDown()
         {

@@ -13,6 +13,13 @@ namespace GalagaX4
 {
     class Player : GameObject
     {
+        static int coldDown;
+        public static int ColdDown
+        {
+            get { return coldDown; }
+            set { coldDown = value; }
+        }
+
         double speed;
         List<Enemies> enemies;
 
@@ -21,9 +28,7 @@ namespace GalagaX4
 
         TextBlock displayPoints;
         int points = 0;
-
         
-
         public Player(Point point, Image image, Canvas canvas
             , double speed) : base(point, image, canvas)
         {
@@ -79,37 +84,45 @@ namespace GalagaX4
             this.enemies = enemies;
         }
 
-        public void Move(object sender, KeyEventArgs e)
+        public void Move()
         {
-            switch (e.Key)
+            if (Keyboard.IsKeyDown(Key.Left))
             {
-                case Key.Left:
-                    this.point.X -= 1;
-                    break;
-                case Key.Right:
-                    this.point.X += 1;
-                    break;
+                this.point.X -= 1;
             }
-
+            if (Keyboard.IsKeyDown(Key.Right))
+            {
+                this.point.X += 1;
+            }
+            
             this.point.X = UtilityMethods.Clamp(this.point.X, 2, 52);
             Canvas.SetLeft(this.image, this.point.X * speed);
         }
 
-        public void Shoot(object sender, KeyEventArgs e)
+        public void StopMove(Object sender, KeyEventArgs e)
         {
-            
-            
+            this.point.X = UtilityMethods.Clamp(this.point.X, 2, 52);
+            Canvas.SetLeft(this.image, this.point.X * speed);
+        }
+
+        public void Shoot()
+        {            
             if (this.image.IsLoaded == true)
             {
-                if (e.Key == Key.Space)
+                if (Keyboard.IsKeyDown(Key.Space))
                 {
-                    Shoot();
-                    
+                    ShootUpdate();
+
+                    coldDown++;
+                }
+                if (Keyboard.IsKeyUp(Key.Space))
+                {
+                    coldDown--;
                 }
             }
         }
 
-        void Shoot()
+        void ShootUpdate()
         {
             GameSound shootSound = new GameSound();
             
