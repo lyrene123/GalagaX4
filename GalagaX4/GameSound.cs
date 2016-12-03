@@ -13,6 +13,7 @@ namespace GalagaX4
         bool repeated;
         public SoundPlayer audioSound;
         public MediaPlayer mediaplayer;
+
         public GameSound()
         {
             this.audiosource = "";
@@ -41,6 +42,7 @@ namespace GalagaX4
         {
            // audioSound.Play();
         }
+        /*
         public void playSoundMediaElement(string str)
         {
             GameWindow media = new GameWindow();
@@ -51,6 +53,7 @@ namespace GalagaX4
             media.mediaElement.Play();
 
         }
+        */
         public void playSoundLooping()
         {
             audioSound.PlayLooping();

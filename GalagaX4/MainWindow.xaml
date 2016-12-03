@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GalagaX4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="860" Background="Black">
+        Title="Galaga X4" Height="650" Width="860" Background="Black" Icon="pics/galaga_ship.ico">
     <Grid>
         <Button x:Name="NewGameBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="61" Margin="297,333,0,0" Click="button_Click" BorderBrush="{x:Null}" FontSize="36" Foreground="{x:Null}" Background="{x:Null}">
             <Image x:Name="newGamePic" Source="pics/newGame_lightBlue.png"/>

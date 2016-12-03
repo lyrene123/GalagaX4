@@ -173,7 +173,13 @@
     <Resource Include="pics\newGame_white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\UFO.png" />
+    <Content Include="audio\Firing.wav" />
+    <Resource Include="pics\galaga_ship.ico" />
+    <Resource Include="pics\level2.png" />
+    <Resource Include="pics\level3.png" />
+    <Resource Include="pics\level4.png" />
+    <Resource Include="pics\level1.png" />
+    <Resource Include="pics\gameOver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
