@@ -87,7 +87,7 @@ namespace GalagaX4
             //label.Content = "Cold down : " + Player.ColdDown;
             progressBar.Value = Player.ColdDown;
 
-            //GameOver();
+            GameOver();
         }
 
         void GameOver()
@@ -101,11 +101,6 @@ namespace GalagaX4
                 Canvas.SetTop(gameOverPic, 200);
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-                /*
-                gameOverTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                gameOverTimer.Interval = TimeSpan.FromSeconds(2);
-                gameOverTimer.Start();
-                gameOverTimer.Tick += new EventHandler(BackToMainWindow);*/
 
                 BackToMainWindow();
             }
@@ -113,11 +108,9 @@ namespace GalagaX4
 
         async void BackToMainWindow()
         {
-            await Task.Delay(2000);
-
             this.coldDownTimer.Stop();
-            //this.gameOverTimer.Stop();
-
+            await Task.Delay(2000);
+            
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
