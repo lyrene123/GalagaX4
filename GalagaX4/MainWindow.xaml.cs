@@ -35,10 +35,14 @@ namespace GalagaX4
         private void button_Click(object sender, RoutedEventArgs e)
         {
             var gameWindow = new GameWindow();
+            this.Hide();
             gameWindow.Show();
             this.Close();
+            
+            /*
             GameSound media = new GameSound();
             media.playSoundMediaElement("audio/main2.wav");
+            */
         }
     }
 }

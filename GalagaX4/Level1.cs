@@ -29,6 +29,8 @@ namespace GalagaX4
         bool exists2 = false;
         List<Enemies> enemies;
 
+        Image lv1Pic;
+
         public Level1(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -38,8 +40,22 @@ namespace GalagaX4
             enemies = new List<Enemies>();
         }
 
-        public void Play()
+        void DisplayLevel()
         {
+            lv1Pic = new Image();
+            lv1Pic.Height = 50;
+            lv1Pic.Width = 140;
+            this.canvas.Children.Add(lv1Pic);
+            Canvas.SetTop(lv1Pic, 200);
+            Canvas.SetLeft(lv1Pic, 350);
+            lv1Pic.Source = UtilityMethods.LoadImage("pics/level1.png");
+        }
+
+        public async void Play()
+        {
+            DisplayLevel();
+            await Task.Delay(2000);
+            this.canvas.Children.Remove(lv1Pic);
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -150,8 +166,7 @@ namespace GalagaX4
             player.SetEnemyTarget(enemies);
             Update();
         }
-
-
+        
         void Update()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
@@ -162,7 +177,7 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            BackToMainWindown();
+            //BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
@@ -238,6 +253,7 @@ namespace GalagaX4
             }
         }
 
+        /*
         void BackToMainWindown()
         {
             if (player.GetLives() == 0)
@@ -248,6 +264,6 @@ namespace GalagaX4
                 this.timer.Stop();
                 this.window.Close();
             }
-        }
+        }*/
     }
 }

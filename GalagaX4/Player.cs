@@ -115,7 +115,7 @@ namespace GalagaX4
 
         void ShootUpdate()
         {
-            GameSound shootSound = new GameSound();
+            //GameSound shootSound = new GameSound();
             
             double position = Canvas.GetLeft(this.GetImage());
             double midOfImage = this.GetImage().Width / 2;
@@ -126,7 +126,7 @@ namespace GalagaX4
             Canvas.SetLeft(bullet.GetImage(), position + midOfImage - 3.5);
 
             bullet.ShootUp();
-            shootSound.playShootSound();
+            //shootSound.playShootSound();
         }
 
         public void StopShootUp()

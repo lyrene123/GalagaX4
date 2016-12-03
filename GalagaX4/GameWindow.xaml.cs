@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,12 +16,15 @@ namespace GalagaX4
     /// </summary>
     public partial class GameWindow : Window
     {
+        DispatcherTimer coldDownTimer;
+        DispatcherTimer gameOverTimer;
+
         Player player;
 
         public GameWindow()
         {
             InitializeComponent();
-
+            
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             playerPic.Width = 42;
@@ -51,14 +55,11 @@ namespace GalagaX4
             {
                 Player.ColdDown = 10;
             }
-            
-            //label.Content = "Cold down : " + Player.ColdDown;
-            //progressBar.Value = Player.ColdDown;
         }
 
         void DecrementColdDown()
         {
-            DispatcherTimer coldDownTimer = new DispatcherTimer();
+            coldDownTimer = new DispatcherTimer(DispatcherPriority.Normal);
             coldDownTimer.Interval = TimeSpan.FromMilliseconds(250);
             coldDownTimer.Tick += new EventHandler(DecrementColdDown);
             coldDownTimer.Start();
@@ -75,10 +76,54 @@ namespace GalagaX4
                 Player.ColdDown = 0;
             }
             
-            label.Content = "Cold down : " + Player.ColdDown;
+            if(Player.ColdDown >= 8)
+            {
+                progressBar.Foreground = Brushes.Red;
+            }
+            else
+            {
+                progressBar.Foreground = Brushes.Blue;
+            }
+            //label.Content = "Cold down : " + Player.ColdDown;
             progressBar.Value = Player.ColdDown;
+
+            //GameOver();
         }
-       
+
+        void GameOver()
+        {
+            if (player.GetLives() == 0)
+            {
+                Image gameOverPic = new Image();
+                gameOverPic.Height = 200;
+                gameOverPic.Width = 250;
+                this.canvas.Children.Add(gameOverPic);
+                Canvas.SetTop(gameOverPic, 200);
+                Canvas.SetLeft(gameOverPic, 300);
+                gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
+                /*
+                gameOverTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                gameOverTimer.Interval = TimeSpan.FromSeconds(2);
+                gameOverTimer.Start();
+                gameOverTimer.Tick += new EventHandler(BackToMainWindow);*/
+
+                BackToMainWindow();
+            }
+        }
+
+        async void BackToMainWindow()
+        {
+            await Task.Delay(2000);
+
+            this.coldDownTimer.Stop();
+            //this.gameOverTimer.Stop();
+
+            this.Hide();
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             /*TimeSpan ts = new TimeSpan(0, 0, 0, 0, 6);
