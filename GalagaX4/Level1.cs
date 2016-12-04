@@ -30,7 +30,6 @@ namespace GalagaX4
         List<Enemies> enemies;
 
         Image lv1Pic;
-
         public Level1(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -62,7 +61,7 @@ namespace GalagaX4
                     UtilityMethods.LoadImage("pics/bee1.png") };
             Image[] beesPic = new Image[8];
             //int spaceX = 0;
-
+            bool isDive = false;
             Bug[] bees = new Bug[beesPic.Length];
             for (int i = 0; i < beesPic.Length; i++)
             {
@@ -82,12 +81,20 @@ namespace GalagaX4
                 bees[i] = bee;
                 enemies.Add(bees[i]);
                 bees[i].setTarget(player);
-                bees[i].Fly(200);
+                bees[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                bees[i].Fly(300);
             }
 
+            //---------------------------------------------------------------------------
+            //red bugs creation
             BitmapImage[] bugImages = { UtilityMethods.LoadImage("pics/redBug0.png"),
                     UtilityMethods.LoadImage("pics/redBug1.png") };
             Image[] bugsPic = new Image[9];
+            isDive = false;
             Bug[] redbugs = new Bug[bugsPic.Length];
             spaceX = 0;
             for (int i = 0; i < bugsPic.Length; i++)
@@ -108,9 +115,16 @@ namespace GalagaX4
                 redbugs[i] = bug;
                 enemies.Add(redbugs[i]);
                 redbugs[i].setTarget(player);
-                redbugs[i].Fly(200);
+                redbugs[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                redbugs[i].Fly(300);
             }
 
+            //---------------------------------------------------------------------------
+            //spaceships creation
             Image[] shipsPic = new Image[8];
             ships = new SpaceShip[shipsPic.Length];
             spaceX = 0;
@@ -133,11 +147,14 @@ namespace GalagaX4
                 ships[i] = ship;
                 enemies.Add(ships[i]);
                 ships[i].setTarget(player);
-                ships[i].Fly(200);
+                ships[i].Fly(300);
                 // ships[i].Shoot(200);
             }
 
-            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"), UtilityMethods.LoadImage("pics/commander2.png") };
+            //----------------------------------------------------------------------------
+            //commanders creation
+            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"),
+                UtilityMethods.LoadImage("pics/commander2.png") };
             Image[] commanderPic = new Image[4];
             commanders = new Commander[commanderPic.Length];
             spaceX = 0;
@@ -160,14 +177,15 @@ namespace GalagaX4
                 commanders[i] = commander;
                 enemies.Add(commanders[i]);
                 commanders[i].setTarget(player);
-                commanders[i].Fly(200);
+                commanders[i].Fly(300);
             }
 
             player.SetEnemyTarget(enemies);
-            Update();
+            StartGame();
         }
-        
-        void Update()
+
+
+        void StartGame()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -177,7 +195,9 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            //BackToMainWindown();
+            BackToMainWindown();
+
+            //remove enemies destroyed from the arr1 or arr2 list
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
@@ -253,7 +273,6 @@ namespace GalagaX4
             }
         }
 
-        /*
         void BackToMainWindown()
         {
             if (player.GetLives() == 0)
@@ -264,6 +283,6 @@ namespace GalagaX4
                 this.timer.Stop();
                 this.window.Close();
             }
-        }*/
+        }
     }
 }

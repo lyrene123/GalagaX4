@@ -46,6 +46,14 @@ namespace GalagaX4
             return this.lives;
         }
 
+        public void addEnemies(List<Enemies> others)
+        {
+            for(int i = 0; i<others.Count; i++)
+            {
+                this.enemies.Add(others[i]);
+            }
+        }
+
         public void setDisplayLives()
         {
             this.displayLives = new TextBlock();
