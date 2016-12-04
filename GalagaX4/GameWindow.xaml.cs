@@ -121,10 +121,6 @@ namespace GalagaX4
             this.Close();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-           ///
-        }
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();

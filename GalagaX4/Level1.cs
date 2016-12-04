@@ -15,6 +15,7 @@ namespace GalagaX4
     {
         Window window;
         Canvas canvas;
+        //GameWindow gamewindow;
 
         DispatcherTimer timer;
         int spaceX = 0;
@@ -278,10 +279,14 @@ namespace GalagaX4
             if (player.GetLives() == 0)
             {
                 this.window.Hide();
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
                 this.timer.Stop();
-                this.window.Close();
+                //this.window.Close();
+                var mainWindow = new MainWindow();
+                //mainWindow.Show();
+                //this.timer.Stop();
+                //this.window.Close();
+                //gamewindow.mediaElement.Stop();
+                
             }
         }
     }
