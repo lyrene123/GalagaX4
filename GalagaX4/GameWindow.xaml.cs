@@ -24,7 +24,7 @@ namespace GalagaX4
         public GameWindow()
         {
             InitializeComponent();
-            
+                        
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             playerPic.Width = 42;
@@ -124,24 +124,11 @@ namespace GalagaX4
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            /*TimeSpan ts = new TimeSpan(0, 0, 0, 0, 6);
-            GameWindow media = new GameWindow();
-            media.mediaElement.Position = ts;
-            media.mediaElement.Volume = 6.6;
-            media.mediaElement.SpeedRatio = 1.5;
-            media.mediaElement.Source = new Uri(@"D:\GalagaX4_Backup\GalagaX4\audio\mainbacksound.wav", UriKind.Absolute);
-            media.mediaElement.Play();
-            */
+           ///
         }
-        private void Element_MediaEnded(object sender, EventArgs e)
+        private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
-            /*TimeSpan ts = new TimeSpan(0, 0, 0, 0, 0);
-            mediaElement.Position = ts;
-            mediaElement.Volume = 6.6;
-            //mediaElement.SpeedRatio = 0.0001;
-            mediaElement.Source = new Uri(@"D:\GalagaX4_Backup\GalagaX4\audio\mainbacksound.wav", UriKind.Absolute);
-            mediaElement.Play();
-            */
+            mediaElement.Stop();
         }
 
     }

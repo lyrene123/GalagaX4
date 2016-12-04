@@ -173,9 +173,9 @@
     <Resource Include="pics\newGame_white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="audio\Firing.wav" />
-    <Resource Include="pics\coin.png" />
-    <Resource Include="pics\heart.png" />
+    <EmbeddedResource Include="audio\main2.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="pics\UFO.png" />
     <Resource Include="pics\galaga_ship.ico" />
     <Resource Include="pics\level2.png" />
@@ -183,6 +183,11 @@
     <Resource Include="pics\level4.png" />
     <Resource Include="pics\level1.png" />
     <Resource Include="pics\gameOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="audio\Firing.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
