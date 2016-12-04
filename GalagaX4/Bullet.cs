@@ -54,8 +54,7 @@ namespace GalagaX4
                 this.point.Y -= 3;
                 this.image.Source = UtilityMethods.LoadImage("pics/bullet.png");
                 Canvas.SetTop(this.image, this.point.Y);
-
-
+                
                 if (enemies != null)
                 {
                     for (int i = 0; i < enemies.Count; i++)
