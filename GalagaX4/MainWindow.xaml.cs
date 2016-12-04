@@ -38,11 +38,9 @@ namespace GalagaX4
             this.Hide();
             gameWindow.Show();
             this.Close();
+            gameWindow.mediaElement.Play();
+                        
             
-            /*
-            GameSound media = new GameSound();
-            media.playSoundMediaElement("audio/main2.wav");
-            */
         }
     }
 }
