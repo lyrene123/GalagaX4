@@ -35,12 +35,8 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            // Level1 lv1 = new Level1(this, canvas, player);
-            //lv1.Play();
-
-             Level3 lv3 = new Level3(this, canvas, player);
-            lv3.Play();
-
+           Level1 lv1 = new Level1(this, canvas, player);
+            lv1.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
             
