@@ -23,6 +23,10 @@ namespace GalagaX4
         protected bool isShooting; //if shooting already
         protected bool dead; //if destroyed already
 
+        protected double flyFrequency;
+        protected int diveFrequency;
+        protected int moveDownFrequency;
+
         public Enemies() : base()
         {
             this.animation = null;
@@ -66,6 +70,16 @@ namespace GalagaX4
         public void setDive(bool dive)
         {
             this.dive = dive;
+        }
+
+        public void setMoveDownFrequency(int freq)
+        {
+            this.moveDownFrequency = freq;
+        }
+
+        public void setDiveFrequency(int freq)
+        {
+            this.diveFrequency = freq;
         }
 
         protected void playerCollision()

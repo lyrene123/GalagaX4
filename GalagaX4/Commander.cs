@@ -28,6 +28,9 @@ namespace GalagaX4
             this.isShot = false; //if shot once already
             this.dead = false; //if destroyed already
             this.isShooting = false; //if shooting already
+
+            this.diveFrequency = 5;
+            this.moveDownFrequency = 35;
         }
 
         public bool isShoot()
@@ -68,7 +71,7 @@ namespace GalagaX4
 
         public void startFly(double frequency)
         {
-
+            this.flyFrequency = frequency;
             this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
             this.timerFly.Interval = TimeSpan.FromMilliseconds(frequency);
             this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
@@ -83,7 +86,7 @@ namespace GalagaX4
             {
                 if (this.moveDown == true)
                 {
-                    this.point.Y += 20;
+                    this.point.Y += this.moveDownFrequency;
                     Canvas.SetTop(this.GetImage(), this.point.Y);
                     moveDown = false;
                     playerCollision();
@@ -142,7 +145,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 550)
             {
-                this.point.Y += 3;
+                this.point.Y += this.diveFrequency;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 playerCollision();
             }
@@ -152,10 +155,7 @@ namespace GalagaX4
                 returnToTheTop();
                 dive = false;
                 this.timerFly.Stop();
-                this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
-                this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
-                this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
-                this.timerFly.Start();
+                Fly(this.flyFrequency);
             }
         }
 

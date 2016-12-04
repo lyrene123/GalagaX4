@@ -46,11 +46,15 @@ namespace GalagaX4
             return this.lives;
         }
 
-        public void addEnemies(List<Enemies> others)
+        public int getEnemiesSize()
         {
-            for(int i = 0; i<others.Count; i++)
+           if(this.enemies == null)
             {
-                this.enemies.Add(others[i]);
+                return 0;
+            }
+           else
+            {
+                return this.enemies.Count;
             }
         }
 
@@ -72,7 +76,7 @@ namespace GalagaX4
         {
             this.displayPoints = new TextBlock();
             canvas.Children.Add(this.displayPoints);
-            Canvas.SetLeft(this.displayPoints, 600);
+            Canvas.SetLeft(this.displayPoints, 700);
             this.displayPoints.Text = "COINS: ";
             this.displayPoints.Foreground = new SolidColorBrush(Colors.Red);
             this.displayPoints.FontSize = 20;

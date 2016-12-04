@@ -28,10 +28,14 @@ namespace GalagaX4
 
             this.isShooting = false;
             this.dead = false;
+
+            this.moveDownFrequency = 35;
+            this.diveFrequency = 5;
         }
 
         public override void Fly(double frequency)
         {
+            this.flyFrequency = frequency;
             timerFly = new DispatcherTimer(DispatcherPriority.Normal);
             timerFly.Interval = TimeSpan.FromMilliseconds(frequency);
             timerFly.Tick += new EventHandler(MoveHorizontal);
@@ -46,7 +50,7 @@ namespace GalagaX4
             {
                 if (moveDown == true)
                 {
-                    this.point.Y += 20;
+                    this.point.Y += this.moveDownFrequency;
                     Canvas.SetTop(this.GetImage(), this.point.Y);
                     moveDown = false;
                     playerCollision();
@@ -55,7 +59,7 @@ namespace GalagaX4
                     {
                         Random rand = new Random();
                         int randNum = rand.Next(20);
-                        if (randNum % 3 == 0)
+                        if (randNum % 5 == 0)
                         {
                             this.timerFly.Stop();
                             this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
@@ -105,7 +109,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 550)
             {
-                this.point.Y += 8;
+                this.point.Y += this.diveFrequency;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 playerCollision();
             }
@@ -115,10 +119,7 @@ namespace GalagaX4
                 returnToTheTop();
                 dive = false;
                 this.timerFly.Stop();
-                this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
-                this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
-                this.timerFly.Tick += new EventHandler(this.MoveHorizontal);
-                this.timerFly.Start();
+                Fly(this.flyFrequency);
             }
         }
 

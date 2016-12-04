@@ -21,6 +21,8 @@ namespace GalagaX4
             this.moveCounter = 1;
             this.moveDown = false;
             this.dive = false;
+            this.moveDownFrequency = 35;
+            this.diveFrequency = 5;
         }
 
         public override void Fly(double frequency)
@@ -31,6 +33,7 @@ namespace GalagaX4
 
         public void startFly(double frequency)
         {
+            this.flyFrequency = frequency;
             this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
             this.timerFly.Interval = TimeSpan.FromMilliseconds(frequency);
             this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
@@ -46,7 +49,7 @@ namespace GalagaX4
                 //move down
                 if (this.moveDown == true)
                 {
-                    this.point.Y += 35;
+                    this.point.Y += this.moveDownFrequency;
                     Canvas.SetTop(this.GetImage(), this.point.Y);
                     this.moveDown = false;
                     playerCollision();
@@ -106,7 +109,7 @@ namespace GalagaX4
         {
             if (this.point.Y <= 550)
             {
-                this.point.Y += 8;
+                this.point.Y += this.diveFrequency;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 playerCollision();
             }
@@ -116,10 +119,7 @@ namespace GalagaX4
                 returnToTheTop();
                 dive = false;
                 this.timerFly.Stop();
-                this.timerFly = new DispatcherTimer(DispatcherPriority.Render);
-                this.timerFly.Interval = TimeSpan.FromMilliseconds(120);
-                this.timerFly.Tick += new EventHandler(this.updateMoveHorizontal);
-                this.timerFly.Start();
+                Fly(this.flyFrequency);
             }
         }
 

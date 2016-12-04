@@ -15,17 +15,21 @@ namespace GalagaX4
         Window window;
         Canvas canvas;
 
+        int round = 1;
         DispatcherTimer timer;
         int spaceX = 0;
 
         Player player;
 
         SpaceShip[] ships;
+        SpaceShip[] ufos;
         Commander[] commanders;
-        List<int> arr1 = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
-        List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
+        List<int> shipsNum = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
+        List<int> commandersNum = new List<int>() { 0, 1, 2, 3 };
+        List<int> ufosNum = new List<int>() { 0, 1, 2, 3, 4 };
         bool exists1 = false;
         bool exists2 = false;
+        bool exists3 = false;
         List<Enemies> enemies;
 
         Image lv3Pic;
@@ -52,16 +56,31 @@ namespace GalagaX4
 
         public async void Play()
         {
-            DisplayLevel();
-            await Task.Delay(2000);
-            this.canvas.Children.Remove(lv3Pic);
+            if (this.round == 1)
+            {
+                DisplayLevel();
+                await Task.Delay(2000);
+                this.canvas.Children.Remove(lv3Pic);
+            }
+            else
+            {
+                this.shipsNum = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
+                this.commandersNum = new List<int>() { 0, 1, 2, 3 };
+                this.ufosNum = new List<int>() { 0, 1, 2, 3, 4 };
+                this.exists1 = false;
+                this.exists2 = false;
+                this.exists3 = false;
+                this.spaceX = 0;
+
+                await Task.Delay(1500);
+            }
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
                     UtilityMethods.LoadImage("pics/bee1.png") };
             Image[] beesPic = new Image[8];
             //int spaceX = 0;
-
+            bool isDive = false;
             Bug[] bees = new Bug[beesPic.Length];
             for (int i = 0; i < beesPic.Length; i++)
             {
@@ -81,14 +100,24 @@ namespace GalagaX4
                 bees[i] = bee;
                 enemies.Add(bees[i]);
                 bees[i].setTarget(player);
-                bees[i].Fly(200);
+                bees[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                bees[i].setDiveFrequency(10);
+                bees[i].setMoveDownFrequency(45);
+                bees[i].Fly(130);
             }
 
+            //---------------------------------------------------------------------------
+            //redbugs creation
             BitmapImage[] bugImages = { UtilityMethods.LoadImage("pics/redBug0.png"),
                     UtilityMethods.LoadImage("pics/redBug1.png") };
             Image[] bugsPic = new Image[9];
             Bug[] redbugs = new Bug[bugsPic.Length];
             spaceX = 0;
+            isDive = false;
             for (int i = 0; i < bugsPic.Length; i++)
             {
                 bugsPic[i] = new Image();
@@ -107,11 +136,22 @@ namespace GalagaX4
                 redbugs[i] = bug;
                 enemies.Add(redbugs[i]);
                 redbugs[i].setTarget(player);
-                redbugs[i].Fly(200);
+                redbugs[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                redbugs[i].setDiveFrequency(10);
+                redbugs[i].setMoveDownFrequency(45);
+                redbugs[i].setMoveCounter(2);
+                redbugs[i].Fly(130);
             }
 
+            //---------------------------------------------------------------------------
+            //ships creation
             Image[] shipsPic = new Image[8];
             ships = new SpaceShip[shipsPic.Length];
+            isDive = false;
             spaceX = 0;
             for (int i = 0; i < ships.Length; i++)
             {
@@ -132,11 +172,63 @@ namespace GalagaX4
                 ships[i] = ship;
                 enemies.Add(ships[i]);
                 ships[i].setTarget(player);
-                ships[i].Fly(200);
+                ships[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                ships[i].setDiveFrequency(10);
+                ships[i].setMoveDownFrequency(45);
+                ships[i].Fly(130);
                 // ships[i].Shoot(200);
             }
 
-            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"), UtilityMethods.LoadImage("pics/commander2.png") };
+
+
+
+            //---------------------------------------------------------------------------
+            //UFO creation
+            Image[] ufoPics = new Image[5];
+            this.ufos = new SpaceShip[ufoPics.Length];
+            isDive = false;
+            spaceX = 0;
+            for (int i = 0; i < ufoPics.Length; i++)
+            {
+                ufoPics[i] = new Image();
+                ufoPics[i].Source = UtilityMethods.LoadImage("pics/UFO.png");
+                ufoPics[i].Width = 34;
+                ufoPics[i].Height = 26;
+                canvas.Children.Add(ufoPics[i]);
+                Canvas.SetLeft(ufoPics[i], 200 + spaceX);
+                Canvas.SetTop(ufoPics[i], 65);
+                spaceX += 60;
+
+                Point ufoPos = new Point();
+                ufoPos.X = Canvas.GetLeft(ufoPics[i]);
+                ufoPos.Y = Canvas.GetTop(ufoPics[i]);
+
+                SpaceShip ufo = new SpaceShip(ufoPos, ufoPics[i], canvas);
+                ufos[i] = ufo;
+                enemies.Add(ufos[i]);
+                ufos[i].setTarget(player);
+                ufos[i].setMoveCounter(2);
+                ufos[i].setDive(isDive);
+
+                if (isDive) isDive = false;
+                else isDive = true;
+
+                ufos[i].setDiveFrequency(10);
+                ufos[i].setMoveDownFrequency(45);
+                ufos[i].Fly(130);
+                // ships[i].Shoot(200);
+            }
+
+
+
+            //---------------------------------------------------------------------------
+            //commanders creation
+            BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"),
+                                        UtilityMethods.LoadImage("pics/commander2.png") };
             Image[] commanderPic = new Image[4];
             commanders = new Commander[commanderPic.Length];
             spaceX = 0;
@@ -148,7 +240,7 @@ namespace GalagaX4
                 commanderPic[i].Height = 26;
                 canvas.Children.Add(commanderPic[i]);
                 Canvas.SetLeft(commanderPic[i], 260 + spaceX);
-                Canvas.SetTop(commanderPic[i], 65);
+                Canvas.SetTop(commanderPic[i], 30);
                 spaceX += 90;
 
                 Point commanderPos = new Point();
@@ -159,14 +251,14 @@ namespace GalagaX4
                 commanders[i] = commander;
                 enemies.Add(commanders[i]);
                 commanders[i].setTarget(player);
-                commanders[i].Fly(200);
+                commanders[i].setMoveDownFrequency(45);
+                commanders[i].Fly(130);
             }
-
             player.SetEnemyTarget(enemies);
-            Update();
+            StartGame();
         }
 
-        void Update()
+        void StartGame()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -174,15 +266,15 @@ namespace GalagaX4
             timer.Start();
         }
 
-        void ShootUpdate(object sender, EventArgs e)
+        private void ShootUpdate(object sender, EventArgs e)
         {
-            //BackToMainWindown();
+            // BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
                 if (ships[i].IsDead() == true)
                 {
-                    arr1.Remove(i);
+                    shipsNum.Remove(i);
                 }
             }
 
@@ -190,29 +282,37 @@ namespace GalagaX4
             {
                 if (commanders[i].IsDead() == true)
                 {
-                    arr2.Remove(i);
+                    commandersNum.Remove(i);
+                }
+            }
+
+            for (int i = 0; i < ufos.Length; i++)
+            {
+                if (ufos[i].IsDead() == true)
+                {
+                    ufosNum.Remove(i);
                 }
             }
 
             //--------------------------------
             Random rand = new Random();
-            int num1 = rand.Next(ships.Length);//8      
-            if (arr1.Contains(num1))
+            int num1 = rand.Next(ships.Length);
+            if (shipsNum.Contains(num1))
             {
-                arr1.Remove(num1);
+                shipsNum.Remove(num1);
                 exists1 = true;
             }
             if (exists1 == true)
             {
                 if (ships[num1].IsDead() == true)
                 {
-                    arr1.Remove(num1);
+                    shipsNum.Remove(num1);
                 }
                 else
                 {
                     if (ships[num1].isShoot() == false)
                     {
-                        ships[num1].Shoot(10);
+                        ships[num1].Shoot(6);
                     }
                 }
 
@@ -220,47 +320,78 @@ namespace GalagaX4
             }
 
             //------------------------------------
-            int num2 = rand.Next(4);
-            if (arr2.Contains(num2))
+            int num2 = rand.Next(commanders.Length);
+            if (commandersNum.Contains(num2))
             {
                 exists2 = true;
-                arr2.Remove(num2);
+                commandersNum.Remove(num2);
             }
             if (exists2 == true)
             {
                 if (commanders[num2].IsDead() == true)
                 {
-                    arr2.Remove(num2);
+                    commandersNum.Remove(num2);
                 }
                 else
                 {
                     if (commanders[num2].isShoot() == false)
                     {
-                        commanders[num2].Shoot(20);
+                        commanders[num2].Shoot(11);
                     }
                 }
                 exists2 = false;
+            }
+
+            //------------------------------------
+            int num3 = rand.Next(ufos.Length);
+            if (ufosNum.Contains(num3))
+            {
+                exists3 = true;
+                ufosNum.Remove(num3);
+            }
+            if (exists3 == true)
+            {
+                if (ufos[num3].IsDead() == true)
+                {
+                    ufosNum.Remove(num3);
+                }
+                else
+                {
+                    if (ufos[num3].isShoot() == false)
+                    {
+                        ufos[num3].Shoot(3);
+                    }
+                }
+                exists3 = false;
             }
 
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
                 this.timer.Stop();
-                Level4 lv4 = new Level4(this.window, this.canvas, this.player);
-                lv4.Play();
+                if (this.round == 1 || this.round == 2)
+                {
+                    round++;
+                    Play();
+                }
+                else
+                {
+                    Level4 lv4 = new Level4(this.window, this.canvas, this.player);
+                    lv4.Play();
+                }
             }
         }
-        /*
-        void BackToMainWindown()
-        {
-            if (player.GetLives() == 0)
-            {
-                this.window.Hide();
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.timer.Stop();
-                this.window.Close();
-            }
-        }*/
+
+        /* void BackToMainWindown()
+         {
+             if (player.GetLives() == 0)
+             {
+                 this.window.Hide();
+                 var mainWindow = new MainWindow();
+                 mainWindow.Show();
+                 this.timer.Stop();
+                 this.window.Close();
+             }
+         }*/
     }
 }

@@ -36,9 +36,11 @@ namespace GalagaX4
             player = new Player(playerPoint, playerPic, canvas, 15);
 
             Level1 lv1 = new Level1(this, canvas, player);
-             lv1.Play();
+            lv1.Play();
 
+           
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
+            
             DecrementColdDown();
         }
 
@@ -49,7 +51,10 @@ namespace GalagaX4
 
             if(Player.ColdDown < progressBar.Maximum)
             {
-                player.Shoot();
+                if (player.getEnemiesSize() != 0)
+                {
+                    player.Shoot();
+                }
             }
             else
             {
