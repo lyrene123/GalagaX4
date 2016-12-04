@@ -371,7 +371,7 @@ namespace GalagaX4
             if (this.enemies.Count == 0)
             {
                 this.timer.Stop();
-                if (this.round == 1 || this.round == 2 || this.round == 3)
+                if (this.round == 1 || this.round == 2 || this.round == 3 || this.round == 4)
                 {
                     round++;
                     Play();
