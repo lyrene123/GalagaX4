@@ -27,6 +27,7 @@ namespace GalagaX4
 
         TextBlock displayLives;
         int lives = 3;
+        Image[] hearts;
 
         TextBlock displayPoints;
         int points = 0;
@@ -36,7 +37,7 @@ namespace GalagaX4
         {
             this.speed = speed;
             setDisplayLives();
-            updateLives();
+           // updateLives();
             setDisplayPoints();
             updatePoints();
         }
@@ -60,31 +61,39 @@ namespace GalagaX4
 
         public void setDisplayLives()
         {
-            this.displayLives = new TextBlock();
-            canvas.Children.Add(this.displayLives);
-            this.displayLives.Text = "LIVES: ";
-            this.displayLives.Foreground = new SolidColorBrush(Colors.Red);
-            this.displayLives.FontSize = 20;
+            this.hearts = new Image[3];
+            int spaceX = 0;
+            for(int i = 0; i < hearts.Length; i++)
+            {
+                hearts[i] = new Image();
+                hearts[i].Width = 34;
+                hearts[i].Height = 26;
+                this.canvas.Children.Add(hearts[i]);
+                Canvas.SetLeft(hearts[i], 10 + spaceX);
+                Canvas.SetTop(hearts[i], 10);
+                spaceX += 30;
+                hearts[i].Source = UtilityMethods.LoadImage("pics/heart.png");
+            }
         }
 
-        public void updateLives()
+       /* public void updateLives()
         {
             this.displayLives.Text = "LIVES: " + this.lives;
-        }
+        }*/
 
         public void setDisplayPoints()
         {
             this.displayPoints = new TextBlock();
             canvas.Children.Add(this.displayPoints);
-            Canvas.SetLeft(this.displayPoints, 700);
-            this.displayPoints.Text = "COINS: ";
+            Canvas.SetLeft(this.displayPoints, 760);
+            Canvas.SetTop(this.displayPoints, 10);
             this.displayPoints.Foreground = new SolidColorBrush(Colors.Red);
             this.displayPoints.FontSize = 20;
         }
 
         public void updatePoints()
         {
-            this.displayPoints.Text = "COINS: " + this.points;
+            this.displayPoints.Text = ""+this.points;
         }
 
         public void addPoints(int morePoints)
@@ -167,12 +176,24 @@ namespace GalagaX4
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
             live();
-
         }
 
         public void decrementLives()
         {
+            if(this.lives == 3)
+            {
+                this.canvas.Children.Remove(hearts[2]);
+            }
+            else if(this.lives == 2)
+            {
+                this.canvas.Children.Remove(hearts[1]);
+            }
+            else
+            {
+                this.canvas.Children.Remove(hearts[0]);
+            }
             this.lives--;
+            
         }
 
         public void live()
@@ -199,9 +220,7 @@ namespace GalagaX4
                 Canvas.SetLeft(gameOver, 300);
                 gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
             }
-
-
-            updateLives();
+            //updateLives();
         }
     }
 }

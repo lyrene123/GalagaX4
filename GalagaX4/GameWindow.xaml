@@ -8,7 +8,8 @@
         Title="Galaga X4" Height="650" Width="860" Background="Black" Loaded="Page_Loaded" Icon="pics/galaga_ship.ico">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
         <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <Label x:Name="label" Content="Label" Canvas.Left="674" Canvas.Top="354" Foreground="#FFF9F1F1" Height="28" Width="118"/>
+           
+            <Image x:Name="coinPic" Height="29" Canvas.Left="811" Canvas.Top="10" Width="31" Source="pics/coin.png"/>
         </Canvas>
         <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="14" Margin="835,10,0,0" VerticalAlignment="Top" Width="9"
                       UnloadedBehavior="Manual" MediaEnded="Element_MediaEnded" Source="main2.wav"/>
