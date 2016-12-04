@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GalagaX4"
         mc:Ignorable="d"
-        Title="Galaga X4" Height="650" Width="860" Background="Black" Loaded="Page_Loaded" Icon="pics/galaga_ship.ico">
+        Title="Galaga X4" Height="650" Width="860" Background="Black" Icon="pics/galaga_ship.ico">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
         <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Label x:Name="label" Content="Label" Canvas.Left="674" Canvas.Top="354" Foreground="#FFF9F1F1" Height="28" Width="118"/>

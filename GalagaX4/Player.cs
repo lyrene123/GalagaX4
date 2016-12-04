@@ -15,7 +15,7 @@ namespace GalagaX4
     {
         static double coldDown;
         Bullet bullet;
-        GameSound shootSoundEffect = new GameSound();
+        //GameSound shootSoundEffect = new GameSound();
 
         public static double ColdDown
         {
@@ -137,7 +137,7 @@ namespace GalagaX4
             Canvas.SetLeft(bullet.GetImage(), position + midOfImage - 3.5);
 
             bullet.ShootUp();
-            shootSoundEffect.playShootSound();
+            //shootSoundEffect.playShootSound();
         }
 
         public void StopShootUp()
