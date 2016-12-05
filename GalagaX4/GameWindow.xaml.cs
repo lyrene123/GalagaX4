@@ -21,6 +21,9 @@ namespace GalagaX4
 
         public GameWindow()
         {
+            this.Closed += GameWindow_Closed;
+            this.Closing += GameWindow_Closing;
+
             InitializeComponent();
 
             Image playerPic = new Image();
@@ -44,6 +47,15 @@ namespace GalagaX4
             DecrementColdDown();
         }
 
+        private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void GameWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
 
         public void MyGrid_KeyDown(object sender, KeyEventArgs e)
         {
@@ -125,7 +137,7 @@ namespace GalagaX4
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
-            this.Close();
+            //this.Close();
         }
 
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
