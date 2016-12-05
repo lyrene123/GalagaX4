@@ -97,15 +97,15 @@ namespace GalagaX4
         {
             this.displayPoints = new TextBlock();
             canvas.Children.Add(this.displayPoints);
-            Canvas.SetLeft(this.displayPoints, 760);
+            Canvas.SetLeft(this.displayPoints, 750);
             Canvas.SetTop(this.displayPoints, 10);
-            this.displayPoints.Foreground = new SolidColorBrush(Colors.Red);
+            this.displayPoints.Foreground = new SolidColorBrush(Colors.White);
             this.displayPoints.FontSize = 20;
         }
 
         public void updatePoints()
         {
-            this.displayPoints.Text = ""+this.points;
+            this.displayPoints.Text = " x "+this.points;
         }
 
         public void addPoints(int morePoints)
