@@ -20,10 +20,12 @@ namespace GalagaX4
         DispatcherTimer gameOverTimer;
 
         Player player;
-
+        
         public GameWindow()
         {
             InitializeComponent();
+
+            //mediaElement.Play();
                         
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -98,6 +100,8 @@ namespace GalagaX4
         {
             if (player.GetLives() == 0)
             {
+                mediaElement.Stop();
+                mediaElement.Source = null;
                 Image gameOverPic = new Image();
                 gameOverPic.Height = 200;
                 gameOverPic.Width = 250;
@@ -105,7 +109,7 @@ namespace GalagaX4
                 Canvas.SetTop(gameOverPic, 200);
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-
+                player.shootSoundEffect.Dispose();
                 BackToMainWindow();
             }
         }
@@ -123,7 +127,7 @@ namespace GalagaX4
 
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
-            mediaElement.Play();
+            //mediaElement.Play();
         }
 
     }
