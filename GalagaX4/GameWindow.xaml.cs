@@ -293,27 +293,37 @@ namespace GalagaX4
                 canvas.Children.Add(resume);
                 resume.Width = 300;
                 resume.Height = 50;
+                resume.FontWeight = FontWeights.Bold;
+                resume.FontSize = 25;
                 Canvas.SetLeft(resume, 300);
                 Canvas.SetTop(resume, 200);
                 resume.Content = "RESUME GAME";
-                resume.Background = Brushes.DarkCyan;
+               resume.Background = Brushes.DimGray;
                 resume.Click += playPauseBtn_Click;
 
                 this.save = new Button();
                 canvas.Children.Add(save);
-                save.Width = 100;
+                save.Width = 300;
                 save.Height = 50;
+                save.FontWeight = FontWeights.Bold;
+                save.FontSize = 25;
                 Canvas.SetLeft(save, 300);
-                Canvas.SetTop(save, 250);
-                save.Content = "Save Game";
+                Canvas.SetTop(save, 275);
+                save.Content = "SAVE GAME";
+               save.Background = Brushes.DimGray;
+                save.Click += saveBtn_Click;
 
                 this.load = new Button();
                 canvas.Children.Add(load);
-                load.Width = 100;
+                load.Width = 300;
                 load.Height = 50;
+                load.FontWeight = FontWeights.Bold;
+                load.FontSize = 25;
                 Canvas.SetLeft(load, 300);
-                Canvas.SetTop(load, 300);
-                load.Content = "Load new Game";
+                Canvas.SetTop(load, 350);
+                load.Content = "LOAD NEW GAME";
+               load.Background = Brushes.DimGray;
+                load.Click += loadBtn_Click;
             }
 
             if (action.Equals("remove"))
@@ -324,6 +334,14 @@ namespace GalagaX4
             }
         }
 
-       
+        private void loadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
