@@ -1,24 +1,26 @@
-﻿<Window x:Class="GalagaX4.GameWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GalagaX4"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" x:Class="GalagaX4.GameWindow"
         mc:Ignorable="d"
         Title="Galaga X4" Height="650" Width="860" Background="Black" Icon="pics/galaga_ship.ico">
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
-        <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-6,0,5" >
+        <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,2,0,-3" >
             <Image x:Name="coinPic" Height="29" Canvas.Left="721" Canvas.Top="10" Width="31" Source="pics/coin.png"/>
-            <Button x:Name="playPauseBtn" Canvas.Top="262" Width="49" Height="44" BorderThickness="0" Focusable="False" Canvas.Left="2" Click="playPauseBtn_Click">
+            <Button x:Name="playPauseBtn" Canvas.Top="281" Width="49" Height="44" BorderThickness="0" Focusable="False" Click="playPauseBtn_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="pics/playpause.png" />
                 </Button.Background>
             </Button>
+            <Image x:Name="backgroundImage" Panel.ZIndex="-1" Height="118" Canvas.Left="10" Canvas.Top="10" Width="116" gif:ImageBehavior.AnimatedSource="pics/fallingStar.gif" Stretch="UniformToFill"/>
         </Canvas>
 
         <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="14" Margin="835,10,0,0" VerticalAlignment="Top" Width="9"
                       UnloadedBehavior ="Manual"  LoadedBehavior="Manual" MediaEnded="Element_MediaEnded" MediaOpened="Element_MediaOpened"/>
-        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="10" HorizontalAlignment="Center" Height="14" VerticalAlignment="Top" Width="288" Margin="-119,450,683,0" Foreground="#FF0023FF" RenderTransformOrigin="0.5,0.5">
+        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="10" HorizontalAlignment="Center" Height="27" VerticalAlignment="Top" Width="288" Margin="-127,456,691,0" Foreground="#FF0023FF" RenderTransformOrigin="0.5,0.5">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
