@@ -86,10 +86,10 @@ namespace GalagaX4
                 hearts[i].Width = 34;
                 hearts[i].Height = 26;
                 this.canvas.Children.Add(hearts[i]);
-                Canvas.SetLeft(hearts[i], 10 + spaceX);
-                Canvas.SetTop(hearts[i], 10);
+                Canvas.SetLeft(hearts[i], 730 + spaceX);
+                Canvas.SetTop(hearts[i], 570);
                 spaceX += 30;
-                hearts[i].Source = UtilityMethods.LoadImage("pics/heart.png");
+                hearts[i].Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
         }
 

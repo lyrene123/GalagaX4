@@ -18,6 +18,9 @@ namespace GalagaX4
 
         Player player;
         bool isPause;
+        Button resume;
+        Button save;
+        Button load;
 
         public GameWindow()
         {
@@ -203,6 +206,8 @@ namespace GalagaX4
                     allBullets[i].restartShootUp();
                 }
             }
+
+            Menu("remove");
         }
 
         private void pauseBtn_Click()
@@ -261,6 +266,7 @@ namespace GalagaX4
                     allBullets[i].StopShootUp();
                 }
             }
+            Menu("display");
         }
 
         private void playPauseBtn_Click(object sender, RoutedEventArgs e)
@@ -268,25 +274,56 @@ namespace GalagaX4
             if(isPause == false)
             {
                 isPause = true;
+                playPauseBtn.IsEnabled = false;
                 pauseBtn_Click();
             }
             else
             {
                 isPause = false;
+                playPauseBtn.IsEnabled = true;
                 playBtn_Click();
             }
         }
 
-        private void displayMenu()
+        private void Menu(String action)
         {
-            Canvas menu = new Canvas();
-            canvas.Children.Add(menu);
+            if (action.Equals("display"))
+            {
+                this.resume = new Button();
+                canvas.Children.Add(resume);
+                resume.Width = 300;
+                resume.Height = 50;
+                Canvas.SetLeft(resume, 300);
+                Canvas.SetTop(resume, 200);
+                resume.Content = "RESUME GAME";
+                resume.Background = Brushes.Blue;
+                resume.Click += playPauseBtn_Click;
 
-            Button resume = new Button();
-            resume.Width = 50;
-            resume.Height = 50;
+                this.save = new Button();
+                canvas.Children.Add(save);
+                save.Width = 100;
+                save.Height = 50;
+                Canvas.SetLeft(save, 300);
+                Canvas.SetTop(save, 250);
+                save.Content = "Save Game";
 
+                this.load = new Button();
+                canvas.Children.Add(load);
+                load.Width = 100;
+                load.Height = 50;
+                Canvas.SetLeft(load, 300);
+                Canvas.SetTop(load, 300);
+                load.Content = "Load new Game";
+            }
 
+            if (action.Equals("remove"))
+            {
+                canvas.Children.Remove(this.resume);
+                canvas.Children.Remove(this.save);
+                canvas.Children.Remove(this.load);
+            }
         }
+
+       
     }
 }
