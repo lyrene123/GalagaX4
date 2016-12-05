@@ -15,16 +15,24 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-
+        
+        
         Player player;
         bool isPause;
+        
 
         public GameWindow()
         {
             this.Closed += GameWindow_Closed;
             this.Closing += GameWindow_Closing;
-
+                                    
             InitializeComponent();
+                       
+            mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
+            mediaElement.BeginInit();
+            mediaElement.Position = TimeSpan.FromMilliseconds(0);
+            mediaElement.Stop();
+            mediaElement.Play();
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -124,7 +132,7 @@ namespace GalagaX4
                 Canvas.SetTop(gameOverPic, 200);
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-
+                mediaElement.Stop();
                 BackToMainWindow();
             }
         }
@@ -133,22 +141,13 @@ namespace GalagaX4
         {
             this.coldDownTimer.Stop();
             await Task.Delay(3000);
-
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
             //this.Close();
         }
 
-        private void Element_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Play();
-        }
-
-
-
-
-
+         
         private void playBtn_Click()
         {
 
@@ -291,6 +290,14 @@ namespace GalagaX4
             resume.Height = 50;
 
 
+        }
+        private void Element_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Play();
+        }
+        private void Element_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Play();
         }
     }
 }
