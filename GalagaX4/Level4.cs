@@ -87,6 +87,8 @@ namespace GalagaX4
             lv4Pic.Height = 40;
             lv4Pic.Width = 100;
             this.canvas.Children.Add(lv4Pic);
+            Canvas.SetLeft(lv4Pic, 0);
+            Canvas.SetTop(lv4Pic, 0);
             lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
 
             //bee creation

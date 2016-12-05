@@ -381,6 +381,9 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
+
+                this.canvas.Children.Remove(lv3Pic);
+
                 timerRandomShoot.Stop();
                 if (this.round == 1 || this.round == 2)
                 {
@@ -389,8 +392,6 @@ namespace GalagaX4
                 }
                 else
                 {
-                    this.canvas.Children.Remove(lv3Pic);
-
                     Level4 lv4 = new Level4(this.window, this.canvas, this.player);
                     lv4.Play();
                 }

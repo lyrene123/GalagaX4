@@ -51,8 +51,8 @@ namespace GalagaX4
             Level1 lv1 = new Level1(this, canvas, player);
             lv1.Play();
 
-           // Level4 lv4 = new Level4(this, canvas, player);
-            //lv4.Play();
+            //Level2 lv2 = new Level2(this, canvas, player);
+            //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
