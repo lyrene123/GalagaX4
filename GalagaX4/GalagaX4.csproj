@@ -205,11 +205,12 @@
     <Resource Include="pics\playpause.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\fallingStar.gif" />
+    <Resource Include="pics\fallingStar.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\loadGame_blue.png" />
-    <Resource Include="pics\loadGame_white.png" />
+    <Resource Include="audio\Explosion.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
