@@ -167,19 +167,31 @@ namespace GalagaX4
             this.isPause = false;
             if (this.player.getCurrentLevel() == 1)
             {
-                Level1.timerRandom.Start();
+                if (Level1.timerRandom != null)
+                {
+                    Level1.timerRandom.Start();
+                }
             }
             if (this.player.getCurrentLevel() == 2)
             {
-                Level2.timerRandom.Start();
+                if (Level2.timerRandom != null)
+                {
+                    Level2.timerRandom.Start();
+                }
             }
             if (this.player.getCurrentLevel() == 3)
             {
-                Level3.timerRandom.Start();
+                if (Level3.timerRandom != null)
+                {
+                    Level3.timerRandom.Start();
+                }
             }
             if(this.player.getCurrentLevel() == 4)
             {
-                Level4.timerRandom.Start();
+                if (Level4.timerRandom != null)
+                {
+                    Level4.timerRandom.Start();
+                }
             }
 
             List<Enemies> allEnemies = this.player.getEnemiesList();
@@ -227,19 +239,31 @@ namespace GalagaX4
         {
             if (this.player.getCurrentLevel() == 1)
             {
-                Level1.timerRandom.Stop();
+                if (Level1.timerRandom != null)
+                {
+                    Level1.timerRandom.Stop();
+                }
             }
             if (this.player.getCurrentLevel() == 2)
             {
-                Level2.timerRandom.Stop();
+                if (Level2.timerRandom != null)
+                {
+                    Level2.timerRandom.Stop();
+                }
             }
             if (this.player.getCurrentLevel() == 3)
             {
-                Level3.timerRandom.Stop();
+                if (Level3.timerRandom != null)
+                {
+                    Level3.timerRandom.Stop();
+                }
             }
             if(this.player.getCurrentLevel() == 4)
             {
-                Level4.timerRandom.Stop();
+                if (Level4.timerRandom != null)
+                {
+                    Level4.timerRandom.Stop();
+                }
             }
 
             List<Enemies> allEnemies = this.player.getEnemiesList();

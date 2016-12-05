@@ -35,8 +35,12 @@ namespace GalagaX4
                     , UtilityMethods.LoadImage("pics/GameTitle_lightBlue.png") };
             Animation titleAnimation = new Animation(titlePic, titleSources, true);
             Animation.Initiate(titleAnimation, 150);
-                                
-            
+
+
+            BitmapImage[] loadGameSoures = { UtilityMethods.LoadImage("pics/loadGame_blue.png")
+                    , UtilityMethods.LoadImage("pics/loadGame_white.png") };
+            Animation loadGameAnim = new Animation(loadGamePic, loadGameSoures, true);
+            Animation.Initiate(loadGameAnim, 150);
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
