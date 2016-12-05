@@ -208,9 +208,7 @@
     <Resource Include="pics\play.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\backgroundspace2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="pics\playpause.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

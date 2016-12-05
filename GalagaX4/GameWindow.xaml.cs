@@ -146,7 +146,11 @@ namespace GalagaX4
             mediaElement.Play();
         }
 
-        private void playBtn_Click(object sender, RoutedEventArgs e)
+
+
+
+
+        private void playBtn_Click()
         {
 
             this.isPause = false;
@@ -206,10 +210,8 @@ namespace GalagaX4
             }
         }
 
-        private void pauseBtn_Click(object sender, RoutedEventArgs e)
+        private void pauseBtn_Click()
         {
-
-            this.isPause = true;
             if (this.player.getCurrentLevel() == 1)
             {
                 Level1.timerRandom.Stop();
@@ -263,6 +265,20 @@ namespace GalagaX4
                     allBullets[i].StopShootRight();
                     allBullets[i].StopShootUp();
                 }
+            }
+        }
+
+        private void playPauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(isPause == false)
+            {
+                isPause = true;
+                pauseBtn_Click();
+            }
+            else
+            {
+                isPause = false;
+                playBtn_Click();
             }
         }
     }
