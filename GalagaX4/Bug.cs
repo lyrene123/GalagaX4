@@ -45,7 +45,7 @@ namespace GalagaX4
         {
             double beeX = this.GetPoint().X;
 
-            if (this.point.Y <= 550)
+            if (this.point.Y <= 500)
             {
                 //move down
                 if (this.moveDown == true)

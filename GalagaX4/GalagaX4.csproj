@@ -202,12 +202,6 @@
     <Resource Include="pics\heart.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pics\play.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="pics\playpause.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
