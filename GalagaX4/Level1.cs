@@ -286,9 +286,10 @@ namespace GalagaX4
                 timerRandomShoot.Stop();
 
                 this.canvas.Children.Remove(lv1Pic);
-
+                
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.Play();
+        
             }
         }
     }
