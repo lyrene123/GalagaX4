@@ -16,7 +16,7 @@ namespace GalagaX4
     {
         Window window;
         Canvas canvas;
-       GameWindow gamewindow;               
+                      
         static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
@@ -202,7 +202,7 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            BackToMainWindown();
+            //BackToMainWindown();
 
             //remove enemies destroyed from the arr1 or arr2 list
             //-------------------------------
@@ -280,7 +280,7 @@ namespace GalagaX4
                 lv2.Play();
             }
         }
-
+        /*
         void BackToMainWindown()
         {
             if (player.GetLives() == 0)
@@ -297,6 +297,7 @@ namespace GalagaX4
                 //gamewindow.mediaElement.BeginInit();
                 player.shootSoundEffect.Dispose();                            
             }
-        }
+            
+        }*/
     }
 }

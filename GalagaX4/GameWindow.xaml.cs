@@ -15,7 +15,6 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-         DispatcherTimer gameOverTimer;
 
         Player player;
         bool isPause;
@@ -121,7 +120,7 @@ namespace GalagaX4
         async void BackToMainWindow()
         {
             this.coldDownTimer.Stop();
-            await Task.Delay(2000);
+            await Task.Delay(3000);
 
             this.Hide();
             var mainWindow = new MainWindow();

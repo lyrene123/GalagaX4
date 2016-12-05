@@ -221,7 +221,7 @@ namespace GalagaX4
                 this.SetPointY(490);
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
-            else
+            /*else
             {
                 Image gameOver = new Image();
                 gameOver.Height = 200;
@@ -230,7 +230,7 @@ namespace GalagaX4
                 Canvas.SetTop(gameOver, 200);
                 Canvas.SetLeft(gameOver, 300);
                 gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-            }
+            }*/
         }
     }
 }
