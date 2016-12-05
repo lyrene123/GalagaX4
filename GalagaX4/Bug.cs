@@ -13,7 +13,7 @@ namespace GalagaX4
     class Bug : Enemies
     {
 
-        DispatcherTimer timerFly; //timer for moving
+        DispatcherTimer timerFly; //timerRandomShoot for moving
 
         public Bug(Point point, Image image, Canvas canvas, Animation animation)
             : base(point, image, canvas, animation)
@@ -30,6 +30,7 @@ namespace GalagaX4
             Animation.Initiate(this.animation, 200);
             startFly(frequency);
         }
+
 
         public void startFly(double frequency)
         {
@@ -127,6 +128,12 @@ namespace GalagaX4
         {
             this.timerFly.Stop(); //stop moving
             this.animation.Stop(); //stop animation
+        }
+
+        public void restartMove()
+        {
+            this.timerFly.Start();
+            this.animation.Start();
         }
 
         public override void Shoot(double frequency)

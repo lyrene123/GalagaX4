@@ -15,8 +15,8 @@ namespace GalagaX4
     {
         static double coldDown;
         Bullet bullet;
-        public GameSound shootSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Firing.wav", true); 
-        
+        public GameSound shootSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Firing.wav", true);
+        int currentLevel;
 
         public static double ColdDown
         {
@@ -27,7 +27,6 @@ namespace GalagaX4
         double speed;
         List<Enemies> enemies;
 
-        TextBlock displayLives;
         int lives = 3;
         Image[] hearts;
 
@@ -39,11 +38,12 @@ namespace GalagaX4
         {
             this.speed = speed;
             setDisplayLives();
-           // updateLives();
             setDisplayPoints();
             updatePoints();
         }
+
         public Player() { }
+
         public int GetLives()
         {
             return this.lives;
@@ -59,6 +59,21 @@ namespace GalagaX4
             {
                 return this.enemies.Count;
             }
+        }
+
+        public List<Enemies> getEnemiesList()
+        {
+            return this.enemies;
+        }
+
+        public void updateCurrentLevel(int level)
+        {
+            this.currentLevel = level;
+        }
+
+        public int getCurrentLevel()
+        {
+            return this.currentLevel;
         }
 
         public void setDisplayLives()
@@ -77,11 +92,6 @@ namespace GalagaX4
                 hearts[i].Source = UtilityMethods.LoadImage("pics/heart.png");
             }
         }
-
-       /* public void updateLives()
-        {
-            this.displayLives.Text = "LIVES: " + this.lives;
-        }*/
 
         public void setDisplayPoints()
         {
@@ -174,6 +184,8 @@ namespace GalagaX4
 
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
+
+            //await Task.Delay(1000);
             live();
         }
 
@@ -191,14 +203,14 @@ namespace GalagaX4
             {
                 this.canvas.Children.Remove(hearts[0]);
             }
-            this.lives--;
-            
+            this.lives--;        
         }
 
         public void live()
-        {
+        {      
             if (lives > 0)
             {
+                //await Task.Delay(1000);
                 this.image = new Image();
                 this.image.Height = 46;
                 this.image.Width = 42;
@@ -219,7 +231,6 @@ namespace GalagaX4
                 Canvas.SetLeft(gameOver, 300);
                 gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
             }
-            //updateLives();
         }
     }
 }
