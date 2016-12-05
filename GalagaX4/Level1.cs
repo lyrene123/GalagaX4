@@ -12,11 +12,11 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
-    class Level1
+    class Level1 
     {
         Window window;
         Canvas canvas;
-                      
+                    
         static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
@@ -28,7 +28,9 @@ namespace GalagaX4
         List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
         bool exists1 = false;
         bool exists2 = false;
-        List<Enemies> enemies;
+        public bool levelOver = false;
+
+        public List<Enemies> enemies;
         Image lv1Pic;
 
 
@@ -39,6 +41,7 @@ namespace GalagaX4
             this.player = player;
             enemies = new List<Enemies>();
             this.player.updateCurrentLevel(1);
+            
         }
 
         public static DispatcherTimer timerRandom
@@ -280,7 +283,6 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
-                
                 timerRandomShoot.Stop();
 
                 this.canvas.Children.Remove(lv1Pic);

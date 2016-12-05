@@ -205,8 +205,7 @@
     <Resource Include="pics\playpause.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\missAccomplised_blue.png" />
-    <Resource Include="pics\missAccomplised_white.png" />
+    <Resource Include="pics\fallingStar.gif" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pics\loadGame_blue.png" />

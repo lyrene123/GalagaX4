@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace GalagaX4
@@ -16,7 +15,8 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-
+        
+        
         Player player;
         bool isPause;
         Button resume;
@@ -27,9 +27,16 @@ namespace GalagaX4
         {
             this.Closed += GameWindow_Closed;
             this.Closing += GameWindow_Closing;
-
+                                    
             InitializeComponent();
-            
+            backgroundImage.Width = 860;
+            backgroundImage.Height = 650;
+            mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
+            mediaElement.BeginInit();
+            mediaElement.Position = TimeSpan.FromMilliseconds(0);
+            mediaElement.Stop();
+            mediaElement.Play();
+
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             playerPic.Width = 42;
@@ -49,7 +56,6 @@ namespace GalagaX4
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
             DecrementColdDown();
-            
         }
 
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -129,7 +135,8 @@ namespace GalagaX4
                 Canvas.SetTop(gameOverPic, 200);
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-
+                mediaElement.Stop();
+                mediaElement.Source = null;
                 BackToMainWindow();
             }
         }
@@ -138,7 +145,6 @@ namespace GalagaX4
         {
             this.coldDownTimer.Stop();
             await Task.Delay(3000);
-
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
@@ -150,25 +156,41 @@ namespace GalagaX4
             mediaElement.Play();
         }
 
+
+
+
+
         private void playBtn_Click()
         {
 
             this.isPause = false;
             if (this.player.getCurrentLevel() == 1)
             {
-                Level1.timerRandom.Start();
+                if (Level1.timerRandom != null)
+                {
+                    Level1.timerRandom.Start();
+                }
             }
             if (this.player.getCurrentLevel() == 2)
             {
-                Level2.timerRandom.Start();
+                if (Level2.timerRandom != null)
+                {
+                    Level2.timerRandom.Start();
+                }
             }
             if (this.player.getCurrentLevel() == 3)
             {
-                Level3.timerRandom.Start();
+                if (Level3.timerRandom != null)
+                {
+                    Level3.timerRandom.Start();
+                }
             }
             if(this.player.getCurrentLevel() == 4)
             {
-                Level4.timerRandom.Start();
+                if (Level4.timerRandom != null)
+                {
+                    Level4.timerRandom.Start();
+                }
             }
 
             List<Enemies> allEnemies = this.player.getEnemiesList();
@@ -216,19 +238,31 @@ namespace GalagaX4
         {
             if (this.player.getCurrentLevel() == 1)
             {
-                Level1.timerRandom.Stop();
+                if (Level1.timerRandom != null)
+                {
+                    Level1.timerRandom.Stop();
+                }
             }
             if (this.player.getCurrentLevel() == 2)
             {
-                Level2.timerRandom.Stop();
+                if (Level2.timerRandom != null)
+                {
+                    Level2.timerRandom.Stop();
+                }
             }
             if (this.player.getCurrentLevel() == 3)
             {
-                Level3.timerRandom.Stop();
+                if (Level3.timerRandom != null)
+                {
+                    Level3.timerRandom.Stop();
+                }
             }
             if(this.player.getCurrentLevel() == 4)
             {
-                Level4.timerRandom.Stop();
+                if (Level4.timerRandom != null)
+                {
+                    Level4.timerRandom.Stop();
+                }
             }
 
             List<Enemies> allEnemies = this.player.getEnemiesList();
@@ -295,37 +329,27 @@ namespace GalagaX4
                 canvas.Children.Add(resume);
                 resume.Width = 300;
                 resume.Height = 50;
-                resume.FontWeight = FontWeights.Bold;
-                resume.FontSize = 25;
                 Canvas.SetLeft(resume, 300);
                 Canvas.SetTop(resume, 200);
                 resume.Content = "RESUME GAME";
-               resume.Background = Brushes.DimGray;
+                resume.Background = Brushes.DarkCyan;
                 resume.Click += playPauseBtn_Click;
 
                 this.save = new Button();
                 canvas.Children.Add(save);
-                save.Width = 300;
+                save.Width = 100;
                 save.Height = 50;
-                save.FontWeight = FontWeights.Bold;
-                save.FontSize = 25;
                 Canvas.SetLeft(save, 300);
-                Canvas.SetTop(save, 275);
-                save.Content = "SAVE GAME";
-               save.Background = Brushes.DimGray;
-                save.Click += saveBtn_Click;
+                Canvas.SetTop(save, 250);
+                save.Content = "Save Game";
 
                 this.load = new Button();
                 canvas.Children.Add(load);
-                load.Width = 300;
+                load.Width = 100;
                 load.Height = 50;
-                load.FontWeight = FontWeights.Bold;
-                load.FontSize = 25;
                 Canvas.SetLeft(load, 300);
-                Canvas.SetTop(load, 350);
-                load.Content = "LOAD NEW GAME";
-               load.Background = Brushes.DimGray;
-                load.Click += loadBtn_Click;
+                Canvas.SetTop(load, 300);
+                load.Content = "Load new Game";
             }
 
             if (action.Equals("remove"))
@@ -334,16 +358,6 @@ namespace GalagaX4
                 canvas.Children.Remove(this.save);
                 canvas.Children.Remove(this.load);
             }
-        }
-
-        private void loadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         private void Element_MediaOpened(object sender, RoutedEventArgs e)
