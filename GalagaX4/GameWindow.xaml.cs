@@ -280,5 +280,17 @@ namespace GalagaX4
                 playBtn_Click();
             }
         }
+
+        private void displayMenu()
+        {
+            Canvas menu = new Canvas();
+            canvas.Children.Add(menu);
+
+            Button resume = new Button();
+            resume.Width = 50;
+            resume.Height = 50;
+
+
+        }
     }
 }

@@ -273,7 +273,6 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            // BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
@@ -386,17 +385,5 @@ namespace GalagaX4
                 }
             }
         }
-
-        /* void BackToMainWindown()
-         {
-             if (player.GetLives() == 0)
-             {
-                 this.window.Hide();
-                 var mainWindow = new MainWindow();
-                 mainWindow.Show();
-                 this.timerRandomShoot.Stop();
-                 this.window.Close();
-             }
-         }*/
     }
 }

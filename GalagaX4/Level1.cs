@@ -202,8 +202,6 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            //BackToMainWindown();
-
             //remove enemies destroyed from the arr1 or arr2 list
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
@@ -280,24 +278,5 @@ namespace GalagaX4
                 lv2.Play();
             }
         }
-        /*
-        void BackToMainWindown()
-        {
-            if (player.GetLives() == 0)
-            {
-                Player player = new Player();
-                this.window.Hide();
-                //this.timerRandomShoot.Stop();
-                //this.window.Close();
-                
-                var mainWindow = new MainWindow();
-                //mainWindow.Show();
-                //this.timerRandomShoot.Stop();
-                //this.window.Close();
-                //gamewindow.mediaElement.BeginInit();
-                player.shootSoundEffect.Dispose();                            
-            }
-            
-        }*/
     }
 }

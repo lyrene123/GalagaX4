@@ -275,7 +275,6 @@ namespace GalagaX4
 
         private void ShootUpdate(object sender, EventArgs e)
         {
-            // BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
