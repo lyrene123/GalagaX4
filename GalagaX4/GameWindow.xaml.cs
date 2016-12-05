@@ -35,6 +35,7 @@ namespace GalagaX4
             mediaElement.BeginInit();
             mediaElement.Position = TimeSpan.FromMilliseconds(0);
             mediaElement.Stop();
+            mediaElement.Volume = 0.07;
             mediaElement.Play();
 
             Image playerPic = new Image();
