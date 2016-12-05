@@ -345,5 +345,10 @@ namespace GalagaX4
         {
             //throw new NotImplementedException();
         }
+
+        private void Element_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Play();
+        }
     }
 }
