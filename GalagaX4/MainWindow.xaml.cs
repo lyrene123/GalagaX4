@@ -17,8 +17,13 @@ namespace GalagaX4
     public partial class MainWindow : Window
     {
         //test2
+        
         public MainWindow()
         {
+            this.Closed += MainWindow_Closed;
+            this.Closing += MainWindow_Closing;
+            
+
             InitializeComponent();
 
             BitmapImage[] newGameSources = { UtilityMethods.LoadImage("pics/newGame_white.png")
@@ -30,6 +35,19 @@ namespace GalagaX4
                     , UtilityMethods.LoadImage("pics/GameTitle_lightBlue.png") };
             Animation titleAnimation = new Animation(titlePic, titleSources, true);
             Animation.Initiate(titleAnimation, 150);
+
+            
+            
+            
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -37,9 +55,11 @@ namespace GalagaX4
             var gameWindow = new GameWindow();
             this.Hide();
             gameWindow.Show();
-            this.Close();
+            //this.Close();
+            gameWindow.mediaElement.BeginInit();
+            gameWindow.mediaElement.Position = TimeSpan.FromMilliseconds(0);
             gameWindow.mediaElement.Play();
-                        
+                         
             
         }
     }

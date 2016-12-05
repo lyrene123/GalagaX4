@@ -123,7 +123,7 @@ namespace GalagaX4
 
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
+            mediaElement.Play();
         }
 
     }

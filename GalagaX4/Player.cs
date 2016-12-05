@@ -15,7 +15,8 @@ namespace GalagaX4
     {
         static double coldDown;
         Bullet bullet;
-        //GameSound shootSoundEffect = new GameSound();
+        public GameSound shootSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Firing.wav", true); 
+        
 
         public static double ColdDown
         {
@@ -42,7 +43,7 @@ namespace GalagaX4
             setDisplayPoints();
             updatePoints();
         }
-
+        public Player() { }
         public int GetLives()
         {
             return this.lives;
@@ -144,9 +145,8 @@ namespace GalagaX4
             bullet = new Bullet(this.point, bulletPic, canvas);
             bullet.setEnemyTarget(enemies);
             Canvas.SetLeft(bullet.GetImage(), position + midOfImage - 3.5);
-
             bullet.ShootUp();
-            //shootSoundEffect.playShootSound();
+            shootSoundEffect.playSound();
         }
 
         public void StopShootUp()

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -15,8 +16,10 @@ namespace GalagaX4
     {
         Window window;
         Canvas canvas;
-        //GameWindow gamewindow;
-
+        GameWindow gamewindow;
+        
+        
+                       
         DispatcherTimer timer;
         int spaceX = 0;
 
@@ -36,8 +39,8 @@ namespace GalagaX4
             this.window = window;
             this.canvas = canvas;
             this.player = player;
-
             enemies = new List<Enemies>();
+            
         }
 
         void DisplayLevel()
@@ -267,8 +270,9 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
+                
                 this.timer.Stop();
-
+            
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.Play();
             }
@@ -278,15 +282,20 @@ namespace GalagaX4
         {
             if (player.GetLives() == 0)
             {
+                Player player = new Player();
                 this.window.Hide();
-                this.timer.Stop();
+                //this.timer.Stop();
                 //this.window.Close();
+                
                 var mainWindow = new MainWindow();
                 //mainWindow.Show();
                 //this.timer.Stop();
                 //this.window.Close();
-                //gamewindow.mediaElement.Stop();
+                //gamewindow.mediaElement.BeginInit();
+                player.shootSoundEffect.Dispose();
                 
+                
+                               
             }
         }
     }
