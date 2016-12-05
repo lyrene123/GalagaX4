@@ -148,10 +148,6 @@ namespace GalagaX4
             mediaElement.Play();
         }
 
-
-
-
-
         private void playBtn_Click()
         {
 

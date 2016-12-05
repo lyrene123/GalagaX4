@@ -59,9 +59,18 @@ namespace GalagaX4
 
         public async void Play()
         {
+            Player.ColdDown = 0;
+
             DisplayLevel();
             await Task.Delay(2000);
             this.canvas.Children.Remove(lv1Pic);
+
+
+            lv1Pic = new Image();
+            lv1Pic.Height = 40;
+            lv1Pic.Width = 100;
+            this.canvas.Children.Add(lv1Pic);
+            lv1Pic.Source = UtilityMethods.LoadImage("pics/level1.png");
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -273,7 +282,9 @@ namespace GalagaX4
             {
                 
                 timerRandomShoot.Stop();
-            
+
+                this.canvas.Children.Remove(lv1Pic);
+
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.Play();
             }
