@@ -69,7 +69,7 @@ namespace GalagaX4
         void DecrementColdDown()
         {
             coldDownTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            coldDownTimer.Interval = TimeSpan.FromMilliseconds(250);
+            coldDownTimer.Interval = TimeSpan.FromMilliseconds(500);
             coldDownTimer.Tick += new EventHandler(DecrementColdDown);
             coldDownTimer.Start();
         }
