@@ -29,7 +29,8 @@ namespace GalagaX4
             this.Closing += GameWindow_Closing;
                                     
             InitializeComponent();
-                       
+            backgroundImage.Width = 860;
+            backgroundImage.Height = 650;
             mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
             mediaElement.BeginInit();
             mediaElement.Position = TimeSpan.FromMilliseconds(0);
@@ -135,6 +136,7 @@ namespace GalagaX4
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
                 mediaElement.Stop();
+                mediaElement.Source = null;
                 BackToMainWindow();
             }
         }
@@ -332,6 +334,11 @@ namespace GalagaX4
                 canvas.Children.Remove(this.save);
                 canvas.Children.Remove(this.load);
             }
+        }
+
+        private void Element_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Play();
         }
     }
 }
