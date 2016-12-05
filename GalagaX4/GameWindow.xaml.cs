@@ -266,7 +266,7 @@ namespace GalagaX4
             }
 
             List<Enemies> allEnemies = this.player.getEnemiesList();
-            if (allEnemies.Count != 0)
+            if (allEnemies!=null)
             {
                 for (int i = 0; i < allEnemies.Count; i++)
                 {
@@ -332,24 +332,32 @@ namespace GalagaX4
                 Canvas.SetLeft(resume, 300);
                 Canvas.SetTop(resume, 200);
                 resume.Content = "RESUME GAME";
-                resume.Background = Brushes.DarkCyan;
+                resume.FontSize = 25;
+                resume.FontWeight = FontWeights.Bold;
+                resume.Background = Brushes.DimGray;
                 resume.Click += playPauseBtn_Click;
 
                 this.save = new Button();
                 canvas.Children.Add(save);
-                save.Width = 100;
+                save.Width = 300;
                 save.Height = 50;
                 Canvas.SetLeft(save, 300);
-                Canvas.SetTop(save, 250);
-                save.Content = "Save Game";
+                Canvas.SetTop(save, 272);
+                save.Content = "SAVE GAME";
+                save.FontSize = 25;
+                save.FontWeight = FontWeights.Bold;
+                save.Background = Brushes.DimGray; ;
 
                 this.load = new Button();
                 canvas.Children.Add(load);
-                load.Width = 100;
+                load.Width = 300;
                 load.Height = 50;
                 Canvas.SetLeft(load, 300);
-                Canvas.SetTop(load, 300);
-                load.Content = "Load new Game";
+                Canvas.SetTop(load, 345);
+                load.Content = "LOAD NEW GAME";
+                load.FontSize = 25;
+                load.FontWeight = FontWeights.Bold;
+                load.Background = Brushes.DimGray; ;
             }
 
             if (action.Equals("remove"))
