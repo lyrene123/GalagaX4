@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace GalagaX4
@@ -28,7 +29,7 @@ namespace GalagaX4
             this.Closing += GameWindow_Closing;
 
             InitializeComponent();
-
+            
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             playerPic.Width = 42;
@@ -48,6 +49,7 @@ namespace GalagaX4
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
             DecrementColdDown();
+            
         }
 
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

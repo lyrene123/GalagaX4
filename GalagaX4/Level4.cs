@@ -391,8 +391,18 @@ namespace GalagaX4
                 else
                 {
                     this.canvas.Children.Remove(lv4Pic);
-                   // Level4 lv4 = new Level4(this.window, this.canvas, this.player);
-                    //lv4.Play();
+
+                    Image missionAccomplished = new Image();
+                    missionAccomplished.Height = 300;
+                    missionAccomplished.Width = 500;
+                    this.canvas.Children.Add(missionAccomplished);
+                    Canvas.SetTop(missionAccomplished, 150);
+                    Canvas.SetLeft(missionAccomplished, 170);
+                    BitmapImage[] missionAccomplishedSources = { UtilityMethods.LoadImage("pics/missAccomplised_blue.png")
+                                , UtilityMethods.LoadImage("pics/missAccomplised_white.png") };
+                    Animation missionAccomplishedAnim = new Animation(missionAccomplished, missionAccomplishedSources, true);
+                    Animation.Initiate(missionAccomplishedAnim, 100);
+                    //missAccomplished.Source = UtilityMethods.LoadImage("pics/level4.png");
                 }
             }
         }
