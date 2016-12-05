@@ -36,8 +36,7 @@ namespace GalagaX4
             Animation titleAnimation = new Animation(titlePic, titleSources, true);
             Animation.Initiate(titleAnimation, 150);
 
-            
-            
+                       
             
         }
 
@@ -56,9 +55,9 @@ namespace GalagaX4
             this.Hide();
             gameWindow.Show();
             //this.Close();
-            gameWindow.mediaElement.BeginInit();
-            gameWindow.mediaElement.Position = TimeSpan.FromMilliseconds(0);
-            gameWindow.mediaElement.Play();
+            //gameWindow.mediaElement.BeginInit();
+            //gameWindow.mediaElement.Position = TimeSpan.FromMilliseconds(0);
+            //gameWindow.mediaElement.Play();
                          
             
         }
