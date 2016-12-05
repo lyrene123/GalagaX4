@@ -161,14 +161,25 @@ namespace GalagaX4
             this.timerFly.Stop();
         }
 
+        public void restartMove()
+        {
+            this.timerFly.Start();
+        }
+
         public void StopShoot()
         {
             if (this.timerShoot != null)
             {
                 this.timerShoot.Stop();
             }
+        }
 
-            // this.isShot = false;
+        public void restartShoot()
+        {
+            if (this.timerShoot != null)
+            {
+                this.timerShoot.Start();
+            }
         }
 
         public override void Die()

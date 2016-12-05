@@ -16,11 +16,8 @@ namespace GalagaX4
     {
         Window window;
         Canvas canvas;
-        GameWindow gamewindow;
-        
-        
-                       
-        DispatcherTimer timer;
+       GameWindow gamewindow;               
+        static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
         Player player;
@@ -32,15 +29,21 @@ namespace GalagaX4
         bool exists1 = false;
         bool exists2 = false;
         List<Enemies> enemies;
-
         Image lv1Pic;
+
+
         public Level1(Window window, Canvas canvas, Player player)
         {
             this.window = window;
             this.canvas = canvas;
             this.player = player;
             enemies = new List<Enemies>();
-            
+            this.player.updateCurrentLevel(1);
+        }
+
+        public static DispatcherTimer timerRandom
+        {
+            get { return timerRandomShoot; }
         }
 
         void DisplayLevel()
@@ -191,10 +194,10 @@ namespace GalagaX4
 
         void StartGame()
         {
-            timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += new EventHandler(ShootUpdate);
-            timer.Start();
+            timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
+            timerRandomShoot.Interval = TimeSpan.FromSeconds(1);
+            timerRandomShoot.Tick += new EventHandler(ShootUpdate);
+            timerRandomShoot.Start();
         }
 
         private void ShootUpdate(object sender, EventArgs e)
@@ -271,7 +274,7 @@ namespace GalagaX4
             if (this.enemies.Count == 0)
             {
                 
-                this.timer.Stop();
+                timerRandomShoot.Stop();
             
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.Play();
@@ -284,18 +287,15 @@ namespace GalagaX4
             {
                 Player player = new Player();
                 this.window.Hide();
-                //this.timer.Stop();
+                //this.timerRandomShoot.Stop();
                 //this.window.Close();
                 
                 var mainWindow = new MainWindow();
                 //mainWindow.Show();
-                //this.timer.Stop();
+                //this.timerRandomShoot.Stop();
                 //this.window.Close();
                 //gamewindow.mediaElement.BeginInit();
-                player.shootSoundEffect.Dispose();
-                
-                
-                               
+                player.shootSoundEffect.Dispose();                            
             }
         }
     }

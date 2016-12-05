@@ -95,6 +95,11 @@ namespace GalagaX4
             this.timer.Stop();
         }
 
+        public void Start()
+        {
+            this.timer.Start();
+        }
+
         public static void Initiate(Animation animation, double animationSpeed)
         {
             animation.Initiate(animationSpeed);
