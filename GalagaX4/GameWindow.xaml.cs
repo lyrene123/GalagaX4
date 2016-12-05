@@ -296,7 +296,7 @@ namespace GalagaX4
                 Canvas.SetLeft(resume, 300);
                 Canvas.SetTop(resume, 200);
                 resume.Content = "RESUME GAME";
-                resume.Background = Brushes.Blue;
+                resume.Background = Brushes.DarkCyan;
                 resume.Click += playPauseBtn_Click;
 
                 this.save = new Button();
