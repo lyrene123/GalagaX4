@@ -14,8 +14,6 @@ namespace GalagaX4
         public string audiosource;
         bool repeated;
         public SoundPlayer audioSound;
-        public MediaPlayer mediaplayer;
-
         // Flag: Has Dispose already been called?
         bool disposed = false;
         // Instantiate a SafeHandle instance.
@@ -34,21 +32,19 @@ namespace GalagaX4
             
             Uri uri = new Uri(audiosource);
             audioSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
-            //audioSound = new SoundPlayer(audiosource);
             audioSound.Load();
 
         }
-        public GameSound(string uriPath)
+        /*
+        public void PlayMediaElement(string uriPath)
         {
-            this.audiosource = uriPath;
-            Uri uri = new Uri(audiosource, UriKind.RelativeOrAbsolute);
-            //this.repeated = repeat;
-            mediaplayer = new MediaPlayer();
-            mediaplayer.Open(uri);
-                        
-            //audioSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
+            sound.mediaElement.Source = new Uri(uriPath, UriKind.Relative);
+            sound.mediaElement.BeginInit();
+            sound.mediaElement.Position = TimeSpan.FromMilliseconds(0);
+            sound.mediaElement.Play();
 
         }
+        */
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {
@@ -76,10 +72,6 @@ namespace GalagaX4
         public void playSound()
         {
            audioSound.Play();
-        }
-        public void playMediaPlayer()
-        {
-            mediaplayer.Play();
         }
         public void playSoundLooping()
         {

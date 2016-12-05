@@ -193,7 +193,7 @@ namespace GalagaX4
         {
             if(this.lives == 3)
             {
-                this.canvas.Children.Remove(hearts[2]);
+                this.canvas.Children.Remove(hearts[0]);
             }
             else if(this.lives == 2)
             {
@@ -201,7 +201,7 @@ namespace GalagaX4
             }
             else
             {
-                this.canvas.Children.Remove(hearts[0]);
+                this.canvas.Children.Remove(hearts[2]);
             }
             this.lives--;        
         }
