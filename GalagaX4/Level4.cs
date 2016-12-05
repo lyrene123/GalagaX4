@@ -62,6 +62,8 @@ namespace GalagaX4
 
         public async void Play()
         {
+            Player.ColdDown = 0;
+
             if (this.round == 1)
             {
                 DisplayLevel();
@@ -80,6 +82,12 @@ namespace GalagaX4
 
                 await Task.Delay(1500);
             }
+
+
+            lv4Pic.Height = 40;
+            lv4Pic.Width = 100;
+            this.canvas.Children.Add(lv4Pic);
+            lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -382,6 +390,7 @@ namespace GalagaX4
                 }
                 else
                 {
+                    this.canvas.Children.Remove(lv4Pic);
                    // Level4 lv4 = new Level4(this.window, this.canvas, this.player);
                     //lv4.Play();
                 }

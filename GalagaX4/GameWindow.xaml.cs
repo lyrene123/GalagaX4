@@ -15,24 +15,19 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-        
-        
+
         Player player;
         bool isPause;
-        
+        Button resume;
+        Button save;
+        Button load;
 
         public GameWindow()
         {
             this.Closed += GameWindow_Closed;
             this.Closing += GameWindow_Closing;
-                                    
+
             InitializeComponent();
-                       
-            mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
-            mediaElement.BeginInit();
-            mediaElement.Position = TimeSpan.FromMilliseconds(0);
-            mediaElement.Stop();
-            mediaElement.Play();
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -132,7 +127,7 @@ namespace GalagaX4
                 Canvas.SetTop(gameOverPic, 200);
                 Canvas.SetLeft(gameOverPic, 300);
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-                mediaElement.Stop();
+
                 BackToMainWindow();
             }
         }
@@ -141,13 +136,18 @@ namespace GalagaX4
         {
             this.coldDownTimer.Stop();
             await Task.Delay(3000);
+
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
             //this.Close();
         }
 
-         
+        private void Element_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Play();
+        }
+
         private void playBtn_Click()
         {
 
@@ -206,6 +206,8 @@ namespace GalagaX4
                     allBullets[i].restartShootUp();
                 }
             }
+
+            Menu("remove");
         }
 
         private void pauseBtn_Click()
@@ -264,6 +266,7 @@ namespace GalagaX4
                     allBullets[i].StopShootUp();
                 }
             }
+            Menu("display");
         }
 
         private void playPauseBtn_Click(object sender, RoutedEventArgs e)
@@ -271,33 +274,56 @@ namespace GalagaX4
             if(isPause == false)
             {
                 isPause = true;
+                playPauseBtn.IsEnabled = false;
                 pauseBtn_Click();
             }
             else
             {
                 isPause = false;
+                playPauseBtn.IsEnabled = true;
                 playBtn_Click();
             }
         }
 
-        private void displayMenu()
+        private void Menu(String action)
         {
-            Canvas menu = new Canvas();
-            canvas.Children.Add(menu);
+            if (action.Equals("display"))
+            {
+                this.resume = new Button();
+                canvas.Children.Add(resume);
+                resume.Width = 300;
+                resume.Height = 50;
+                Canvas.SetLeft(resume, 300);
+                Canvas.SetTop(resume, 200);
+                resume.Content = "RESUME GAME";
+                resume.Background = Brushes.DarkCyan;
+                resume.Click += playPauseBtn_Click;
 
-            Button resume = new Button();
-            resume.Width = 50;
-            resume.Height = 50;
+                this.save = new Button();
+                canvas.Children.Add(save);
+                save.Width = 100;
+                save.Height = 50;
+                Canvas.SetLeft(save, 300);
+                Canvas.SetTop(save, 250);
+                save.Content = "Save Game";
 
+                this.load = new Button();
+                canvas.Children.Add(load);
+                load.Width = 100;
+                load.Height = 50;
+                Canvas.SetLeft(load, 300);
+                Canvas.SetTop(load, 300);
+                load.Content = "Load new Game";
+            }
 
+            if (action.Equals("remove"))
+            {
+                canvas.Children.Remove(this.resume);
+                canvas.Children.Remove(this.save);
+                canvas.Children.Remove(this.load);
+            }
         }
-        private void Element_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Play();
-        }
-        private void Element_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Play();
-        }
+
+       
     }
 }
