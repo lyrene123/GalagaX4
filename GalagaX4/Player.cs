@@ -16,6 +16,7 @@ namespace GalagaX4
         static double coldDown;
         Bullet bullet;
         public GameSound shootSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Firing.wav", true);
+        public GameSound explosionSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Explosion.wav", true);
         int currentLevel;
 
         public static double ColdDown
@@ -184,6 +185,7 @@ namespace GalagaX4
 
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
+            explosionSoundEffect.playSound();
 
             //await Task.Delay(1000);
             live();
