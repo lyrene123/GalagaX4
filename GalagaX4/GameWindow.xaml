@@ -9,18 +9,13 @@
     <Grid x:Name="MyGrid" KeyDown="MyGrid_KeyDown">
         <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-6,0,5" >
             <Image x:Name="coinPic" Height="29" Canvas.Left="811" Canvas.Top="10" Width="31" Source="pics/coin.png"/>
-            <Button x:Name="pauseBtn" Canvas.Left="10" Canvas.Top="274" Width="36" Height="31" BorderThickness="0" Click="pauseBtn_Click" Focusable="False">
+            <Button x:Name="playPauseBtn" Canvas.Top="262" Width="49" Height="44" BorderThickness="0" Focusable="False" Canvas.Left="2" Click="playPauseBtn_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="pics/pause.png" />
-                </Button.Background>
-            </Button>
-            <Button x:Name="playBtn" Canvas.Left="10" Canvas.Top="239" Width="36" Height="26" BorderThickness="0" Click="playBtn_Click" Focusable="False">
-                <Button.Background>
-                    <ImageBrush ImageSource="pics/play.png" />
+                    <ImageBrush ImageSource="pics/playpause.png" />
                 </Button.Background>
             </Button>
         </Canvas>
-        
+
         <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="14" Margin="835,10,0,0" VerticalAlignment="Top" Width="9"
                       UnloadedBehavior="Manual" MediaEnded="Element_MediaEnded" Source="audio/main2.wav"/>
         <ProgressBar x:Name="progressBar" Minimum="0" Maximum="10" HorizontalAlignment="Center" Height="14" VerticalAlignment="Top" Width="288" Margin="-119,450,683,0" Foreground="#FF0023FF" RenderTransformOrigin="0.5,0.5">
