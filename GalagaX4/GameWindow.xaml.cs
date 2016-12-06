@@ -22,6 +22,8 @@ namespace GalagaX4
         Button resume;
         Button save;
         Button load;
+        Image life;
+
 
         public GameWindow()
         {
@@ -60,7 +62,7 @@ namespace GalagaX4
             //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-            buyLives();
+           // buyLives();
 
             DecrementColdDown();
         }
