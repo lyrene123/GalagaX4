@@ -33,10 +33,15 @@ namespace GalagaX4
             backgroundImage.Height = 650;
             mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
             mediaElement.BeginInit();
-            mediaElement.Position = TimeSpan.FromMilliseconds(0);
-            mediaElement.Stop();
+            mediaElement.Position = TimeSpan.FromSeconds(1);
+            //mediaElement.Stop();
             mediaElement.Volume = 0.07;
+            //mediaElement.MediaOpened += new RoutedEventHandler(Element_MediaOpened);
             mediaElement.Play();
+            mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
+            //mediaElement.Play();
+           
+
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -48,11 +53,11 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-           // Level1 lv1 = new Level1(this, canvas, player);
-            //lv1.Play();
+            Level1 lv1 = new Level1(this, canvas, player);
+            lv1.Play();
 
-            Level4 lv4 = new Level4(this, canvas, player);
-            lv4.Play();
+            //Level2 lv2 = new Level2(this, canvas, player);
+            //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
@@ -154,10 +159,14 @@ namespace GalagaX4
 
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
+            mediaElement.Position = TimeSpan.FromSeconds(1);
             mediaElement.Play();
         }
-
-
+        private void Element_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            
+            //mediaElement.Play();
+        }
         private void playBtn_Click()
         {
 
@@ -345,7 +354,6 @@ namespace GalagaX4
                 save.FontSize = 25;
                 save.FontWeight = FontWeights.Bold;
                 save.Background = Brushes.DimGray; ;
-                save.Click += saveBtn_Click;
 
                 this.load = new Button();
                 canvas.Children.Add(load);
@@ -356,8 +364,7 @@ namespace GalagaX4
                 load.Content = "LOAD NEW GAME";
                 load.FontSize = 25;
                 load.FontWeight = FontWeights.Bold;
-                load.Background = Brushes.DimGray;
-                load.Click += loadBtn_Click;
+                load.Background = Brushes.DimGray; ;
             }
 
             if (action.Equals("remove"))
@@ -368,19 +375,6 @@ namespace GalagaX4
             }
         }
 
-        private void loadBtn_Click(object sender, RoutedEventArgs e)
-        {
-           // throw new NotImplementedException();
-        }
-
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void Element_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Play();
-        }
+        
     }
 }
