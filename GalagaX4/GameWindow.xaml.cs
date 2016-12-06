@@ -22,7 +22,8 @@ namespace GalagaX4
         Button resume;
         Button save;
         Button load;
-        Image life;
+
+        GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
 
 
         public GameWindow()
