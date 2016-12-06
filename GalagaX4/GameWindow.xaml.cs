@@ -42,7 +42,7 @@ namespace GalagaX4
             mediaElement.Play();
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
             //mediaElement.Play();
-           
+            //
 
 
             Image playerPic = new Image();
