@@ -48,11 +48,11 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            Level1 lv1 = new Level1(this, canvas, player);
-            lv1.Play();
+           // Level1 lv1 = new Level1(this, canvas, player);
+            //lv1.Play();
 
-            //Level2 lv2 = new Level2(this, canvas, player);
-            //lv2.Play();
+            Level4 lv4 = new Level4(this, canvas, player);
+            lv4.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
@@ -156,9 +156,6 @@ namespace GalagaX4
         {
             mediaElement.Play();
         }
-
-
-
 
 
         private void playBtn_Click()
@@ -348,6 +345,7 @@ namespace GalagaX4
                 save.FontSize = 25;
                 save.FontWeight = FontWeights.Bold;
                 save.Background = Brushes.DimGray; ;
+                save.Click += saveBtn_Click;
 
                 this.load = new Button();
                 canvas.Children.Add(load);
@@ -358,7 +356,8 @@ namespace GalagaX4
                 load.Content = "LOAD NEW GAME";
                 load.FontSize = 25;
                 load.FontWeight = FontWeights.Bold;
-                load.Background = Brushes.DimGray; ;
+                load.Background = Brushes.DimGray;
+                load.Click += loadBtn_Click;
             }
 
             if (action.Equals("remove"))
@@ -367,6 +366,16 @@ namespace GalagaX4
                 canvas.Children.Remove(this.save);
                 canvas.Children.Remove(this.load);
             }
+        }
+
+        private void loadBtn_Click(object sender, RoutedEventArgs e)
+        {
+           // throw new NotImplementedException();
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         private void Element_MediaOpened(object sender, RoutedEventArgs e)
