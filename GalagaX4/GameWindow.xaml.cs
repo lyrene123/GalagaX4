@@ -16,12 +16,13 @@ namespace GalagaX4
     {
         DispatcherTimer coldDownTimer;
         
-        
+        //
         Player player;
         bool isPause;
         Button resume;
         Button save;
         Button load;
+
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
 
         public GameWindow()
