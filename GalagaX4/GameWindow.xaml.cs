@@ -33,10 +33,15 @@ namespace GalagaX4
             backgroundImage.Height = 650;
             mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
             mediaElement.BeginInit();
-            mediaElement.Position = TimeSpan.FromMilliseconds(0);
-            mediaElement.Stop();
+            mediaElement.Position = TimeSpan.FromSeconds(1);
+            //mediaElement.Stop();
             mediaElement.Volume = 0.07;
+            //mediaElement.MediaOpened += new RoutedEventHandler(Element_MediaOpened);
             mediaElement.Play();
+            mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
+            //mediaElement.Play();
+           
+
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -154,13 +159,14 @@ namespace GalagaX4
 
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
+            mediaElement.Position = TimeSpan.FromSeconds(1);
             mediaElement.Play();
         }
-
-
-
-
-
+        private void Element_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            
+            //mediaElement.Play();
+        }
         private void playBtn_Click()
         {
 
@@ -369,9 +375,6 @@ namespace GalagaX4
             }
         }
 
-        private void Element_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Play();
-        }
+        
     }
 }
