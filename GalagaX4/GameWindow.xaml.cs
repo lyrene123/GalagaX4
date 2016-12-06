@@ -22,6 +22,7 @@ namespace GalagaX4
         Button resume;
         Button save;
         Button load;
+        GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
 
         public GameWindow()
         {
@@ -143,6 +144,7 @@ namespace GalagaX4
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
                 mediaElement.Stop();
                 mediaElement.Source = null;
+                sound.playSoundLooping();
                 BackToMainWindow();
             }
         }
@@ -154,6 +156,7 @@ namespace GalagaX4
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
+            sound.StopSound();
             //this.Close();
         }
 
