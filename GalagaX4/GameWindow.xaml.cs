@@ -15,14 +15,13 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-        
-        
+        DispatcherTimer checkLife;
+        DispatcherTimer lifeTimer;
         Player player;
         bool isPause;
         Button resume;
         Button save;
         Button load;
-        GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
 
         public GameWindow()
         {
@@ -54,15 +53,72 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            Level1 lv1 = new Level1(this, canvas, player);
-            lv1.Play();
+           Level1 lv1 = new Level1(this, canvas, player);
+           lv1.Play();
 
-            //Level2 lv2 = new Level2(this, canvas, player);
+           // Level4 lv2 = new Level4(this, canvas, player);
             //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
+            buyLives();
 
             DecrementColdDown();
+        }
+
+
+        public void buyLives()
+        {
+            this.life = new Image();
+            this.life.Width = 34;
+            this.life.Height = 26;
+            canvas.Children.Add(this.life);
+            Canvas.SetLeft(this.life, 400);
+            Canvas.SetTop(this.life, 10);
+
+            this.checkLife = new DispatcherTimer(DispatcherPriority.Normal);
+            checkLife.Interval = TimeSpan.FromSeconds(15);
+            checkLife.Tick += new EventHandler(giveLife);
+            checkLife.Start();
+        }
+
+        private void giveLife(object sender, EventArgs e)
+        {
+            MessageBox.Show("lifee");
+            if (player.GetLives() <=2)
+            {
+                MessageBox.Show("lifee");
+                this.lifeTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                lifeTimer.Interval = TimeSpan.FromMilliseconds(150);
+                lifeTimer.Tick += new EventHandler(sendLife);
+                lifeTimer.Start();
+            }
+        }
+
+        private void sendLife(object sender, EventArgs e)
+        {
+           // MessageBox.Show("lifee");
+            double posY = Canvas.GetTop(this.life);
+            double posX = Canvas.GetLeft(this.life);
+            Rect rectLife = new Rect(posX, posY, this.life.Width + 20, this.life.Height + 20);
+            Rect rectPlayer = new Rect(this.player.GetPoint().X, this.player.GetPoint().Y, this.player.GetImage().Width - 5, this.player.GetImage().Height - 5);
+            
+            if (posY <= 500)
+            {
+                Canvas.SetTop(this.life, posY += 10);
+                this.life.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+
+                if (rectPlayer.IntersectsWith(rectLife))
+                {
+                    MessageBox.Show("hello");
+                    this.lifeTimer.Stop();
+                    player.addLife();
+                    canvas.Children.Remove(this.life);
+                }
+            }
+            else
+            {
+                canvas.Children.Remove(this.life);
+            }
         }
 
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -357,6 +413,7 @@ namespace GalagaX4
                 save.FontSize = 25;
                 save.FontWeight = FontWeights.Bold;
                 save.Background = Brushes.DimGray; ;
+                save.Click += saveBtn_Click;
 
                 this.load = new Button();
                 canvas.Children.Add(load);
@@ -367,7 +424,8 @@ namespace GalagaX4
                 load.Content = "LOAD NEW GAME";
                 load.FontSize = 25;
                 load.FontWeight = FontWeights.Bold;
-                load.Background = Brushes.DimGray; ;
+                load.Background = Brushes.DimGray;
+                load.Click += loadBtn_Click;
             }
 
             if (action.Equals("remove"))
@@ -378,6 +436,14 @@ namespace GalagaX4
             }
         }
 
-        
+        private void loadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
