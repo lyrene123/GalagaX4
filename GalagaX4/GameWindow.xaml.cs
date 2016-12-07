@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using WpfAnimatedGif;
 
 namespace GalagaX4
 {
@@ -44,9 +45,10 @@ namespace GalagaX4
 
 
             Image playerPic = new Image();
-            playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
-            playerPic.Width = 42;
-            playerPic.Height = 46;
+            playerPic.Source = UtilityMethods.LoadImage("pics/galagaSpaceShip.gif");
+            ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
+            playerPic.Width = 122;
+            playerPic.Height = 126;
             canvas.Children.Add(playerPic);
             Canvas.SetLeft(playerPic, 405);
             Canvas.SetTop(playerPic, 500);
