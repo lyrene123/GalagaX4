@@ -268,10 +268,10 @@ namespace GalagaX4
                 commanders[i].Fly(120);
             }
 
-            if(this.round == 3)
+          /*  if(this.round == 5)
             {
                 displayBoss();
-            }
+            }*/
             
             player.SetEnemyTarget(enemies);
             StartGame();
@@ -387,10 +387,16 @@ namespace GalagaX4
             if (this.enemies.Count <= 1)
             {
                 timerRandomShoot.Stop();
-                if (this.round == 1 || this.round == 2 || this.round == 3)
+                if (this.round >=1 && this.round<=4)
                 {
                     round++;
-                    Play();
+                    if (this.round != 4)
+                    {
+                        Play();
+                    }else
+                    {
+                        displayBoss();
+                    }
                 }
                 else
                 {
@@ -431,7 +437,7 @@ namespace GalagaX4
             enemies.Add(boss);
             boss.setTarget(player);
             this.boss.Fly(200);
-            this.boss.Shoot(1);
+            this.boss.Shoot(0.5);
         }
 
     }

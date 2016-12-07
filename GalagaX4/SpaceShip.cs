@@ -185,7 +185,7 @@ namespace GalagaX4
         public override void Die()
         {
             this.dead = true;
-            this.target.addPoints(200);
+            this.target.addCoins(200);
             //this.isShot = true;
             BitmapImage[] explosions =
             {

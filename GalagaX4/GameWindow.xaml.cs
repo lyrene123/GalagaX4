@@ -11,13 +11,18 @@ using WpfAnimatedGif;
 namespace GalagaX4
 {
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaction logic for GameWindow.xaml. 
+    /// The GameWindow class sets the galaga game by creating the player,
+    /// by setting the background music and by calling the level 1 to start off
+    /// the play. The GameWindow class implements the codes that will handle
+    /// events such as the pause and play button click and the regular check of
+    /// extra life to give to the player if necessary
     /// </summary>
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-        DispatcherTimer checkLife;
-        DispatcherTimer lifeTimer;
+        DispatcherTimer checkLife; //timer to check if player needs more life or not
+        DispatcherTimer lifeTimer; //timer to make the life icon appear
         Player player;
         bool isPause;
         Button resume;
@@ -26,7 +31,11 @@ namespace GalagaX4
         Image life;
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
 
-
+        /// <summary>
+        /// The GameWindow constructor sets the overral initial state of the game
+        /// by creating the player, by setting the background music, the background image
+        /// and by calling the first level of the game
+        /// </summary>
         public GameWindow()
         {
             this.Closed += GameWindow_Closed;
@@ -37,15 +46,10 @@ namespace GalagaX4
             backgroundImage.Height = 650;
             mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
             mediaElement.BeginInit();
-            mediaElement.Position = TimeSpan.FromSeconds(1);
-            //mediaElement.Stop();
+            mediaElement.Position = TimeSpan.FromSeconds(1);;
             mediaElement.Volume = 0.07;
-            //mediaElement.MediaOpened += new RoutedEventHandler(Element_MediaOpened);
             mediaElement.Play();
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
-            //mediaElement.Play();
-            //
-
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -58,11 +62,11 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-           Level1 lv1 = new Level1(this, canvas, player);
-           lv1.Play();
+           //Level1 lv1 = new Level1(this, canvas, player);
+           //lv1.Play();
 
-           // Level4 lv2 = new Level4(this, canvas, player);
-            //lv2.Play();
+           Level4 lv2 = new Level4(this, canvas, player);
+            lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
           // buyLives();
@@ -70,7 +74,10 @@ namespace GalagaX4
             DecrementColdDown();
         }
 
-
+        /// <summary>
+        /// The buyLives method initiates the checkLife timer and will
+        /// call the giveLife event method handler
+        /// </summary>
         public void buyLives()
         {
             this.checkLife = new DispatcherTimer(DispatcherPriority.Normal);
@@ -79,12 +86,18 @@ namespace GalagaX4
             checkLife.Start();
         }
 
+        /// <summary>
+        /// giveLife method event handler handles the regular checking 
+        /// if the player is in need of an extra life. If it's the case
+        /// then, the method will initiate the lifeTimer timer and will call
+        /// the sendLife method handler event
+        /// </summary>
+        /// <param name="sender">object raising the event</param>
+        /// <param name="e">the giveLife event raised </param>
         private void giveLife(object sender, EventArgs e)
         {
-           // MessageBox.Show("giveLife");
-            if (player.GetLives() <= 2)
+            if (player.GetLives() < 2)
             {
-               // MessageBox.Show("need life");
                 this.life = new Image();
                 this.life.Width = 34;
                 this.life.Height = 26;
@@ -98,9 +111,16 @@ namespace GalagaX4
             }
         }
 
+        /// <summary>
+        /// sendLife method handles the provision of an extra life for the player.
+        /// An image of a spaceship will appear and the method will make it move down
+        /// in order for the player to have the choice to take it by checking any
+        /// collision
+        /// </summary>
+        /// <param name="sender">object that raised the event</param>
+        /// <param name="e">the sendLife event that was raised</param>
         private void sendLife(object sender, EventArgs e)
         {
-           // MessageBox.Show("lifee");
             double posLifeY = Canvas.GetTop(this.life);
             double posLifeX = Canvas.GetLeft(this.life);
             double posPlayerX = Canvas.GetLeft(player.GetImage());
@@ -114,11 +134,14 @@ namespace GalagaX4
                 Canvas.SetTop(this.life, posLifeY += 8);
                 this.life.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
 
+                //check if the player touched the extra life image
                 if (rectPlayer.IntersectsWith(rectLife))
                 {
-                    //MessageBox.Show("entered!");
                     this.lifeTimer.Stop();
-                    player.addLife();
+                    if (player.getCoins() >= 200 && player.GetLives() < 2)
+                    {
+                        player.addLife();
+                    }
                     canvas.Children.Remove(this.life);
                 }
             }
@@ -128,11 +151,21 @@ namespace GalagaX4
             }
         }
 
+        /// <summary>
+        /// GameWindow_Closing method closes the game window by exiting the environment
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
@@ -207,6 +240,8 @@ namespace GalagaX4
                 gameOverPic.Source = UtilityMethods.LoadImage("pics/gameOver.png");
                 mediaElement.Stop();
                 mediaElement.Source = null;
+                player.shootSoundEffect.StopSound();
+                player.shootSoundEffect.Dispose();
                 sound.playSoundLooping();
                 sound.Dispose();
                 BackToMainWindow();

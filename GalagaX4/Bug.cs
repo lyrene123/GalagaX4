@@ -144,7 +144,7 @@ namespace GalagaX4
 
         public override void Die()
         {
-            this.target.addPoints(100);
+            this.target.addCoins(100);
             BitmapImage[] explosions =
             {
                 UtilityMethods.LoadImage("pics/explosions/enemiesExp0.png"),

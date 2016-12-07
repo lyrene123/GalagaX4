@@ -27,8 +27,6 @@ namespace GalagaX4
 
         }
 
-
-
         public override void Die()
         {
             hitCounter++;
@@ -162,7 +160,6 @@ namespace GalagaX4
 
         public void live()
         {
-
             Animation bossAnimation;
             if (hitCounter < 34)
             {
@@ -185,14 +182,11 @@ namespace GalagaX4
                 bossAnimation = new Animation(image, bossImages, true);
                 Animation.Initiate(bossAnimation, 200);
             }
-
-
         }
 
 
         private String[] SwitchImage()
         {
-
             String[] path = new string[3];
 
             if (hitCounter >= 1 && hitCounter < 3)
@@ -269,10 +263,7 @@ namespace GalagaX4
                 path[0] = "pics/boss/wing10/boss1Wing10.png";
                 path[1] = "pics/boss/wing10/boss2Wing10.png";
                 path[2] = "pics/boss/wing10/boss3Wing10.png";
-
             }
-
-
             return path;
         }
 
@@ -286,7 +277,5 @@ namespace GalagaX4
             this.timer.Stop();
             this.animation.Stop();
         }
-
-
     }
 }

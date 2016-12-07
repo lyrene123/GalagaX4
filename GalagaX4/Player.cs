@@ -111,10 +111,15 @@ namespace GalagaX4
             this.displayPoints.Text = " x "+this.points;
         }
 
-        public void addPoints(int morePoints)
+        public void addCoins(int morePoints)
         {
             this.points += morePoints;
             updatePoints();
+        }
+
+        public int getCoins()
+        {
+            return this.points;
         }
 
         public void addLife()
@@ -219,7 +224,6 @@ namespace GalagaX4
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
             explosionSoundEffect.playSound();
-            //await Task.Delay(1000);
             live();
         }
 
@@ -230,19 +234,6 @@ namespace GalagaX4
                 this.canvas.Children.Remove(shipLives[0]);
                 this.shipLives.RemoveAt(0);
             }
-
-            /*if(this.lives == 3)
-            {
-                this.canvas.Children.Remove(shipLives[0]);
-            }
-            else if(this.lives == 2)
-            {
-                this.canvas.Children.Remove(shipLives[1]);
-            }
-            else
-            {
-                this.canvas.Children.Remove(shipLives[2]);
-            }*/
             this.lives--;        
         }
 
@@ -250,6 +241,8 @@ namespace GalagaX4
         {              
             if (lives > 0)
             {
+                coldDown = 0;
+
                 this.image = new Image();
                 this.image.Height = 46;
                 this.image.Width = 42;
@@ -258,7 +251,7 @@ namespace GalagaX4
                 Canvas.SetLeft(this.image, 405);
                 this.SetPointX(27);
                 this.SetPointY(490);
-                await Task.Delay(1500);  
+                await Task.Delay(1200);  
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else
