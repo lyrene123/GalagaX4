@@ -115,6 +115,30 @@ namespace GalagaX4
             updatePoints();
         }
 
+        public void addLife()
+        {       
+            if (this.lives == 2)
+            {
+                Image newLife = new Image();
+                canvas.Children.Add(newLife);
+                double posX = Canvas.GetLeft(hearts[1]);
+                Canvas.SetLeft(newLife, posX - 30);
+                newLife.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+            }
+            else
+            {
+                Image newLife = new Image();
+                canvas.Children.Add(newLife);
+                double posX = Canvas.GetLeft(hearts[2]);
+                Canvas.SetLeft(newLife, posX - 30);
+                newLife.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+            }
+            this.lives++;
+            this.points = this.points - 2000;
+            updatePoints();
+            MessageBox.Show(this.lives+ " " + this.points);
+        }
+
         public void SetEnemyTarget(List<Enemies> enemies)
         {
             this.enemies = enemies;

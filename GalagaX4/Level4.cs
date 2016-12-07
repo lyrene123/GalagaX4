@@ -83,13 +83,15 @@ namespace GalagaX4
                 await Task.Delay(1500);
             }
 
-
-            lv4Pic.Height = 40;
-            lv4Pic.Width = 100;
-            this.canvas.Children.Add(lv4Pic);
-            Canvas.SetLeft(lv4Pic, 0);
-            Canvas.SetTop(lv4Pic, 0);
-            lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
+            if (this.round == 1)
+            {
+                lv4Pic.Height = 40;
+                lv4Pic.Width = 100;
+                this.canvas.Children.Add(lv4Pic);
+                Canvas.SetLeft(lv4Pic, 0);
+                Canvas.SetTop(lv4Pic, 0);
+                lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
+            }
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),

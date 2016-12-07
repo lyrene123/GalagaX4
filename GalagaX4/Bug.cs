@@ -55,6 +55,7 @@ namespace GalagaX4
                     this.moveDown = false;
                     playerCollision();
 
+                    //random dive
                     if (dive == true)
                     {
                         Random rand = new Random();

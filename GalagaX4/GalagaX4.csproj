@@ -216,7 +216,9 @@
     <Resource Include="audio\Fireworks_Finale-SoundBible.com-370363529.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\galagaSpaceShip.gif" />
+    <Resource Include="audio\Game_Over.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
