@@ -235,7 +235,6 @@ namespace GalagaX4
         {      
             if (lives > 0)
             {
-                explosionSoundEffect.StopSound();
                 //await Task.Delay(1000);
                 this.image = new Image();
                 this.image.Height = 46;
