@@ -246,16 +246,11 @@ namespace GalagaX4
                 this.SetPointY(490);
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
-            /*else
+            else
             {
-                Image gameOver = new Image();
-                gameOver.Height = 200;
-                gameOver.Width = 250;
-                this.canvas.Children.Add(gameOver);
-                Canvas.SetTop(gameOver, 200);
-                Canvas.SetLeft(gameOver, 300);
-                gameOver.Source = UtilityMethods.LoadImage("pics/gameOver.png");
-            }*/
+                explosionSoundEffect.StopSound();
+                explosionSoundEffect.Dispose(); 
+            }
         }
     }
 }
