@@ -211,7 +211,7 @@ namespace GalagaX4
         async void BackToMainWindow()
         {
             this.coldDownTimer.Stop();
-            await Task.Delay(3000);
+            await Task.Delay(5000);
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
