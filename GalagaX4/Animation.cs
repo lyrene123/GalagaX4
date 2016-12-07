@@ -10,6 +10,13 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Animation class Animation define the elements responsible for the creation
+    /// of the fly movements illusion that is created by looping through a series of images,
+    /// each image different from the last image giving the impression that the object is
+    /// moving in a certain pathern defined by the user. The illusion created 
+    /// The brain perceives the group of images as a single changing scene.
+    /// </summary>
     class Animation
     {
         int index = 0;
