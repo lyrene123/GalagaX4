@@ -48,7 +48,7 @@ namespace GalagaX4
 
 
             Image playerPic = new Image();
-            playerPic.Source = UtilityMethods.LoadImage("pics/galagaSpaceShip.gif");
+            playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
             playerPic.Width = 122;
             playerPic.Height = 126;
