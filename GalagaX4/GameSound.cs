@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The GameSound Class creates 
+    /// </summary>
     class GameSound: IDisposable
     {
         public string audiosource;
