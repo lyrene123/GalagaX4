@@ -29,7 +29,8 @@ namespace GalagaX4
         List<Enemies> enemies;
 
         int lives = 3;
-        Image[] hearts;
+        List<Image> shipLives;
+        Image newLife;
 
         TextBlock displayPoints;
         int points = 0;
@@ -37,6 +38,7 @@ namespace GalagaX4
         public Player(Point point, Image image, Canvas canvas
             , double speed) : base(point, image, canvas)
         {
+            this.shipLives = new List<Image>();
             this.speed = speed;
             setDisplayLives();
             setDisplayPoints();
@@ -79,18 +81,18 @@ namespace GalagaX4
 
         public void setDisplayLives()
         {
-            this.hearts = new Image[3];
+           // this.shipLives = new List<Image>(3);
             int spaceX = 0;
-            for(int i = 0; i < hearts.Length; i++)
+            for(int i = 0; i < 3; i++)
             {
-                hearts[i] = new Image();
-                hearts[i].Width = 34;
-                hearts[i].Height = 26;
-                this.canvas.Children.Add(hearts[i]);
-                Canvas.SetLeft(hearts[i], 745 + spaceX);
-                Canvas.SetTop(hearts[i], 585);
+                shipLives.Add(new Image());
+                shipLives[i].Width = 34;
+                shipLives[i].Height = 26;
+                this.canvas.Children.Add(shipLives[i]);
+                Canvas.SetLeft(shipLives[i], 745 + spaceX);
+                Canvas.SetTop(shipLives[i], 585);
                 spaceX += 30;
-                hearts[i].Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+                shipLives[i].Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
         }
 
@@ -119,24 +121,31 @@ namespace GalagaX4
         {       
             if (this.lives == 2)
             {
-                Image newLife = new Image();
+                this.newLife = new Image();
+                this.shipLives.Insert(0, newLife);
+                newLife.Width = 34;
+                newLife.Height = 26;
                 canvas.Children.Add(newLife);
-                double posX = Canvas.GetLeft(hearts[1]);
+                double posX = Canvas.GetLeft(shipLives[1]);
                 Canvas.SetLeft(newLife, posX - 30);
+                Canvas.SetTop(newLife, 585);
                 newLife.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else
             {
-                Image newLife = new Image();
+                this.newLife = new Image();
+                this.shipLives.Insert(0, newLife);
+                newLife.Width = 34;
+                newLife.Height = 26;
                 canvas.Children.Add(newLife);
-                double posX = Canvas.GetLeft(hearts[2]);
+                double posX = Canvas.GetLeft(shipLives[shipLives.Count-1]);
                 Canvas.SetLeft(newLife, posX - 30);
+                Canvas.SetTop(newLife, 585);
                 newLife.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             this.lives++;
             this.points = this.points - 2000;
             updatePoints();
-            MessageBox.Show(this.lives+ " " + this.points);
         }
 
         public void SetEnemyTarget(List<Enemies> enemies)
@@ -216,26 +225,31 @@ namespace GalagaX4
 
         public void decrementLives()
         {
-            if(this.lives == 3)
+            if (this.shipLives.Count != 0)
             {
-                this.canvas.Children.Remove(hearts[0]);
+                this.canvas.Children.Remove(shipLives[0]);
+                this.shipLives.RemoveAt(0);
+            }
+
+            /*if(this.lives == 3)
+            {
+                this.canvas.Children.Remove(shipLives[0]);
             }
             else if(this.lives == 2)
             {
-                this.canvas.Children.Remove(hearts[1]);
+                this.canvas.Children.Remove(shipLives[1]);
             }
             else
             {
-                this.canvas.Children.Remove(hearts[2]);
-            }
+                this.canvas.Children.Remove(shipLives[2]);
+            }*/
             this.lives--;        
         }
 
-        public void live()
-        {      
+        public async void live()
+        {              
             if (lives > 0)
             {
-                //await Task.Delay(1000);
                 this.image = new Image();
                 this.image.Height = 46;
                 this.image.Width = 42;
@@ -244,6 +258,7 @@ namespace GalagaX4
                 Canvas.SetLeft(this.image, 405);
                 this.SetPointX(27);
                 this.SetPointY(490);
+                await Task.Delay(1500);  
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else

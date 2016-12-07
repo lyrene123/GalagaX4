@@ -65,7 +65,7 @@ namespace GalagaX4
             //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-           //buyLives();
+          // buyLives();
 
             DecrementColdDown();
         }
@@ -73,25 +73,24 @@ namespace GalagaX4
 
         public void buyLives()
         {
-            this.life = new Image();
-            this.life.Width = 34;
-            this.life.Height = 26;
-            canvas.Children.Add(this.life);
-            Canvas.SetLeft(this.life, 600);
-            Canvas.SetTop(this.life, 10);
-
             this.checkLife = new DispatcherTimer(DispatcherPriority.Normal);
-            checkLife.Interval = TimeSpan.FromSeconds(15);
+            checkLife.Interval = TimeSpan.FromMinutes(1);
             checkLife.Tick += new EventHandler(giveLife);
             checkLife.Start();
         }
 
         private void giveLife(object sender, EventArgs e)
         {
-            MessageBox.Show("giveLife");
+           // MessageBox.Show("giveLife");
             if (player.GetLives() <= 2)
             {
-                MessageBox.Show("need life");
+               // MessageBox.Show("need life");
+                this.life = new Image();
+                this.life.Width = 34;
+                this.life.Height = 26;
+                canvas.Children.Add(this.life);
+                Canvas.SetLeft(this.life, 750);
+                Canvas.SetTop(this.life, 10);
                 this.lifeTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 lifeTimer.Interval = TimeSpan.FromMilliseconds(150);
                 lifeTimer.Tick += new EventHandler(sendLife);
@@ -102,19 +101,22 @@ namespace GalagaX4
         private void sendLife(object sender, EventArgs e)
         {
            // MessageBox.Show("lifee");
-            double posY = Canvas.GetTop(this.life);
-            double posX = Canvas.GetLeft(this.life);
-            Rect rectLife = new Rect(posX, posY, this.life.Width + 20, this.life.Height + 20);
-            Rect rectPlayer = new Rect(this.player.GetPoint().X, this.player.GetPoint().Y, this.player.GetImage().Width - 5, this.player.GetImage().Height - 5);
+            double posLifeY = Canvas.GetTop(this.life);
+            double posLifeX = Canvas.GetLeft(this.life);
+            double posPlayerX = Canvas.GetLeft(player.GetImage());
+            double posPlayerY = Canvas.GetTop(player.GetImage());
+
+            Rect rectLife = new Rect(posLifeX, posLifeY, this.life.Width - 5, this.life.Height - 5);
+            Rect rectPlayer = new Rect(posPlayerX, posPlayerY, this.life.Width - 5, this.life.Height - 5);
             
-            if (posY <= 500)
+            if (posLifeY <= 530)
             {
-                Canvas.SetTop(this.life, posY += 10);
+                Canvas.SetTop(this.life, posLifeY += 8);
                 this.life.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
 
                 if (rectPlayer.IntersectsWith(rectLife))
                 {
-                    MessageBox.Show("entered!");
+                    //MessageBox.Show("entered!");
                     this.lifeTimer.Stop();
                     player.addLife();
                     canvas.Children.Remove(this.life);
@@ -239,8 +241,8 @@ namespace GalagaX4
         }
         private void playBtn_Click()
         {
-
-            this.isPause = false;
+            this.lifeTimer.Start();
+            this.checkLife.Start();
             if (this.player.getCurrentLevel() == 1)
             {
                 if (Level1.timerRandom != null)
@@ -313,6 +315,8 @@ namespace GalagaX4
 
         private void pauseBtn_Click()
         {
+            this.lifeTimer.Stop();
+            this.checkLife.Stop();
             if (this.player.getCurrentLevel() == 1)
             {
                 if (Level1.timerRandom != null)

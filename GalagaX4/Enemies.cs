@@ -95,6 +95,7 @@ namespace GalagaX4
             if (current.IntersectsWith(player))
             {
                 target.Die();
+                this.Die();
             }
         }
 
