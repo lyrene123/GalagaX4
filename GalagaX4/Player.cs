@@ -210,7 +210,6 @@ namespace GalagaX4
             Animation animation = new Animation(this.image, explosions, false, canvas);
             Animation.Initiate(animation, 100);
             explosionSoundEffect.playSound();
-
             //await Task.Delay(1000);
             live();
         }
@@ -236,6 +235,7 @@ namespace GalagaX4
         {      
             if (lives > 0)
             {
+                explosionSoundEffect.StopSound();
                 //await Task.Delay(1000);
                 this.image = new Image();
                 this.image.Height = 46;

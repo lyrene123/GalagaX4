@@ -214,11 +214,16 @@ namespace GalagaX4
         async void BackToMainWindow()
         {
             this.coldDownTimer.Stop();
-            await Task.Delay(7000);
+            await Task.Delay(10000);
             this.Hide();
             var mainWindow = new MainWindow();
-            mainWindow.Show();
+            player.explosionSoundEffect.StopSound();
+            player.explosionSoundEffect.Dispose();
             sound.StopSound();
+            sound.Dispose();
+            mainWindow.Show();
+            //sound.StopSound();
+            //sound.Dispose();
             //this.Close();
         }
 
