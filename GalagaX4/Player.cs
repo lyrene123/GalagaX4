@@ -211,7 +211,7 @@ namespace GalagaX4
             Animation.Initiate(animation, 100);
             explosionSoundEffect.playSound();
             //await Task.Delay(1000);
-            live();
+            Respawn();
         }
 
         public void decrementLives()
@@ -231,11 +231,14 @@ namespace GalagaX4
             this.lives--;        
         }
 
-        public void live()
-        {      
+        public async void Respawn()
+        {
             if (lives > 0)
             {
-                //await Task.Delay(1000);
+                coldDown = 0;
+
+                await Task.Delay(2000);
+                
                 this.image = new Image();
                 this.image.Height = 46;
                 this.image.Width = 42;
