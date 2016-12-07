@@ -65,7 +65,7 @@ namespace GalagaX4
             //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-           //buyLives();//
+           //buyLives();
 
             DecrementColdDown();
         }
@@ -89,9 +89,9 @@ namespace GalagaX4
         private void giveLife(object sender, EventArgs e)
         {
             MessageBox.Show("giveLife");
-            if (player.GetLives() <=2)
+            if (player.GetLives() <= 2)
             {
-                MessageBox.Show("lifee");
+                MessageBox.Show("need life");
                 this.lifeTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 lifeTimer.Interval = TimeSpan.FromMilliseconds(150);
                 lifeTimer.Tick += new EventHandler(sendLife);
@@ -114,7 +114,7 @@ namespace GalagaX4
 
                 if (rectPlayer.IntersectsWith(rectLife))
                 {
-                    MessageBox.Show("hello");
+                    MessageBox.Show("entered!");
                     this.lifeTimer.Stop();
                     player.addLife();
                     canvas.Children.Remove(this.life);
