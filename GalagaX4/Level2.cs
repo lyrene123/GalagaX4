@@ -11,6 +11,13 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Level2 Class instantiates a new Game,
+    /// creating all the elements on the screen 
+    /// necessary to play the game such as the Player and 
+    /// enemies. It also creates all the patherns of the 
+    /// enemies for level2 of the game.
+    /// </summary>
     class Level2
     {
         Window window;
@@ -35,6 +42,13 @@ namespace GalagaX4
 
         Image lv2Pic;
 
+        /// <summary>
+        /// Level2 Class Constructor. It cosntructs the new window (screen),
+        /// a new Canvas and the Player.
+        /// </summary>
+        /// <param name="window"> A new window to receive all elements fo the game and manage the screen</param>
+        /// <param name="canvas">Area within the window which you can position all elements by using coordinates that are relative to the Canvas area.</param>
+        /// <param name="player">The main player of the Game</param>
         public Level2(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -43,12 +57,17 @@ namespace GalagaX4
             this.player.updateCurrentLevel(2);
             enemies = new List<Enemies>();
         }
-
+        /// <summary>
+        /// The static timerRandom method returns 
+        /// a DispatcherTimer Object related to the random shooting.
+        /// </summary>
         public static DispatcherTimer timerRandom
         {
             get { return timerRandomShoot; }
         }
-
+        /// <summary>
+        /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
+        /// </summary>
         void DisplayLevel()
         {
             lv2Pic = new Image();
@@ -59,7 +78,10 @@ namespace GalagaX4
             Canvas.SetLeft(lv2Pic, 350);
             lv2Pic.Source = UtilityMethods.LoadImage("pics/level2.png");
         }
-
+        /// <summary>
+        /// The Play Method creates and displays all enemies and the player on 
+        /// the Canvas (screen).
+        /// </summary>
         public async void Play()
         {
             Player.ColdDown = 0;
@@ -260,7 +282,11 @@ namespace GalagaX4
             player.SetEnemyTarget(enemies);
             StartGame();
         }
-
+        /// <summary>
+        /// The StartGame method instantiates a DispatcherTimer Class which 
+        /// will be used to control the interval of all enemies shooting execution 
+        /// in the game of this specific level.
+        /// </summary>
         void StartGame()
         {
             timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
@@ -268,7 +294,12 @@ namespace GalagaX4
             timerRandomShoot.Tick += new EventHandler(ShootUpdate);
             timerRandomShoot.Start();
         }
-
+        /// <summary>
+        /// The shootUpdate method controls randomly the
+        /// shooting of the enemies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShootUpdate(object sender, EventArgs e)
         {
             //-------------------------------
