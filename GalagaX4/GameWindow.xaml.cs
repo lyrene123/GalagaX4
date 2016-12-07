@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using WpfAnimatedGif;
 
 namespace GalagaX4
 {
@@ -48,6 +49,7 @@ namespace GalagaX4
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+            ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
             playerPic.Width = 42;
             playerPic.Height = 46;
             canvas.Children.Add(playerPic);
@@ -204,6 +206,7 @@ namespace GalagaX4
                 mediaElement.Stop();
                 mediaElement.Source = null;
                 sound.playSoundLooping();
+                sound.Dispose();
                 BackToMainWindow();
             }
         }
@@ -211,7 +214,7 @@ namespace GalagaX4
         async void BackToMainWindow()
         {
             this.coldDownTimer.Stop();
-            await Task.Delay(5000);
+            await Task.Delay(7000);
             this.Hide();
             var mainWindow = new MainWindow();
             mainWindow.Show();
