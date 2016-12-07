@@ -50,8 +50,8 @@ namespace GalagaX4
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
-            playerPic.Width = 122;
-            playerPic.Height = 126;
+            playerPic.Width = 42;
+            playerPic.Height = 46;
             canvas.Children.Add(playerPic);
             Canvas.SetLeft(playerPic, 405);
             Canvas.SetTop(playerPic, 500);
