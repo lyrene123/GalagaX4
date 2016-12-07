@@ -65,7 +65,7 @@ namespace GalagaX4
             //lv2.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-           buyLives();
+           //buyLives();
 
             DecrementColdDown();
         }
