@@ -474,7 +474,7 @@ namespace GalagaX4
             enemies.Add(boss);
             boss.setTarget(player);
             this.boss.Fly(200);
-            this.boss.Shoot(0.5);
+            this.boss.Shoot(2);
         }
 
     }

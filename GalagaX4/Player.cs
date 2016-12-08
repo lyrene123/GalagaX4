@@ -345,7 +345,7 @@ namespace GalagaX4
                 Canvas.SetLeft(this.image, 405);
                 this.SetPointX(27);
                 this.SetPointY(490);
-                await Task.Delay(1200);
+                await Task.Delay(1500);
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else

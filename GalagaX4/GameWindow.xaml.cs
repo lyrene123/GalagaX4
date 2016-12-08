@@ -28,7 +28,7 @@ namespace GalagaX4
         Button load;
         Image life;
         bool loaded;
-        Level1 lv1;
+        Level4 lv1;
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
         /// <summary>
         /// The GameWindow constructor sets the overral initial state of the game
@@ -61,7 +61,7 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            lv1 = new Level1(this, canvas, player);
+            lv1 = new Level4(this, canvas, player);
             lv1.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
@@ -91,7 +91,7 @@ namespace GalagaX4
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
             if (load == true)
             {
-                lv1 = new Level1(this, canvas, player, true);
+               // lv1 = new Level1(this, canvas, player, true);
             }
             else
             {
@@ -105,7 +105,7 @@ namespace GalagaX4
                 Point playerPoint = new Point(27, 490);
                 player = new Player(playerPoint, playerPic, canvas, 15);
 
-                lv1 = new Level1(this, canvas, player);
+                //lv1 = new Level1(this, canvas, player);
                 lv1.Play();
             }
 
@@ -546,7 +546,7 @@ namespace GalagaX4
             {
                 if (LoadLevels.getStaticPlayer().getCurrentLevel() == 1)
                 {
-                    lv1.saveLevel1();
+                 //   lv1.saveLevel1();
 
                 }
                 else if (LoadLevels.getStaticPlayer().getCurrentLevel() == 2)
@@ -559,7 +559,7 @@ namespace GalagaX4
 
                 if (player.getCurrentLevel() == 1)
                 {
-                    lv1.saveLevel1();
+                   // lv1.saveLevel1();
 
                 }
                 else if (player.getCurrentLevel() == 2)
