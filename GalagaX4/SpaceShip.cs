@@ -70,7 +70,7 @@ namespace GalagaX4
         /// <param name="e">The MoveHorizontal event raised</param>
         void MoveHorizontal(Object sender, EventArgs e)
         {
-            double x =this.GetPoint().X;
+            double x = this.GetPoint().X;
 
             if (this.point.Y <= 550)
             {

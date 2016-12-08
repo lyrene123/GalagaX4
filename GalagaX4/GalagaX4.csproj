@@ -69,7 +69,9 @@
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
     <Compile Include="Level4.cs" />
+    <Compile Include="LoadLevels.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="SerializeGameObj.cs" />
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="GameWindow.xaml">

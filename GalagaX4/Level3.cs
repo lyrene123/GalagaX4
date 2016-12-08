@@ -215,7 +215,7 @@ namespace GalagaX4
                 ships[i].setDiveFrequency(10);
                 ships[i].setMoveDownFrequency(45);
                 ships[i].Fly(130);
-                
+
             }
 
             //---------------------------------------------------------------------------
@@ -252,9 +252,9 @@ namespace GalagaX4
                 ufos[i].setDiveFrequency(10);
                 ufos[i].setMoveDownFrequency(45);
                 ufos[i].Fly(130);
-                
+
             }
-            
+
             //---------------------------------------------------------------------------
             //commanders creation
             BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"),

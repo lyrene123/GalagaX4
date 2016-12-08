@@ -38,9 +38,9 @@ namespace GalagaX4
             this.moveDown = false;
             this.dive = false;
 
-            this.isShot = false; 
-            this.dead = false; 
-            this.isShooting = false; 
+            this.isShot = false;
+            this.dead = false;
+            this.isShooting = false;
 
             this.diveFrequency = 5; //default value if not set
             this.moveDownFrequency = 35; //default value if not set
@@ -167,7 +167,7 @@ namespace GalagaX4
                         Canvas.SetLeft(this.GetImage(), this.point.X);
                     }
                     else //if commander cannot move to the left any further : 
-                    { 
+                    {
                         moveCounter = 2; // 2 = move right 
                         moveDown = true;
                     }

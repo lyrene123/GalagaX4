@@ -73,9 +73,9 @@ namespace GalagaX4
             if (disposing)
             {
                 handle.Dispose();
-                
+
             }
-                       
+
             disposed = true;
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace GalagaX4
         /// </summary>
         public void playSound()
         {
-           audioSound.Play();
+            audioSound.Play();
         }
         /// <summary>
         /// The playSoundLooping method plays and loops the 

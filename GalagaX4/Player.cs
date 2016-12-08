@@ -23,6 +23,7 @@ namespace GalagaX4
         public GameSound shootSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Firing.wav", true);
         public GameSound explosionSoundEffect = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Explosion.wav", true);
         int currentLevel;
+        static Player player;
         /// <summary>
         /// The static ColdDown method gets or sets the value 
         /// of the coldDown of type Double.
@@ -59,6 +60,19 @@ namespace GalagaX4
             setDisplayPoints();
             updatePoints();
         }
+        public Player(Player player)
+        {
+            Player.player = player;
+
+        }
+        public static Player getPlayer()
+        {
+            return Player.player;
+        }
+        public void setCurrentLevel(int currentLevel)
+        {
+            this.currentLevel = currentLevel;
+        }
         /// <summary>
         /// The Player Constructor without parameters to give access
         /// to useful methods provided by this Class.
@@ -79,11 +93,11 @@ namespace GalagaX4
         /// <returns>List of type enemies the number of elements contained in the list of enemies.</returns>
         public int getEnemiesSize()
         {
-           if(this.enemies == null)
+            if (this.enemies == null)
             {
                 return 0;
             }
-           else
+            else
             {
                 return this.enemies.Count;
             }
@@ -117,9 +131,9 @@ namespace GalagaX4
         /// </summary>
         public void setDisplayLives()
         {
-           // this.shipLives = new List<Image>(3);
+            // this.shipLives = new List<Image>(3);
             int spaceX = 0;
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 shipLives.Add(new Image());
                 shipLives[i].Width = 34;
@@ -149,7 +163,7 @@ namespace GalagaX4
         /// </summary>
         public void updatePoints()
         {
-            this.displayPoints.Text = " x "+this.points;
+            this.displayPoints.Text = " x " + this.points;
         }
         /// <summary>
         /// The addCoins method adds points to the player and also invokes the updatePoints method.
@@ -172,7 +186,7 @@ namespace GalagaX4
         /// The addLife method adds life to player and sets the image on the screen.
         /// </summary>
         public void addLife()
-        {       
+        {
             if (this.lives == 2)
             {
                 this.newLife = new Image();
@@ -192,7 +206,7 @@ namespace GalagaX4
                 newLife.Width = 34;
                 newLife.Height = 26;
                 canvas.Children.Add(newLife);
-                double posX = Canvas.GetLeft(shipLives[shipLives.Count-1]);
+                double posX = Canvas.GetLeft(shipLives[shipLives.Count - 1]);
                 Canvas.SetLeft(newLife, posX - 30);
                 Canvas.SetTop(newLife, 585);
                 newLife.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -223,7 +237,7 @@ namespace GalagaX4
             {
                 this.point.X += 1;
             }
-            
+
             this.point.X = UtilityMethods.Clamp(this.point.X, 2, 52);
             Canvas.SetLeft(this.image, this.point.X * speed);
         }
@@ -233,7 +247,7 @@ namespace GalagaX4
         /// one bullet at a time.
         /// </summary>
         public void Shoot()
-        {            
+        {
             if (this.image.IsLoaded == true)
             {
                 if (Keyboard.IsKeyDown(Key.Space))
@@ -265,7 +279,7 @@ namespace GalagaX4
         /// </summary>
         public void StopShootUp()
         {
-            if(bullet != null)
+            if (bullet != null)
                 bullet.StopShootUp();
         }
         /// <summary>
@@ -311,14 +325,14 @@ namespace GalagaX4
                 this.canvas.Children.Remove(shipLives[0]);
                 this.shipLives.RemoveAt(0);
             }
-            this.lives--;        
+            this.lives--;
         }
         /// <summary>
         /// The live method creates a new instance image of the player if the lives still greater than 0.
         /// If the lives is not greater than 0 the explosion of the soundeffect stops and it is Disposed.
         /// </summary>
         public async void live()
-        {              
+        {
             if (lives > 0)
             {
                 coldDown = 0;
@@ -331,13 +345,13 @@ namespace GalagaX4
                 Canvas.SetLeft(this.image, 405);
                 this.SetPointX(27);
                 this.SetPointY(490);
-                await Task.Delay(1200);  
+                await Task.Delay(1200);
                 this.image.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             }
             else
             {
                 explosionSoundEffect.StopSound();
-                explosionSoundEffect.Dispose(); 
+                explosionSoundEffect.Dispose();
             }
         }
     }

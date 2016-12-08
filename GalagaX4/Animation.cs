@@ -197,7 +197,7 @@ namespace GalagaX4
                     Stop();
                     if (this.image.IsLoaded)
                     {
-                      
+
                         canvas.Children.Remove(this.image);
                     }
                 }

@@ -77,6 +77,11 @@ namespace GalagaX4
             }
 
         }
+        public int getHitCounter()
+        {
+            return this.hitCounter;
+
+        }
         /// <summary>
         /// The overridden Fly method takes as input a double for the frequency
         /// to call the startFly method for the moving of the Boss on the screen
@@ -133,23 +138,22 @@ namespace GalagaX4
             Point newPoint = new Point();
             newPoint.X = this.point.X + 50;
             newPoint.Y = this.point.Y + 70;
-
-
             Image bulletPic1 = new Image();
             Bullet bullet1 = new Bullet(newPoint, bulletPic1, canvas);
             bullet1.setPlayerTarget(this.target);
             bullet1.ShootLeftSide("pics/fireball.png");
 
-            newPoint.X = this.point.X + 100;
-            newPoint.Y = this.point.Y + 50;
+
+            newPoint.X = this.point.X + 90;
+            newPoint.Y = this.point.Y + 70;
             Image bulletPic = new Image();
             Bullet bullet = new Bullet(newPoint, bulletPic, canvas);
             bullet.setPlayerTarget(this.target);
             bullet.ShootRightSide("pics/fireball.png");
 
 
-            newPoint.Y = this.point.Y + 50;
-            newPoint.X = this.point.X + 50;
+            newPoint.Y = this.point.Y + 70;
+            newPoint.X = this.point.X + 70;
             Image bulletPic2 = new Image();
             Bullet bullet2 = new Bullet(newPoint, bulletPic2, canvas);
             bullet2.setPlayerTarget(this.target);
@@ -195,7 +199,7 @@ namespace GalagaX4
                 if (bossX <= maxX)
                 {
                     this.point.X += 10;
-                    Canvas.SetRight(this.GetImage(), this.point.X);
+                    Canvas.SetLeft(this.GetImage(), this.point.X);
                 }
                 if (bossY <= maxY)
                 {

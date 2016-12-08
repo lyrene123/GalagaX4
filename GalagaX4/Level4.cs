@@ -290,11 +290,11 @@ namespace GalagaX4
                 commanders[i].Fly(120);
             }
 
-          /*  if(this.round == 5)
+            if (this.round == 5)
             {
                 displayBoss();
-            }*/
-            
+            }
+
             player.SetEnemyTarget(enemies);
             StartGame();
         }
@@ -418,13 +418,14 @@ namespace GalagaX4
             if (this.enemies.Count <= 1)
             {
                 timerRandomShoot.Stop();
-                if (this.round >=1 && this.round<=4)
+                if (this.round >= 1 && this.round <= 4)
                 {
                     round++;
                     if (this.round != 4)
                     {
                         Play();
-                    }else
+                    }
+                    else
                     {
                         displayBoss();
                     }
@@ -458,6 +459,8 @@ namespace GalagaX4
             bossPos.Y = 100;
             Animation bossAnimation;
             Image bossPic = new Image();
+            bossPic.Height = 120;
+            bossPic.Width = 140;
             bossPic.Source = UtilityMethods.LoadImage("pics/boss/boss.png");
             canvas.Children.Add(bossPic);
             Canvas.SetLeft(bossPic, 200);

@@ -49,7 +49,7 @@ namespace GalagaX4
 
         }
 
-       //abtract method for destroying any game elements
+        //abtract method for destroying any game elements
         public abstract void Die();
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace GalagaX4
         /// SetPointX method sets the X position of the game element
         /// </summary>
         /// <param name="x">double value</param>
-        public void SetPointX(double x) 
+        public void SetPointX(double x)
         {
             this.point.X = x;
         }

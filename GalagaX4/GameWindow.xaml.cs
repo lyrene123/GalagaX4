@@ -21,16 +21,15 @@ namespace GalagaX4
     public partial class GameWindow : Window
     {
         DispatcherTimer coldDownTimer;
-        DispatcherTimer checkLife; //timer to check if player needs more life or not
-        DispatcherTimer lifeTimer; //timer to make the life icon appear
         Player player;
         bool isPause;
         Button resume;
         Button save;
         Button load;
         Image life;
+        bool loaded;
+        Level1 lv1;
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
-
         /// <summary>
         /// The GameWindow constructor sets the overral initial state of the game
         /// by creating the player, by setting the background music, the background image
@@ -46,7 +45,7 @@ namespace GalagaX4
             backgroundImage.Height = 650;
             mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
             mediaElement.BeginInit();
-            mediaElement.Position = TimeSpan.FromSeconds(1);;
+            mediaElement.Position = TimeSpan.FromSeconds(1); ;
             mediaElement.Volume = 0.07;
             mediaElement.Play();
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
@@ -62,94 +61,60 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-           //Level1 lv1 = new Level1(this, canvas, player);
-           //lv1.Play();
-
-           Level4 lv2 = new Level4(this, canvas, player);
-            lv2.Play();
+            lv1 = new Level1(this, canvas, player);
+            lv1.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
-          // buyLives();
+
+            DecrementColdDown();
+        }
+        /// <summary>
+        /// GameWindow overloaded constructor for the loaded version 
+        /// game after saving
+        /// </summary>
+        /// <param name="load"></param>
+        public GameWindow(Boolean load)
+        {
+            this.Closed += GameWindow_Closed;
+            this.Closing += GameWindow_Closing;
+
+            InitializeComponent();
+            this.loaded = load;
+
+            backgroundImage.Width = 860;
+            backgroundImage.Height = 650;
+            mediaElement.Source = new Uri("audio/main2.wav", UriKind.Relative);
+            mediaElement.BeginInit();
+            mediaElement.Position = TimeSpan.FromSeconds(1);
+            mediaElement.Volume = 0.07;
+            mediaElement.Play();
+            mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
+            if (load == true)
+            {
+                lv1 = new Level1(this, canvas, player, true);
+            }
+            else
+            {
+                Image playerPic = new Image();
+                playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+                playerPic.Width = 42;
+                playerPic.Height = 46;
+                canvas.Children.Add(playerPic);
+                Canvas.SetLeft(playerPic, 405);
+                Canvas.SetTop(playerPic, 500);
+                Point playerPoint = new Point(27, 490);
+                player = new Player(playerPoint, playerPic, canvas, 15);
+
+                lv1 = new Level1(this, canvas, player);
+                lv1.Play();
+            }
+
+            KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
             DecrementColdDown();
         }
 
-        /// <summary>
-        /// The buyLives method initiates the checkLife timer and will
-        /// call the giveLife event method handler
-        /// </summary>
-        public void buyLives()
-        {
-            this.checkLife = new DispatcherTimer(DispatcherPriority.Normal);
-            checkLife.Interval = TimeSpan.FromMinutes(1);
-            checkLife.Tick += new EventHandler(giveLife);
-            checkLife.Start();
-        }
 
-        /// <summary>
-        /// giveLife method event handler handles the regular checking 
-        /// if the player is in need of an extra life. If it's the case
-        /// then, the method will initiate the lifeTimer timer and will call
-        /// the sendLife method handler event
-        /// </summary>
-        /// <param name="sender">object raising the event</param>
-        /// <param name="e">the giveLife event raised </param>
-        private void giveLife(object sender, EventArgs e)
-        {
-            if (player.GetLives() < 2)
-            {
-                this.life = new Image();
-                this.life.Width = 34;
-                this.life.Height = 26;
-                canvas.Children.Add(this.life);
-                Canvas.SetLeft(this.life, 750);
-                Canvas.SetTop(this.life, 10);
-                this.lifeTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                lifeTimer.Interval = TimeSpan.FromMilliseconds(150);
-                lifeTimer.Tick += new EventHandler(sendLife);
-                lifeTimer.Start();
-            }
-        }
-
-        /// <summary>
-        /// sendLife method handles the provision of an extra life for the player.
-        /// An image of a spaceship will appear and the method will make it move down
-        /// in order for the player to have the choice to take it by checking any
-        /// collision
-        /// </summary>
-        /// <param name="sender">object that raised the event</param>
-        /// <param name="e">the sendLife event that was raised</param>
-        private void sendLife(object sender, EventArgs e)
-        {
-            double posLifeY = Canvas.GetTop(this.life);
-            double posLifeX = Canvas.GetLeft(this.life);
-            double posPlayerX = Canvas.GetLeft(player.GetImage());
-            double posPlayerY = Canvas.GetTop(player.GetImage());
-
-            Rect rectLife = new Rect(posLifeX, posLifeY, this.life.Width - 5, this.life.Height - 5);
-            Rect rectPlayer = new Rect(posPlayerX, posPlayerY, this.life.Width - 5, this.life.Height - 5);
-            
-            if (posLifeY <= 530)
-            {
-                Canvas.SetTop(this.life, posLifeY += 8);
-                this.life.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
-
-                //check if the player touched the extra life image
-                if (rectPlayer.IntersectsWith(rectLife))
-                {
-                    this.lifeTimer.Stop();
-                    if (player.getCoins() >= 200 && player.GetLives() < 2)
-                    {
-                        player.addLife();
-                    }
-                    canvas.Children.Remove(this.life);
-                }
-            }
-            else
-            {
-                canvas.Children.Remove(this.life);
-            }
-        }
 
         /// <summary>
         /// GameWindow_Closing method closes the game window by exiting the environment
@@ -162,15 +127,22 @@ namespace GalagaX4
         }
 
         /// <summary>
-        /// 
+        /// GameWindow_Closed method shuts down the whole application
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Object raising the GameWindow_Closed event</param>
+        /// <param name="e">GameWindow_Closed event raised</param>
         private void GameWindow_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// MyGrid_KeyDown method event handler handles the event raised
+        /// if the space bar is pressed, the arrow keys are pressed and the
+        /// cold down progress bar
+        /// </summary>
+        /// <param name="sender">Object raising the event </param>
+        /// <param name="e">MyGrid_KeyDown raised event</param>
         public void MyGrid_KeyDown(object sender, KeyEventArgs e)
         {
             if (this.isPause == false)
@@ -191,6 +163,10 @@ namespace GalagaX4
             }
         }
 
+        /// <summary>
+        /// DecrementColdDown method initialized the coldDownTimer timer
+        /// for the cold down progress bar
+        /// </summary>
         void DecrementColdDown()
         {
             coldDownTimer = new DispatcherTimer(DispatcherPriority.Normal);
@@ -199,6 +175,14 @@ namespace GalagaX4
             coldDownTimer.Start();
         }
 
+        /// <summary>
+        /// DecrementColdDown event handler method handles the 
+        /// event the progress bar value is changed related to the
+        /// shooting of the player. If the progress bar is completed,
+        /// the player shooting is limited, if it decreases, the shooting
+        /// of the player is increased.
+        /// </summary>
+        /// <param name="sender">Object raising the event</param>
         void DecrementColdDown(Object sender, EventArgs e)
         {
             if (this.isPause == false)
@@ -227,6 +211,11 @@ namespace GalagaX4
             }
         }
 
+        /// <summary>
+        /// GameOver method checks if the player has no more lives left
+        /// and if it's the case, then the game over display and sound will
+        /// initialize and execute
+        /// </summary>
         void GameOver()
         {
             if (player.GetLives() == 0)
@@ -247,7 +236,9 @@ namespace GalagaX4
                 BackToMainWindow();
             }
         }
-
+        /// <summary>
+        /// BackToMainWindow method returns to the main GalagaX4 window
+        /// </summary>
         async void BackToMainWindow()
         {
             this.coldDownTimer.Stop();
@@ -264,20 +255,32 @@ namespace GalagaX4
             //this.Close();
         }
 
+        /// <summary>
+        /// Element_MediaEnded method plays a particular music
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Element_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Position = TimeSpan.FromSeconds(1);
             mediaElement.Play();
         }
+
         private void Element_MediaOpened(object sender, RoutedEventArgs e)
         {
-            
+
             //mediaElement.Play();
         }
+
+        /// <summary>
+        /// playBtn_Click method resumes the current movement, shooting of 
+        /// player and enemies after pausing the game and will remove the menu
+        /// displayed on the screen
+        /// </summary>
         private void playBtn_Click()
         {
-            this.lifeTimer.Start();
-            this.checkLife.Start();
+            // this.lifeTimer.Start();
+            //this.checkLife.Start();
             if (this.player.getCurrentLevel() == 1)
             {
                 if (Level1.timerRandom != null)
@@ -299,7 +302,7 @@ namespace GalagaX4
                     Level3.timerRandom.Start();
                 }
             }
-            if(this.player.getCurrentLevel() == 4)
+            if (this.player.getCurrentLevel() == 4)
             {
                 if (Level4.timerRandom != null)
                 {
@@ -321,7 +324,7 @@ namespace GalagaX4
                         ((SpaceShip)allEnemies[i]).restartMove();
                         ((SpaceShip)allEnemies[i]).restartShoot();
                     }
-                    else if(allEnemies[i].GetType() == typeof(Commander))
+                    else if (allEnemies[i].GetType() == typeof(Commander))
                     {
                         ((Commander)allEnemies[i]).restartMove();
                         ((Commander)allEnemies[i]).restartShoot();
@@ -348,41 +351,78 @@ namespace GalagaX4
             Menu("remove");
         }
 
+        /// <summary>
+        /// pauseBtn_Click method pauses all movement, shooting happening 
+        /// on the game canvas after the pause button is clicked
+        /// </summary>
         private void pauseBtn_Click()
         {
-            this.lifeTimer.Stop();
-            this.checkLife.Stop();
-            if (this.player.getCurrentLevel() == 1)
+            //this.lifeTimer.Stop();
+            //this.checkLife.Stop();
+            if (loaded == true)
             {
-                if (Level1.timerRandom != null)
+                if (LoadLevels.getStaticPlayer().getCurrentLevel() == 1)
                 {
-                    Level1.timerRandom.Stop();
+                    if (Level1.timerRandom != null)
+                    {
+                        Level1.timerRandom.Stop();
+                    }
+                }
+                if (LoadLevels.getStaticPlayer().getCurrentLevel() == 2)
+                {
+                    if (Level2.timerRandom != null)
+                    {
+                        Level2.timerRandom.Stop();
+                    }
+                }
+                if (LoadLevels.getStaticPlayer().getCurrentLevel() == 3)
+                {
+                    if (Level3.timerRandom != null)
+                    {
+                        Level3.timerRandom.Stop();
+                    }
+                }
+                if (LoadLevels.getStaticPlayer().getCurrentLevel() == 4)
+                {
+                    if (Level4.timerRandom != null)
+                    {
+                        Level4.timerRandom.Stop();
+                    }
                 }
             }
-            if (this.player.getCurrentLevel() == 2)
+            else
             {
-                if (Level2.timerRandom != null)
+                if (this.player.getCurrentLevel() == 1)
                 {
-                    Level2.timerRandom.Stop();
+                    if (Level1.timerRandom != null)
+                    {
+                        Level1.timerRandom.Stop();
+                    }
+                }
+                if (this.player.getCurrentLevel() == 2)
+                {
+                    if (Level2.timerRandom != null)
+                    {
+                        Level2.timerRandom.Stop();
+                    }
+                }
+                if (this.player.getCurrentLevel() == 3)
+                {
+                    if (Level3.timerRandom != null)
+                    {
+                        Level3.timerRandom.Stop();
+                    }
+                }
+                if (this.player.getCurrentLevel() == 4)
+                {
+                    if (Level4.timerRandom != null)
+                    {
+                        Level4.timerRandom.Stop();
+                    }
                 }
             }
-            if (this.player.getCurrentLevel() == 3)
-            {
-                if (Level3.timerRandom != null)
-                {
-                    Level3.timerRandom.Stop();
-                }
-            }
-            if(this.player.getCurrentLevel() == 4)
-            {
-                if (Level4.timerRandom != null)
-                {
-                    Level4.timerRandom.Stop();
-                }
-            }
-
             List<Enemies> allEnemies = this.player.getEnemiesList();
-            if (allEnemies!=null)
+            if (allEnemies != null)
             {
                 for (int i = 0; i < allEnemies.Count; i++)
                 {
@@ -395,12 +435,12 @@ namespace GalagaX4
                         ((SpaceShip)allEnemies[i]).stopMove();
                         ((SpaceShip)allEnemies[i]).StopShoot();
                     }
-                    else if(allEnemies[i].GetType() == typeof(Commander))
+                    else if (allEnemies[i].GetType() == typeof(Commander))
                     {
                         ((Commander)allEnemies[i]).stopMove();
                         ((Commander)allEnemies[i]).stopShoot();
                     }
-                    else 
+                    else
                     {
 
                     }
@@ -421,9 +461,16 @@ namespace GalagaX4
             Menu("display");
         }
 
+        /// <summary>
+        /// playPauseBtn_Click method checks if the pause/play has been
+        /// clicked once or twice in order to know if the user wants to play
+        /// the game of to pause the game
+        /// </summary>
+        /// <param name="sender">Object raising the event</param>
+        /// <param name="e">the event raised playPauseBtn_Click</param>
         private void playPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(isPause == false)
+            if (isPause == false)
             {
                 isPause = true;
                 playPauseBtn.IsEnabled = false;
@@ -488,12 +535,40 @@ namespace GalagaX4
 
         private void loadBtn_Click(object sender, RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            var gameWindow = new GameWindow(true);
+            this.Hide();
+            gameWindow.Show();
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            if (loaded)
+            {
+                if (LoadLevels.getStaticPlayer().getCurrentLevel() == 1)
+                {
+                    lv1.saveLevel1();
+
+                }
+                else if (LoadLevels.getStaticPlayer().getCurrentLevel() == 2)
+                {
+                    Level2.saveLevel2(this.player, false);
+                }
+            }
+            else
+            {
+
+                if (player.getCurrentLevel() == 1)
+                {
+                    lv1.saveLevel1();
+
+                }
+                else if (player.getCurrentLevel() == 2)
+                {
+                    Level2.saveLevel2(this.player, false);
+                }
+
+            }
+
         }
     }
 }

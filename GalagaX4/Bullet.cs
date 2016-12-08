@@ -55,7 +55,7 @@ namespace GalagaX4
         /// </summary>
         public static List<Bullet> getBulletList
         {
-            get{ return bullets; }
+            get { return bullets; }
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace GalagaX4
                 this.point.Y -= 3;
                 this.image.Source = UtilityMethods.LoadImage("pics/bullet.png");
                 Canvas.SetTop(this.image, this.point.Y);
-                
+
                 //check for player collision
                 if (enemies != null)
                 {
@@ -148,6 +148,7 @@ namespace GalagaX4
             {
                 this.point.Y += 3;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
+                Canvas.SetLeft(this.GetImage(), this.point.X);
 
                 OnCollision(this.player);
             }
@@ -169,6 +170,7 @@ namespace GalagaX4
             this.image.Source = UtilityMethods.LoadImage(path);
             this.timerShootLeftSide = new DispatcherTimer(DispatcherPriority.Normal);
             this.timerShootLeftSide.Interval = TimeSpan.FromMilliseconds(1);
+            timerShootLeftSide.Start();
             timerShootLeftSide.Tick += new EventHandler(ShootLeftSide);
         }
 
@@ -180,10 +182,11 @@ namespace GalagaX4
         /// <param name="e">The event ShootLeftSide raised </param>
         void ShootLeftSide(Object sender, EventArgs e)
         {
+
             if (this.point.Y <= 600)
             {
-                this.point.Y += 10;
-                this.point.X -= 10;
+                this.point.Y += 3;
+                this.point.X -= 3;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 Canvas.SetLeft(this.GetImage(), this.point.X);
                 OnCollision(this.player);
@@ -205,7 +208,8 @@ namespace GalagaX4
         {
             this.image.Source = UtilityMethods.LoadImage(path);
             timerShootRightSide = new DispatcherTimer(DispatcherPriority.Normal);
-            timerShootRightSide.Interval = TimeSpan.FromSeconds(1);
+            timerShootRightSide.Interval = TimeSpan.FromMilliseconds(1);
+            timerShootRightSide.Start();
             timerShootRightSide.Tick += new EventHandler(ShootRightSide);
         }
 
@@ -219,8 +223,8 @@ namespace GalagaX4
         {
             if (this.point.Y <= 600)
             {
-                this.point.Y += 10;
-                this.point.X += 10;
+                this.point.Y += 3;
+                this.point.X += 3;
                 Canvas.SetTop(this.GetImage(), this.point.Y);
                 Canvas.SetLeft(this.GetImage(), this.point.X);
                 OnCollision(this.player);
@@ -362,13 +366,31 @@ namespace GalagaX4
                         StopShootUp(); //stop player bullet
                         Die(); //remove player bullet
                     }
+                    else if (gameObject.GetType() == typeof(Boss))
+                    {
+                        if (((Boss)gameObject).getHitCounter() == 33)
+                        {
+
+                            gameObject.Die();
+                            destroy(gameObject);
+                        }
+                        else
+                        {
+                            gameObject.Die();
+                            StopShootUp();
+                            Die();
+                        }
+
+                    }
                     else
                     {
                         destroy(gameObject); //remove gameObject
                     }
                 }
             }
+
         }
+
 
         /// <summary>
         /// OnCollisionCommander method takes as input a commander 
@@ -383,7 +405,7 @@ namespace GalagaX4
             {
                 destroy(commander);
             }
-            
+
             if (commander.getIsShot() == false)
             {
                 commander.setIsShot(true);
@@ -405,7 +427,7 @@ namespace GalagaX4
                 Enemies defeated = (Enemies)gameObject;
                 enemies.Remove(defeated); //remove enemy from list
             }
-            else 
+            else
             {
                 StopShootDown(); //stop enemy bullet
             }

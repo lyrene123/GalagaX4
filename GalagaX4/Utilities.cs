@@ -29,6 +29,15 @@ namespace GalagaX4
 
             return src;
         }
+        public static BitmapImage LoadImageFullPath(String path)
+        {
+            BitmapImage src = new BitmapImage();
+            src.BeginInit();
+            src.UriSource = new Uri(path, UriKind.Absolute);
+            src.EndInit();
+
+            return src;
+        }
         /// <summary>
         /// The Clamp method define the boundaries of the objects 
         /// preventing movements that exceeds the limit provided.

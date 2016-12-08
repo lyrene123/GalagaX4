@@ -16,11 +16,11 @@ namespace GalagaX4
     {
         protected Animation animation;
         protected Player target;
-        
+
         protected int moveCounter;
         protected double maxX;
         protected double minX;
-        protected  bool moveDown;
+        protected bool moveDown;
         protected bool dive;
 
         protected bool isShooting; //if shooting already
