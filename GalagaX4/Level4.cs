@@ -16,7 +16,7 @@ namespace GalagaX4
         Canvas canvas;
 
         int round = 1;
-        DispatcherTimer timer;
+        static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
         Player player;
@@ -40,8 +40,13 @@ namespace GalagaX4
             this.window = window;
             this.canvas = canvas;
             this.player = player;
-
+            this.player.updateCurrentLevel(4);
             enemies = new List<Enemies>();
+        }
+
+        public static DispatcherTimer timerRandom
+        {
+            get { return timerRandomShoot; }
         }
 
         void DisplayLevel()
@@ -108,7 +113,7 @@ namespace GalagaX4
 
                 bees[i].setDiveFrequency(10);
                 bees[i].setMoveDownFrequency(45);
-                bees[i].Fly(130);
+                bees[i].Fly(120);
             }
 
             //---------------------------------------------------------------------------
@@ -145,7 +150,7 @@ namespace GalagaX4
                 redbugs[i].setDiveFrequency(10);
                 redbugs[i].setMoveDownFrequency(45);
                 redbugs[i].setMoveCounter(2);
-                redbugs[i].Fly(130);
+                redbugs[i].Fly(120);
             }
 
             //---------------------------------------------------------------------------
@@ -180,7 +185,7 @@ namespace GalagaX4
 
                 ships[i].setDiveFrequency(10);
                 ships[i].setMoveDownFrequency(45);
-                ships[i].Fly(130);
+                ships[i].Fly(120);
                 // ships[i].Shoot(200);
             }
 
@@ -217,7 +222,7 @@ namespace GalagaX4
 
                 ufos[i].setDiveFrequency(10);
                 ufos[i].setMoveDownFrequency(45);
-                ufos[i].Fly(130);
+                ufos[i].Fly(120);
                 // ships[i].Shoot(200);
             }
 
@@ -248,7 +253,7 @@ namespace GalagaX4
                 enemies.Add(commanders[i]);
                 commanders[i].setTarget(player);
                 commanders[i].setMoveDownFrequency(45);
-                commanders[i].Fly(130);
+                commanders[i].Fly(120);
             }
 
             if(this.round == 3)
@@ -262,10 +267,10 @@ namespace GalagaX4
 
         void StartGame()
         {
-            timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += new EventHandler(ShootUpdate);
-            timer.Start();
+            timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
+            timerRandomShoot.Interval = TimeSpan.FromSeconds(1);
+            timerRandomShoot.Tick += new EventHandler(ShootUpdate);
+            timerRandomShoot.Start();
         }
 
         private void ShootUpdate(object sender, EventArgs e)
@@ -314,7 +319,7 @@ namespace GalagaX4
                 {
                     if (ships[num1].isShoot() == false)
                     {
-                        ships[num1].Shoot(6);
+                        ships[num1].Shoot(4);
                     }
                 }
 
@@ -338,7 +343,7 @@ namespace GalagaX4
                 {
                     if (commanders[num2].isShoot() == false)
                     {
-                        commanders[num2].Shoot(11);
+                        commanders[num2].Shoot(8);
                     }
                 }
                 exists2 = false;
@@ -361,16 +366,16 @@ namespace GalagaX4
                 {
                     if (ufos[num3].isShoot() == false)
                     {
-                        ufos[num3].Shoot(3);
+                        ufos[num3].Shoot(2);
                     }
                 }
                 exists3 = false;
             }
 
             //----------------------------------------
-            if (this.enemies.Count == 0)
+            if (this.enemies.Count <= 1)
             {
-                this.timer.Stop();
+                timerRandomShoot.Stop();
                 if (this.round == 1 || this.round == 2 || this.round == 3)
                 {
                     round++;

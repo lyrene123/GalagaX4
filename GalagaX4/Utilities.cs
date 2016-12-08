@@ -19,7 +19,17 @@ namespace GalagaX4
 
             return src;
         }
-        
+
+        public static BitmapImage LoadImageFullPath(String path)
+        {
+            BitmapImage src = new BitmapImage();
+            src.BeginInit();
+            src.UriSource = new Uri(path, UriKind.Absolute);
+            src.EndInit();
+
+            return src;
+        }
+
         public static double Clamp(double val, double min, double max)
         {
             if (val < min) return min;

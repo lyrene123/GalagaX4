@@ -12,8 +12,6 @@ namespace GalagaX4
 {
     class Commander : Enemies
     {
-
-        int shotCounter;
         bool isShot;
         DispatcherTimer timerFly;
         DispatcherTimer timerShoot;
@@ -162,6 +160,13 @@ namespace GalagaX4
         public void stopMove()
         {
             this.timerFly.Stop();
+            this.animation.Stop();
+        }
+
+        public void restartMove()
+        {
+            this.timerFly.Start();
+            this.animation.Start();
         }
 
         public void stopShoot()
@@ -169,6 +174,14 @@ namespace GalagaX4
             if (this.timerShoot != null)
             {
                 this.timerShoot.Stop();
+            }
+        }
+
+        public void restartShoot()
+        {
+            if (this.timerShoot != null)
+            {
+                this.timerShoot.Start();
             }
         }
 
@@ -201,16 +214,6 @@ namespace GalagaX4
                     UtilityMethods.LoadImage("pics/commanderGreen1.png") };
             this.animation = new Animation(this.image, commanderImages, true);
             Animation.Initiate(animation, 500);
-        }
-
-        public int getShotValue()
-        {
-            return this.shotCounter;
-        }
-
-        public void addShotValue()
-        {
-            this.shotCounter++;
         }
 
         public bool getIsShot()

@@ -17,6 +17,7 @@ namespace GalagaX4
         DispatcherTimer timerShootLeftSide;
 
         List<Enemies> enemies;
+        static List<Bullet> bullets = new List<Bullet>();
         Player player;
 
         public Bullet() : base()
@@ -27,6 +28,12 @@ namespace GalagaX4
         public Bullet(Point point, Image image, Canvas canvas) : base(point, image, canvas)
         {
             this.canvas.Children.Add(image);
+            bullets.Add(this);
+        }
+
+        public static List<Bullet> getBulletList
+        {
+            get{ return bullets; }
         }
 
         public void setEnemyTarget(List<Enemies> enemies)
@@ -66,8 +73,7 @@ namespace GalagaX4
             else
             {
                 StopShootUp(); //stop bullet up
-                this.canvas.Children.Remove(this.image); //remove bullet up
-
+                this.Die();
             }
         }
 
@@ -144,34 +150,78 @@ namespace GalagaX4
             else
             {
                 StopShootRight();
-                this.canvas.Children.Remove(this.GetImage());
+                this.Die();
             }
         }
 
         public void StopShootLeft()
         {
-            this.timerShootLeftSide.Stop();
+            if (this.timerShootLeftSide != null)
+            {
+                this.timerShootLeftSide.Stop();
+            }
+        }
+
+        public void restartShootLeft()
+        {
+            if (this.timerShootLeftSide != null)
+            {
+                this.timerShootLeftSide.Start();
+            }
         }
 
         public void StopShootRight()
         {
-            this.timerShootRightSide.Stop();
+            if (this.timerShootRightSide != null)
+            {
+                this.timerShootRightSide.Stop();
+            }
         }
 
+        public void restartShootRight()
+        {
+            if (this.timerShootRightSide != null)
+            {
+                this.timerShootRightSide.Start();
+            }
+        }
 
         public void StopShootDown()
         {
-            this.timerShootDown.Stop();
+            if (this.timerShootDown != null)
+            {
+                this.timerShootDown.Stop();
+            }
+        }
+
+        public void restartShootDown()
+        {
+            if (this.timerShootDown != null)
+            {
+                this.timerShootDown.Start();
+            }
         }
 
         public void StopShootUp()
         {
-            this.timerShootUp.Stop();
+            if (this.timerShootUp != null)
+            {
+                this.timerShootUp.Stop();
+            }
+        }
+
+        public void restartShootUp()
+        {
+            if (this.timerShootUp != null)
+            {
+                this.timerShootUp.Start();
+            }
         }
 
         public override void Die()
         {
-            canvas.Children.Remove(this.image);
+            canvas.Children.Remove(this.image); //remove bullet instance
+            bullets.Remove(this);
         }
 
         public void OnCollision(GameObject gameObject)
@@ -204,26 +254,23 @@ namespace GalagaX4
             }
         }
 
+        public static explicit operator Bullet(UIElement v)
+        {
+            throw new NotImplementedException();
+        }
+
         public void OnCollisionCommander(Commander commander)
         {
-            commander.addShotValue();
             if (commander.getIsShot() == true)
             {
                 destroy(commander);
             }
-
-            /*for (int i = 0; i < this.enemies.Count(); i++)
-            {
-                if (enemies[i].GetType() == typeof(Commander))
-                {
-                    Commander commander = (Commander)enemies[i];*/
-            if (commander.getShotValue() > 1 && commander.getIsShot() == false)
+            
+            if (commander.getIsShot() == false)
             {
                 commander.setIsShot(true);
                 commander.changeImage();
             }
-            // }
-            // }
         }
 
         public void destroy(GameObject gameObject)

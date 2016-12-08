@@ -52,7 +52,7 @@ namespace GalagaX4
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var gameWindow = new GameWindow();
+            var gameWindow = new GameWindow(false);
             this.Hide();
             gameWindow.Show();
             //this.Close();
@@ -61,6 +61,22 @@ namespace GalagaX4
             gameWindow.mediaElement.Play();
                          
             
+        }
+
+
+
+       
+
+        private void loadingGame(object sender, RoutedEventArgs e)
+        {
+
+            var gameWindow = new GameWindow(true);
+            this.Hide();
+            gameWindow.Show();
+            //this.Close();
+            gameWindow.mediaElement.BeginInit();
+            gameWindow.mediaElement.Position = TimeSpan.FromMilliseconds(0);
+            gameWindow.mediaElement.Play();
         }
     }
 }

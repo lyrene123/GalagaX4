@@ -16,7 +16,7 @@ namespace GalagaX4
         Canvas canvas;
 
         int round = 1;
-        DispatcherTimer timer;
+        static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
         Player player;
@@ -39,8 +39,13 @@ namespace GalagaX4
             this.window = window;
             this.canvas = canvas;
             this.player = player;
-
+            this.player.updateCurrentLevel(3);
             enemies = new List<Enemies>();
+        }
+
+        public static DispatcherTimer timerRandom
+        {
+            get { return timerRandomShoot; }
         }
 
         void DisplayLevel()
@@ -260,10 +265,10 @@ namespace GalagaX4
 
         void StartGame()
         {
-            timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += new EventHandler(ShootUpdate);
-            timer.Start();
+            timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
+            timerRandomShoot.Interval = TimeSpan.FromSeconds(1);
+            timerRandomShoot.Tick += new EventHandler(ShootUpdate);
+            timerRandomShoot.Start();
         }
 
         private void ShootUpdate(object sender, EventArgs e)
@@ -368,7 +373,7 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
-                this.timer.Stop();
+                timerRandomShoot.Stop();
                 if (this.round == 1 || this.round == 2)
                 {
                     round++;
@@ -389,7 +394,7 @@ namespace GalagaX4
                  this.window.Hide();
                  var mainWindow = new MainWindow();
                  mainWindow.Show();
-                 this.timer.Stop();
+                 this.timerRandomShoot.Stop();
                  this.window.Close();
              }
          }*/
