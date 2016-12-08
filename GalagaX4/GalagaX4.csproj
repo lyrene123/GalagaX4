@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -49,6 +50,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -64,7 +69,7 @@
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
     <Compile Include="Level4.cs" />
-    <Compile Include="LoadLevel1.cs" />
+    <Compile Include="LoadLevels.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SerializeGameObj.cs" />
     <Compile Include="SpaceShip.cs" />
@@ -110,6 +115,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -198,10 +204,32 @@
     <Resource Include="pics\heart.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\pause.png" />
+    <Resource Include="pics\playpause.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pics\play.png" />
+    <Resource Include="pics\fallingStar.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="audio\Explosion.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="audio\Fireworks_Finale-SoundBible.com-370363529.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="audio\Game_Over.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\loadGame_blue.png" />
+    <Resource Include="pics\loadGame_white.png" />
+    <Resource Include="pics\missAccomplised_blue.png" />
+    <Resource Include="pics\missAccomplised_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\fireball.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

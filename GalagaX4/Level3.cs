@@ -10,6 +10,13 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Level3 Class instantiates a new Game,
+    /// creating all the elements on the screen 
+    /// necessary to play the game such as the Player and 
+    /// enemies. It also creates all the patherns of the 
+    /// enemies for level3 of the game.
+    /// </summary>
     class Level3
     {
         Window window;
@@ -33,7 +40,13 @@ namespace GalagaX4
         List<Enemies> enemies;
 
         Image lv3Pic;
-
+        /// <summary>
+        /// Level3 Class Constructor. It cosntructs the new window (screen),
+        /// a new Canvas and the Player.
+        /// </summary>
+        /// <param name="window"> A new window to receive all elements fo the game and manage the screen</param>
+        /// <param name="canvas">Area within the window which you can position all elements by using coordinates that are relative to the Canvas area.</param>
+        /// <param name="player">The main player of the Game</param>
         public Level3(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -42,12 +55,17 @@ namespace GalagaX4
             this.player.updateCurrentLevel(3);
             enemies = new List<Enemies>();
         }
-
+        /// <summary>
+        /// The static timerRandom method returns 
+        /// a DispatcherTimer Object related to the random shooting.
+        /// </summary>
         public static DispatcherTimer timerRandom
         {
             get { return timerRandomShoot; }
         }
-
+        /// <summary>
+        /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
+        /// </summary>
         void DisplayLevel()
         {
             lv3Pic = new Image();
@@ -58,9 +76,14 @@ namespace GalagaX4
             Canvas.SetLeft(lv3Pic, 350);
             lv3Pic.Source = UtilityMethods.LoadImage("pics/level3.png");
         }
-
+        /// <summary>
+        /// The Play Method creates and displays all enemies and the player on 
+        /// the Canvas (screen).
+        /// </summary>
         public async void Play()
         {
+            Player.ColdDown = 0;
+
             if (this.round == 1)
             {
                 DisplayLevel();
@@ -79,6 +102,13 @@ namespace GalagaX4
 
                 await Task.Delay(1500);
             }
+
+
+            lv3Pic = new Image();
+            lv3Pic.Height = 40;
+            lv3Pic.Width = 100;
+            this.canvas.Children.Add(lv3Pic);
+            lv3Pic.Source = UtilityMethods.LoadImage("pics/level3.png");
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -185,11 +215,8 @@ namespace GalagaX4
                 ships[i].setDiveFrequency(10);
                 ships[i].setMoveDownFrequency(45);
                 ships[i].Fly(130);
-                // ships[i].Shoot(200);
+
             }
-
-
-
 
             //---------------------------------------------------------------------------
             //UFO creation
@@ -225,10 +252,8 @@ namespace GalagaX4
                 ufos[i].setDiveFrequency(10);
                 ufos[i].setMoveDownFrequency(45);
                 ufos[i].Fly(130);
-                // ships[i].Shoot(200);
+
             }
-
-
 
             //---------------------------------------------------------------------------
             //commanders creation
@@ -262,7 +287,11 @@ namespace GalagaX4
             player.SetEnemyTarget(enemies);
             StartGame();
         }
-
+        /// <summary>
+        /// The StartGame method instantiates a DispatcherTimer Class which 
+        /// will be used to control the interval of all enemies shooting execution 
+        /// in the game of this specific level.
+        /// </summary>
         void StartGame()
         {
             timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
@@ -270,10 +299,14 @@ namespace GalagaX4
             timerRandomShoot.Tick += new EventHandler(ShootUpdate);
             timerRandomShoot.Start();
         }
-
+        /// <summary>
+        /// The shootUpdate method controls randomly the
+        /// shooting of the enemies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShootUpdate(object sender, EventArgs e)
         {
-            // BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
@@ -373,6 +406,9 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
+
+                this.canvas.Children.Remove(lv3Pic);
+
                 timerRandomShoot.Stop();
                 if (this.round == 1 || this.round == 2)
                 {
@@ -386,17 +422,5 @@ namespace GalagaX4
                 }
             }
         }
-
-        /* void BackToMainWindown()
-         {
-             if (player.GetLives() == 0)
-             {
-                 this.window.Hide();
-                 var mainWindow = new MainWindow();
-                 mainWindow.Show();
-                 this.timerRandomShoot.Stop();
-                 this.window.Close();
-             }
-         }*/
     }
 }

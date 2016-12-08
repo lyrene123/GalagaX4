@@ -15,11 +15,19 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Level1 Class instantiates a new Game,
+    /// creating all the elements on the screen 
+    /// necessary to play the game such as the Player and 
+    /// enemies. It also creates all the patherns of the 
+    /// enemies for level1 of the game.
+    /// </summary>
     class Level1
     {
         Window window;
         Canvas canvas;
-        GameWindow gamewindow;
+        bool load = false;
+
         static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
 
@@ -31,18 +39,26 @@ namespace GalagaX4
         List<int> arr2 = new List<int>() { 0, 1, 2, 3 };
         bool exists1 = false;
         bool exists2 = false;
-        List<Enemies> enemies = new List<Enemies>();
+        public bool levelOver = false;
+
+        public List<Enemies> enemies;
         Image lv1Pic;
-        bool load = false;
 
-
+        /// <summary>
+        /// Level1 Class Constructor. It cosntructs the new window (screen),
+        /// a new Canvas and the Player.
+        /// </summary>
+        /// <param name="window"> A new window to receive all elements fo the game and manage the screen</param>
+        /// <param name="canvas">Area within the window which you can position all elements by using coordinates that are relative to the Canvas area.</param>
+        /// <param name="player">The main player of the Game</param>
         public Level1(Window window, Canvas canvas, Player player)
         {
             this.window = window;
             this.canvas = canvas;
             this.player = player;
             enemies = new List<Enemies>();
-            this.player.setCurrentLevel(1);
+            this.player.updateCurrentLevel(1);
+
         }
         public Level1(Window window, Canvas canvas, Player player, Boolean load)
         {
@@ -55,14 +71,18 @@ namespace GalagaX4
                 Level1.loadLevel1(this.canvas, this.window, player);
                 this.player = player;
             }
-
         }
-
+        /// <summary>
+        /// The static timerRandom method returns 
+        /// a DispatcherTimer Object related to the random shooting.
+        /// </summary>
         public static DispatcherTimer timerRandom
         {
             get { return timerRandomShoot; }
         }
-
+        /// <summary>
+        /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
+        /// </summary>
         void DisplayLevel()
         {
             lv1Pic = new Image();
@@ -73,12 +93,24 @@ namespace GalagaX4
             Canvas.SetLeft(lv1Pic, 350);
             lv1Pic.Source = UtilityMethods.LoadImage("pics/level1.png");
         }
-
+        /// <summary>
+        /// The Play Method creates and displays all enemies and the player on 
+        /// the Canvas (screen).
+        /// </summary>
         public async void Play()
         {
+            Player.ColdDown = 0;
+
             DisplayLevel();
             await Task.Delay(2000);
             this.canvas.Children.Remove(lv1Pic);
+
+
+            lv1Pic = new Image();
+            lv1Pic.Height = 40;
+            lv1Pic.Width = 100;
+            this.canvas.Children.Add(lv1Pic);
+            lv1Pic.Source = UtilityMethods.LoadImage("pics/level1.png");
 
             //bee creation
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
@@ -172,7 +204,7 @@ namespace GalagaX4
                 enemies.Add(ships[i]);
                 ships[i].setTarget(player);
                 ships[i].Fly(300);
-                // ships[i].Shoot(200);
+
             }
 
             //----------------------------------------------------------------------------
@@ -185,7 +217,6 @@ namespace GalagaX4
             for (int i = 0; i < commanderPic.Length; i++)
             {
                 commanderPic[i] = new Image();
-                //commanderPic[i].Source = UtilityMethods.LoadImage("pics/spaceShip.png");
                 commanderPic[i].Width = 34;
                 commanderPic[i].Height = 26;
                 canvas.Children.Add(commanderPic[i]);
@@ -208,7 +239,11 @@ namespace GalagaX4
             StartGame();
         }
 
-
+        /// <summary>
+        /// The StartGame method instantiates a DispatcherTimer Class which 
+        /// will be used to control the interval of all enemies shooting execution 
+        /// in the game of this specific level.
+        /// </summary>
         void StartGame()
         {
             timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
@@ -216,11 +251,14 @@ namespace GalagaX4
             timerRandomShoot.Tick += new EventHandler(ShootUpdate);
             timerRandomShoot.Start();
         }
-
+        /// <summary>
+        /// The shootUpdate method controls randomly the
+        /// shooting of the enemies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShootUpdate(object sender, EventArgs e)
         {
-            BackToMainWindown();
-
             //remove enemies destroyed from the arr1 or arr2 list
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
@@ -290,29 +328,13 @@ namespace GalagaX4
             //----------------------------------------
             if (this.enemies.Count == 0)
             {
-
                 timerRandomShoot.Stop();
+
+                this.canvas.Children.Remove(lv1Pic);
 
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.Play();
-            }
-        }
 
-        void BackToMainWindown()
-        {
-            if (player.GetLives() == 0)
-            {
-                Player player = new Player();
-                this.window.Hide();
-                //this.timerRandomShoot.Stop();
-                //this.window.Close();
-
-                var mainWindow = new MainWindow();
-                //mainWindow.Show();
-                //this.timerRandomShoot.Stop();
-                //this.window.Close();
-                //gamewindow.mediaElement.BeginInit();
-                player.shootSoundEffect.Dispose();
             }
         }
         public void saveLevel1()
@@ -436,6 +458,7 @@ namespace GalagaX4
                 MessageBox.Show("An error occured and the current game was not able to be LOADED.");
                 MessageBox.Show(e.Message);
             }
+
 
 
         }

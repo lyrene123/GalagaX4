@@ -10,6 +10,14 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Level4 Class instantiates a new Game,
+    /// creating all the elements on the screen 
+    /// necessary to play the game such as the Player and 
+    /// enemies and also creates the final Boss Enemy.
+    /// It also creates all the patherns of the 
+    /// enemies and of the boss for the last level of the game.
+    /// </summary>
     class Level4
     {
         Window window;
@@ -34,7 +42,13 @@ namespace GalagaX4
 
         Boss boss;
         Image lv4Pic;
-
+        /// <summary>
+        /// Level4 Class Constructor. It cosntructs the new window (screen),
+        /// a new Canvas and the Player.
+        /// </summary>
+        /// <param name="window"> A new window to receive all elements fo the game and manage the screen</param>
+        /// <param name="canvas">Area within the window which you can position all elements by using coordinates that are relative to the Canvas area.</param>
+        /// <param name="player">The main player of the Game</param>
         public Level4(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -43,12 +57,17 @@ namespace GalagaX4
             this.player.updateCurrentLevel(4);
             enemies = new List<Enemies>();
         }
-
+        /// <summary>
+        /// The static timerRandom method returns 
+        /// a DispatcherTimer Object related to the random shooting.
+        /// </summary>
         public static DispatcherTimer timerRandom
         {
             get { return timerRandomShoot; }
         }
-
+        /// <summary>
+        /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
+        /// </summary>
         void DisplayLevel()
         {
             lv4Pic = new Image();
@@ -59,9 +78,14 @@ namespace GalagaX4
             Canvas.SetLeft(lv4Pic, 350);
             lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
         }
-
+        /// <summary>
+        /// The Play Method creates and displays all enemies and the player on 
+        /// the Canvas (screen).
+        /// </summary>
         public async void Play()
         {
+            Player.ColdDown = 0;
+
             if (this.round == 1)
             {
                 DisplayLevel();
@@ -79,6 +103,16 @@ namespace GalagaX4
                 this.spaceX = 0;
 
                 await Task.Delay(1500);
+            }
+
+            if (this.round == 1)
+            {
+                lv4Pic.Height = 40;
+                lv4Pic.Width = 100;
+                this.canvas.Children.Add(lv4Pic);
+                Canvas.SetLeft(lv4Pic, 0);
+                Canvas.SetTop(lv4Pic, 0);
+                lv4Pic.Source = UtilityMethods.LoadImage("pics/level4.png");
             }
 
             //bee creation
@@ -256,15 +290,19 @@ namespace GalagaX4
                 commanders[i].Fly(120);
             }
 
-            if(this.round == 3)
+            if (this.round == 5)
             {
                 displayBoss();
             }
-            
+
             player.SetEnemyTarget(enemies);
             StartGame();
         }
-
+        /// <summary>
+        /// The StartGame method instantiates a DispatcherTimer Class which 
+        /// will be used to control the interval of all enemies shooting execution 
+        /// in the game of this specific level.
+        /// </summary>
         void StartGame()
         {
             timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
@@ -272,10 +310,14 @@ namespace GalagaX4
             timerRandomShoot.Tick += new EventHandler(ShootUpdate);
             timerRandomShoot.Start();
         }
-
+        /// <summary>
+        /// The shootUpdate method controls randomly the
+        /// shooting of the enemies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShootUpdate(object sender, EventArgs e)
         {
-            // BackToMainWindown();
             //-------------------------------
             for (int i = 0; i < ships.Length; i++)
             {
@@ -376,19 +418,40 @@ namespace GalagaX4
             if (this.enemies.Count <= 1)
             {
                 timerRandomShoot.Stop();
-                if (this.round == 1 || this.round == 2 || this.round == 3)
+                if (this.round >= 1 && this.round <= 4)
                 {
                     round++;
-                    Play();
+                    if (this.round != 4)
+                    {
+                        Play();
+                    }
+                    else
+                    {
+                        displayBoss();
+                    }
                 }
                 else
                 {
-                   // Level4 lv4 = new Level4(this.window, this.canvas, this.player);
-                    //lv4.Play();
+                    this.canvas.Children.Remove(lv4Pic);
+
+                    Image missionAccomplished = new Image();
+                    missionAccomplished.Height = 300;
+                    missionAccomplished.Width = 500;
+                    this.canvas.Children.Add(missionAccomplished);
+                    Canvas.SetTop(missionAccomplished, 150);
+                    Canvas.SetLeft(missionAccomplished, 170);
+                    BitmapImage[] missionAccomplishedSources = { UtilityMethods.LoadImage("pics/missAccomplised_blue.png")
+                                , UtilityMethods.LoadImage("pics/missAccomplised_white.png") };
+                    Animation missionAccomplishedAnim = new Animation(missionAccomplished, missionAccomplishedSources, true);
+                    Animation.Initiate(missionAccomplishedAnim, 100);
+                    //missAccomplished.Source = UtilityMethods.LoadImage("pics/level4.png");
                 }
             }
         }
-
+        /// <summary>
+        /// The displayBoss method creates the final Boss enemy and
+        /// defines all its movements and shooting patherns.
+        /// </summary>
         private void displayBoss()
         {
             Point bossPos = new Point();
@@ -396,6 +459,8 @@ namespace GalagaX4
             bossPos.Y = 100;
             Animation bossAnimation;
             Image bossPic = new Image();
+            bossPic.Height = 120;
+            bossPic.Width = 140;
             bossPic.Source = UtilityMethods.LoadImage("pics/boss/boss.png");
             canvas.Children.Add(bossPic);
             Canvas.SetLeft(bossPic, 200);
@@ -409,7 +474,7 @@ namespace GalagaX4
             enemies.Add(boss);
             boss.setTarget(player);
             this.boss.Fly(200);
-            this.boss.Shoot(1);
+            this.boss.Shoot(0.5);
         }
 
     }

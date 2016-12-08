@@ -38,7 +38,7 @@ namespace GalagaX4
         {
             get { return this.bugPoint; }
         }
-        
+
         public List<String> GetShipPath
         {
             get { return this.shipPath; }
@@ -51,7 +51,7 @@ namespace GalagaX4
         {
             get { return this.bugPath; }
         }
-       
+
 
         public List<int> GetShipInt
         {
@@ -65,7 +65,7 @@ namespace GalagaX4
         {
             get { return this.bugInt; }
         }
-      
+
 
         public SerializeGameObj(List<int> shipInt, List<Point> shipPoint, List<String> shipPath,
             List<int> commanderInt, List<Point> commanderPoint, List<String> commanderPath,
