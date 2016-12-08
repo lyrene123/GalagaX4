@@ -40,7 +40,7 @@ namespace GalagaX4
         {
             this.Closed += GameWindow_Closed;
             this.Closing += GameWindow_Closing;
-                                    
+
             InitializeComponent();
             backgroundImage.Width = 860;
             backgroundImage.Height = 650;
