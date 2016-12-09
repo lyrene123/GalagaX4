@@ -69,7 +69,9 @@
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
     <Compile Include="Level4.cs" />
+    <Compile Include="LoadLevels.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="SerializeGameObj.cs" />
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="GameWindow.xaml">
@@ -168,8 +170,6 @@
     <Resource Include="pics\boss\boss1.png" />
     <Resource Include="pics\boss\boss2.png" />
     <Resource Include="pics\boss\boss3.png" />
-    <Resource Include="pics\boss\bossLeft.png" />
-    <Resource Include="pics\boss\bossRight.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pics\GameTitle_Blue.png" />
@@ -213,12 +213,72 @@
     <Resource Include="audio\Explosion.wav" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="audio\Fireworks_Finale-SoundBible.com-370363529.wav" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="audio\Game_Over.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="audio\Win.wav" />
+    <Resource Include="pics\loadGame_blue.png" />
+    <Resource Include="pics\loadGame_white.png" />
+    <Resource Include="pics\missAccomplised_blue.png" />
+    <Resource Include="pics\missAccomplised_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\fireball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing1\boss1Wing1.png" />
+    <Resource Include="pics\boss\wing1\boss2Wing1.png" />
+    <Resource Include="pics\boss\wing1\boss3Wing1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing10\boss1Wing10.png" />
+    <Resource Include="pics\boss\wing10\boss2Wing10.png" />
+    <Resource Include="pics\boss\wing10\boss3Wing10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing2\boss1Wing2.png" />
+    <Resource Include="pics\boss\wing2\boss2Wing2.png" />
+    <Resource Include="pics\boss\wing2\boss3Wing2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing3\boss1Wing3.png" />
+    <Resource Include="pics\boss\wing3\boss2Wing3.png" />
+    <Resource Include="pics\boss\wing3\boss3Wing3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing4\boss1Wing4.png" />
+    <Resource Include="pics\boss\wing4\boss2Wing4.png" />
+    <Resource Include="pics\boss\wing4\boss3Wing4.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="pics\boss\wing5\boss1Wing5.png" />
+    <Resource Include="pics\boss\wing5\boss2Wing5.png" />
+    <Resource Include="pics\boss\wing5\boss3Wing5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing6\boss1Wing6.png" />
+    <Resource Include="pics\boss\wing6\boss2Wing6.png" />
+    <Resource Include="pics\boss\wing6\boss3Wing6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing7\boss1Wing7.png" />
+    <Resource Include="pics\boss\wing7\boss2Wing7.png" />
+    <Resource Include="pics\boss\wing7\boss3Wing7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing8\boss1Wing8.png" />
+    <Resource Include="pics\boss\wing8\boss2Wing8.png" />
+    <Resource Include="pics\boss\wing8\boss3Wing8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\boss\wing9\boss1Wing9.png" />
+    <Resource Include="pics\boss\wing9\boss2Wing9.png" />
+    <Resource Include="pics\boss\wing9\boss3Wing9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

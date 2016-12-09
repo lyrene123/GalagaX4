@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +14,13 @@ using System.Windows.Threading;
 
 namespace GalagaX4
 {
+    /// <summary>
+    /// The Level2 Class instantiates a new Game,
+    /// creating all the elements on the screen 
+    /// necessary to play the game such as the Player and 
+    /// enemies. It also creates all the patherns of the 
+    /// enemies for level2 of the game.
+    /// </summary>
     class Level2
     {
         Window window;
@@ -21,7 +31,7 @@ namespace GalagaX4
         int spaceX = 0;
 
         Player player;
-
+        bool load;
         SpaceShip[] ships;
         SpaceShip[] ufos;
         Commander[] commanders;
@@ -35,6 +45,13 @@ namespace GalagaX4
 
         Image lv2Pic;
 
+        /// <summary>
+        /// Level2 Class Constructor. It cosntructs the new window (screen),
+        /// a new Canvas and the Player.
+        /// </summary>
+        /// <param name="window"> A new window to receive all elements fo the game and manage the screen</param>
+        /// <param name="canvas">Area within the window which you can position all elements by using coordinates that are relative to the Canvas area.</param>
+        /// <param name="player">The main player of the Game</param>
         public Level2(Window window, Canvas canvas, Player player)
         {
             this.window = window;
@@ -43,12 +60,17 @@ namespace GalagaX4
             this.player.updateCurrentLevel(2);
             enemies = new List<Enemies>();
         }
-
+        /// <summary>
+        /// The static timerRandom method returns 
+        /// a DispatcherTimer Object related to the random shooting.
+        /// </summary>
         public static DispatcherTimer timerRandom
         {
             get { return timerRandomShoot; }
         }
-
+        /// <summary>
+        /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
+        /// </summary>
         void DisplayLevel()
         {
             lv2Pic = new Image();
@@ -59,7 +81,10 @@ namespace GalagaX4
             Canvas.SetLeft(lv2Pic, 350);
             lv2Pic.Source = UtilityMethods.LoadImage("pics/level2.png");
         }
-
+        /// <summary>
+        /// The Play Method creates and displays all enemies and the player on 
+        /// the Canvas (screen).
+        /// </summary>
         public async void Play()
         {
             Player.ColdDown = 0;
@@ -82,7 +107,7 @@ namespace GalagaX4
 
                 await Task.Delay(1500);
             }
-            
+
             lv2Pic = new Image();
             lv2Pic.Height = 40;
             lv2Pic.Width = 100;
@@ -260,7 +285,11 @@ namespace GalagaX4
             player.SetEnemyTarget(enemies);
             StartGame();
         }
-
+        /// <summary>
+        /// The StartGame method instantiates a DispatcherTimer Class which 
+        /// will be used to control the interval of all enemies shooting execution 
+        /// in the game of this specific level.
+        /// </summary>
         void StartGame()
         {
             timerRandomShoot = new DispatcherTimer(DispatcherPriority.Normal);
@@ -268,7 +297,12 @@ namespace GalagaX4
             timerRandomShoot.Tick += new EventHandler(ShootUpdate);
             timerRandomShoot.Start();
         }
-
+        /// <summary>
+        /// The shootUpdate method controls randomly the
+        /// shooting of the enemies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShootUpdate(object sender, EventArgs e)
         {
             //-------------------------------
@@ -385,6 +419,134 @@ namespace GalagaX4
                     lv3.Play();
                 }
             }
+        }
+        public void setRound(int round)
+        {
+            this.round = round;
+        }
+        public void setLoad(bool load)
+        {
+            this.load = load;
+        }
+        public static void saveLevel2(Player player, bool load)
+        {
+            String fileName = "GalagaSavedGame.bin";
+            BinaryFormatter formatter = null;
+            Stream stream = null;
+            SerializeGameObj game = null;
+
+            List<int> playerInt = new List<int>();
+            List<int> shipInt = new List<int>();
+            List<int> commanderInt = new List<int>();
+            List<int> bugInt = new List<int>();
+
+            List<Point> playerPoint = new List<Point>();
+            List<Point> shipPoint = new List<Point>();
+            List<Point> commanderPoint = new List<Point>();
+            List<Point> bugPoint = new List<Point>();
+
+            List<String> playerPath = new List<string>();
+            List<String> shipPath = new List<string>();
+            List<String> commanderPath = new List<string>();
+            List<String> bugPath = new List<string>();
+
+            if (load == true)
+            {
+                for (int i = 0; i < LoadLevels.getStaticPlayer().getEnemiesList().Count; i++)
+                {
+                    if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(SpaceShip))
+                    {
+                        shipInt.Add(0);
+                        shipPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        shipPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Commander))
+                    {
+                        commanderInt.Add(1);
+                        commanderPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        commanderPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Bug))
+                    {
+                        bugInt.Add(2);
+                        bugPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        bugPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < player.getEnemiesList().Count; i++)
+                {
+                    if (player.getEnemiesList()[i].GetType() == typeof(SpaceShip))
+                    {
+                        shipInt.Add(0);
+                        shipPoint.Add(player.getEnemiesList()[i].GetPoint());
+                        shipPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                    else if (player.getEnemiesList()[i].GetType() == typeof(Commander))
+                    {
+                        commanderInt.Add(1);
+                        commanderPoint.Add(player.getEnemiesList()[i].GetPoint());
+                        commanderPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                    else if (player.getEnemiesList()[i].GetType() == typeof(Bug))
+                    {
+                        bugInt.Add(2);
+                        bugPoint.Add(player.getEnemiesList()[i].GetPoint());
+                        bugPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                    }
+                }
+            }
+
+
+            game = new SerializeGameObj(shipInt, shipPoint, shipPath, commanderInt, commanderPoint, commanderPath,
+                bugInt, bugPoint, bugPath);
+
+            try
+            {
+                formatter = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                formatter.Serialize(stream, game);
+                stream.Close();
+                MessageBox.Show("Game has been saved");
+            }
+            catch (SerializationException e)
+            {
+                MessageBox.Show("An error occured and the current game was not able to be saved.");
+                MessageBox.Show(e.Message);
+            }
+        }
+        public static void loadLevel2(Canvas canvas, Window window, Player player)
+        {
+            String fileName = "GalagaSavedGame.bin";
+            BinaryFormatter reader = null;
+            Stream stream = null;
+            SerializeGameObj game = null;
+            List<int> enemieInt = new List<int>();
+            List<Point> pointArr = new List<Point>();
+            List<String> pathArr = new List<string>();
+
+            try
+            {
+                reader = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+                game = (SerializeGameObj)reader.Deserialize(stream);
+
+
+                LoadLevels loadlvl1 = new LoadLevels(game.GetShipInt, game.GetShipPoint, game.GetShipPath, game.GetCommanderInt,
+                       game.GetCommanderPoint, game.GetCommanderPath, game.GetBugInt, game.GetBugPoint, game.GetBugPath,
+                        canvas, window, 2);
+                player = loadlvl1.getPlayer();
+            }
+            catch (SerializationException e)
+            {
+                MessageBox.Show("An error occured and the current game was not able to be LOADED.");
+                MessageBox.Show(e.Message);
+            }
+
+
         }
     }
 }
