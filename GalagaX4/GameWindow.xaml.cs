@@ -31,6 +31,7 @@ namespace GalagaX4
         Image life;
         bool loaded;
         Level1 lv1;
+       
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
         /// <summary>
         /// The GameWindow constructor sets the overral initial state of the game
@@ -51,7 +52,7 @@ namespace GalagaX4
             mediaElement.Volume = 0.07;
             mediaElement.Play();
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
-
+           
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
             ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
@@ -63,14 +64,14 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            lv1 = new Level1(this, canvas, player);
-            lv1.Play();
+            //lv1 = new Level1(this, canvas, player);
+            //lv1.Play();
             //Level2 lv2 = new Level2(this, canvas, player);
             //lv2.Play();
             //Level3 lv3 = new Level3(this, canvas, player);
             //lv3.Play();
-            //Level4 lv4 = new Level4(this, canvas, player);
-            //lv4.Play();
+            Level4 lv4 = new Level4(this, canvas, player);
+            lv4.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
             // buyLives();

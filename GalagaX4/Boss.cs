@@ -25,7 +25,7 @@ namespace GalagaX4
         double maxY;
         DispatcherTimer timer;
         int moveCounter = 1;
-
+        GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Win.wav", true);
         /// <summary>
         /// The Boss constructor initializes the attributes of the Boss
         /// class and the attributes inherited by the Enemies interface. The Boss
@@ -41,6 +41,7 @@ namespace GalagaX4
         {
 
         }
+        public Boss() { }
         /// <summary>
         /// The overriden Die method initiates the animation of the explosion of
         /// the Boss once the Boss is hit 33 times. If the commander is eliminated it stops the
@@ -68,6 +69,21 @@ namespace GalagaX4
                 this.stopMove();
                 this.animation = new Animation(this.image, explosions, false, canvas);
                 Animation.Initiate(this.animation, 40);
+
+                //this.canvas.Children.Remove(lv4Pic);
+                sound.playSound();
+                Image missionAccomplished = new Image();
+                missionAccomplished.Height = 300;
+                missionAccomplished.Width = 500;
+                this.canvas.Children.Add(missionAccomplished);
+                Canvas.SetTop(missionAccomplished, 150);
+                Canvas.SetLeft(missionAccomplished, 170);
+                BitmapImage[] missionAccomplishedSources = { UtilityMethods.LoadImage("pics/missAccomplised_blue.png")
+                                , UtilityMethods.LoadImage("pics/missAccomplised_white.png") };
+                Animation missionAccomplishedAnim = new Animation(missionAccomplished, missionAccomplishedSources, true);
+                Animation.Initiate(missionAccomplishedAnim, 100);
+
+
             }
             else
             {
