@@ -437,7 +437,7 @@ namespace GalagaX4
                         displayBoss();
                     }
                 }
-                else
+                /*else
                 {
                     this.canvas.Children.Remove(lv4Pic);
 
@@ -453,6 +453,7 @@ namespace GalagaX4
                     Animation.Initiate(missionAccomplishedAnim, 100);
                     //missAccomplished.Source = UtilityMethods.LoadImage("pics/level4.png");
                 }
+                */
             }
         }
         /// <summary>
