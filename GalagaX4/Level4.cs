@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +25,7 @@ namespace GalagaX4
     {
         Window window;
         Canvas canvas;
-
+        bool load;
         int round = 1;
         static DispatcherTimer timerRandomShoot;
         int spaceX = 0;
@@ -54,9 +57,13 @@ namespace GalagaX4
             this.window = window;
             this.canvas = canvas;
             this.player = player;
-            this.player.updateCurrentLevel(4);
+            if(player != null)
+            {
+                this.player.updateCurrentLevel(4);
+            }
             enemies = new List<Enemies>();
         }
+
         /// <summary>
         /// The static timerRandom method returns 
         /// a DispatcherTimer Object related to the random shooting.
@@ -475,6 +482,86 @@ namespace GalagaX4
             boss.setTarget(player);
             this.boss.Fly(200);
             this.boss.Shoot(2);
+        }
+
+        public static void saveLevel4(Player player, bool load)
+        {
+            String fileName = "GalagaSavedGame.bin";
+            BinaryFormatter formatter = null;
+            Stream stream = null;
+            SerializeGameObj game = null;
+
+          
+            int coins;
+            int lives;
+            int level;
+
+            if (load)
+            {
+                coins = LoadLevels.getStaticPlayer().getCoins();
+                lives = LoadLevels.getStaticPlayer().GetLives();
+                level = LoadLevels.getStaticPlayer().getCurrentLevel();
+            }
+            else
+            {
+                coins = player.getCoins();
+                lives = player.GetLives();
+                level = player.getCurrentLevel();
+            }
+
+            game = new SerializeGameObj(coins, lives, level);
+
+            try
+            {
+                formatter = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                formatter.Serialize(stream, game);
+                stream.Close();
+                MessageBox.Show("Game has been saved");
+            }
+            catch (SerializationException e)
+            {
+                MessageBox.Show("An error occured and the current game was not able to be saved.");
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        public void setRound(int round)
+        {
+            this.round = round;
+        }
+        public void setLoad(bool load)
+        {
+            this.load = load;
+        }
+
+        public static void loadLevel4(Canvas canvas, Window window, Player player)
+        {
+            String fileName = "GalagaSavedGame.bin";
+            BinaryFormatter reader = null;
+            Stream stream = null;
+            SerializeGameObj game = null;
+           
+
+            try
+            {
+                reader = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+                game = (SerializeGameObj)reader.Deserialize(stream);
+
+
+                LoadLevels loadlvl1 = new LoadLevels(game.GetCoins, game.GetLives, game.GetLevel);
+                player = loadlvl1.getPlayer();
+            }
+            catch (SerializationException e)
+            {
+                MessageBox.Show("An error occured and the current game was not able to be LOADED.");
+                MessageBox.Show(e.Message);
+            }
+
+
+
         }
 
     }

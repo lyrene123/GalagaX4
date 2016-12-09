@@ -470,7 +470,7 @@ namespace GalagaX4
             Stream stream = null;
             SerializeGameObj game = null;
            
-
+            
             try
             {
                 reader = new BinaryFormatter();
@@ -478,12 +478,19 @@ namespace GalagaX4
 
                 game = (SerializeGameObj)reader.Deserialize(stream);
 
-
-                LoadLevels loadlvl1 = new LoadLevels(game.GetShipInt, game.GetShipPoint, game.GetShipPath, game.GetCommanderInt,
-                       game.GetCommanderPoint, game.GetCommanderPath, game.GetBugInt, game.GetBugPoint, game.GetBugPath,
-                        canvas, window, game.GetShipMin, game.GetShipMax, game.GetComMin, game.GetComMax, game.GetBugMin, game.GetBugMax
-                        ,game.GetCoins, game.GetLives, game.GetLevel);
-                player = loadlvl1.getPlayer();
+             //   if(game.GetLevel == 4)
+               // {
+                 //   LoadLevels load = new LoadLevels(game.GetCoins, game.GetLives, game.GetLevel);
+                //}
+                //else
+                ///{
+                    LoadLevels loadlvl1 = new LoadLevels(game.GetShipInt, game.GetShipPoint, game.GetShipPath, game.GetCommanderInt,
+                      game.GetCommanderPoint, game.GetCommanderPath, game.GetBugInt, game.GetBugPoint, game.GetBugPath,
+                       canvas, window, game.GetShipMin, game.GetShipMax, game.GetComMin, game.GetComMax, game.GetBugMin, game.GetBugMax
+                       , game.GetCoins, game.GetLives, game.GetLevel);
+                    player = loadlvl1.getPlayer();
+                //}
+               
             }
             catch (SerializationException e)
             {

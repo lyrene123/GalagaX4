@@ -23,12 +23,15 @@ namespace GalagaX4
         List<int> shipInt;
         List<int> commanderInt;
         List<int> bugInt;
+
         List<double> minXShip = new List<double>();
         List<double> maxXShip = new List<double>();
         List<double> minXCom = new List<double>();
         List<double> maxXCom = new List<double>();
         List<double> minXBug = new List<double>();
         List<double> maxXBug = new List<double>();
+      
+        static int staticLevel;
 
         int lives;
         int coins;
@@ -113,6 +116,10 @@ namespace GalagaX4
             get { return this.maxXBug; }
         }
 
+        public static int getLevel()
+        {
+            return staticLevel;
+        }
 
 
         public SerializeGameObj(List<int> shipInt, List<Point> shipPoint, List<String> shipPath,
@@ -148,8 +155,14 @@ namespace GalagaX4
 
         }
 
-
-
+       
+        public SerializeGameObj(int coins, int lives, int level)
+        {
+            this.coins = coins;
+            this.level = level;
+            this.lives = lives;
+            staticLevel = level;
+        }
 
     }
 }

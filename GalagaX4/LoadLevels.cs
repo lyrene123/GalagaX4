@@ -55,7 +55,7 @@ namespace GalagaX4
             this.coins = coins;
             this.level = level;
             this.window = window;
-            this.commanderPic = new Image[commanderPath.Count];
+
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -67,24 +67,46 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15, lives, coins);
 
+            staticPlayer = player;
+            player.setCurrentLevel(level);
+            player.setCoins(coins);
+            player.setLives(lives);
+            staticPlayer.setCurrentLevel(level);
+            staticPlayer.setCoins(coins);
+            staticPlayer.setLives(lives);
 
+            if (level < 4)
+            {
+                this.commanderPic = new Image[commanderPath.Count];
                 loadCommanders(commanderInt, commanderPoint, commanderPath, minXCom, maxXCom, player);
                 loadShip(shipInt, shipPoint, shipPath, maxXShip, minXShip, player);
                 loadBug(bugInt, bugPoint, bugPath, maxXBug, minXBug, player);
-                staticPlayer = player;
-                player.setCurrentLevel(level);
-                player.setCoins(coins);
-                player.setLives(lives);
-                staticPlayer.setCurrentLevel(level);
-                staticPlayer.setCoins(coins);
-                staticPlayer.setLives(lives);
+              
+                player.SetEnemyTarget(enemies);
+
+
+                newPlayer = new Player(player);
+                StartGame();
+            }
+            else
+            {
+                Level4 lv4 = new Level4(window, canvas, player);
+                lv4.Play();
+            }
+
+               
        
 
-            player.SetEnemyTarget(enemies);
+           
+        }
 
-
-            newPlayer = new Player(player);
-            StartGame();
+        public LoadLevels(int coins, int lives, int level)
+        {
+            if(level == 4)
+            {
+                Level4 lv4 = new Level4(window, canvas, player);
+                
+            }
         }
 
         void StartGame()
@@ -252,7 +274,6 @@ namespace GalagaX4
                 }
                 else
                 {
-
                     if (round == 3)
                     {
                         timerRandomShoot.Stop();

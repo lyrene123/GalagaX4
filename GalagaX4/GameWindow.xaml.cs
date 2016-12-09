@@ -69,7 +69,7 @@ namespace GalagaX4
             //lv2.Play();
             //Level3 lv3 = new Level3(this, canvas, player);
             //lv3.Play();
-            //Level4 lv4 = new Level4(this, canvas, player);
+           // Level4 lv4 = new Level4(this, canvas, player);
             //lv4.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
@@ -97,8 +97,11 @@ namespace GalagaX4
             mediaElement.MediaEnded += new RoutedEventHandler(Element_MediaEnded);
             //mediaElement.Play();
             //
+           
+
             if (loaded == true)
             {
+              
                     lv1 = new Level1(this, canvas, player, true);
            
             }
@@ -106,6 +109,7 @@ namespace GalagaX4
             {
                 Image playerPic = new Image();
                 playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
+                ImageBehavior.SetAnimatedSource(playerPic, playerPic.Source);
                 playerPic.Width = 42;
                 playerPic.Height = 46;
                 canvas.Children.Add(playerPic);
@@ -113,7 +117,6 @@ namespace GalagaX4
                 Canvas.SetTop(playerPic, 500);
                 Point playerPoint = new Point(27, 490);
                 player = new Player(playerPoint, playerPic, canvas, 15);
-
                 lv1 = new Level1(this, canvas, player);
                 lv1.Play();
             }
@@ -639,7 +642,6 @@ namespace GalagaX4
                 if (LoadLevels.getStaticPlayer().getCurrentLevel() == 1)
                 {
                     lv1.saveLevel1();
-
                 }
                 else if (LoadLevels.getStaticPlayer().getCurrentLevel() == 2)
                 {
@@ -648,6 +650,10 @@ namespace GalagaX4
                 else if (LoadLevels.getStaticPlayer().getCurrentLevel() == 3)
                 {
                     Level3.saveLevel3(this.player, true);
+                }
+                else if (LoadLevels.getStaticPlayer().getCurrentLevel() == 4)
+                {
+                    Level4.saveLevel4(this.player, true);
                 }
             }
             else
@@ -664,6 +670,10 @@ namespace GalagaX4
                 else if (player.getCurrentLevel() == 3)
                 {
                     Level3.saveLevel3(this.player, false);
+                }
+                else if (player.getCurrentLevel() == 4)
+                {
+                    Level4.saveLevel4(this.player, false);
                 }
 
             }
