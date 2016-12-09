@@ -56,14 +56,23 @@ namespace GalagaX4
         {
             this.shipLives = new List<Image>();
             this.speed = speed;
-            setDisplayLives();
+            setDisplayLives(lives);
+            setDisplayPoints();
+            updatePoints();
+        }
+        public Player(Point point, Image image, Canvas canvas
+           , double speed, int lives, int points) : base(point, image, canvas)
+        {
+            this.shipLives = new List<Image>();
+            this.speed = speed;
+            this.points = points;
+            setDisplayLives(lives);
             setDisplayPoints();
             updatePoints();
         }
         public Player(Player player)
         {
             Player.player = player;
-
         }
         public static Player getPlayer()
         {
@@ -129,11 +138,11 @@ namespace GalagaX4
         /// <summary>
         /// The setDisplayLives displays the number of lives on the screen in form of the player image.
         /// </summary>
-        public void setDisplayLives()
+        public void setDisplayLives(int lives)
         {
             // this.shipLives = new List<Image>(3);
             int spaceX = 0;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < lives; i++)
             {
                 shipLives.Add(new Image());
                 shipLives[i].Width = 34;
@@ -222,6 +231,16 @@ namespace GalagaX4
         public void SetEnemyTarget(List<Enemies> enemies)
         {
             this.enemies = enemies;
+        }
+
+        public void setLives(int lives)
+        {
+            this.lives = lives;
+        }
+
+        public void setCoins(int coins)
+        {
+            this.points = coins;
         }
         /// <summary>
         /// The Move method is used to move the player to the left or right according 
