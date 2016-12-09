@@ -25,7 +25,7 @@ namespace GalagaX4
         {
             this.Closed += MainWindow_Closed;
             this.Closing += MainWindow_Closing;
-            
+
 
             InitializeComponent();
 
@@ -74,27 +74,19 @@ namespace GalagaX4
         /// <param name="e"></param>
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var gameWindow = new GameWindow(false);
+            var gameWindow = new GameWindow();
             this.Hide();
             gameWindow.Show();
-                                    
-            
+
+
         }
 
-
-
-       
-
-        private void loadingGame(object sender, RoutedEventArgs e)
+        private void load_Click(object sender, RoutedEventArgs e)
         {
-
             var gameWindow = new GameWindow(true);
             this.Hide();
             gameWindow.Show();
-            //this.Close();
-            gameWindow.mediaElement.BeginInit();
-            gameWindow.mediaElement.Position = TimeSpan.FromMilliseconds(0);
-            gameWindow.mediaElement.Play();
+
         }
     }
 }
