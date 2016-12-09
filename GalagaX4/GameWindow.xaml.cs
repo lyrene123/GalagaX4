@@ -105,7 +105,7 @@ namespace GalagaX4
                 Point playerPoint = new Point(27, 490);
                 player = new Player(playerPoint, playerPic, canvas, 15);
 
-                //lv1 = new Level1(this, canvas, player);
+                lv1 = new Level4(this, canvas, player);
                 lv1.Play();
             }
 
