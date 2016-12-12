@@ -28,7 +28,7 @@ namespace GalagaX4
         Button load;
         Image life;
         bool loaded;
-        Level4 lv1;
+        Level4 lv4;
         GameSound sound = new GameSound(@"pack://application:,,,/GalagaX4;Component/audio/Game_Over.wav", true);
         /// <summary>
         /// The GameWindow constructor sets the overral initial state of the game
@@ -61,8 +61,8 @@ namespace GalagaX4
             Point playerPoint = new Point(27, 490);
             player = new Player(playerPoint, playerPic, canvas, 15);
 
-            lv1 = new Level4(this, canvas, player);
-            lv1.Play();
+            lv4 = new Level4(this, canvas, player);
+            lv4.Play();
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
 
@@ -106,7 +106,8 @@ namespace GalagaX4
                 player = new Player(playerPoint, playerPic, canvas, 15);
 
                 //lv1 = new Level1(this, canvas, player);
-                lv1.Play();
+                lv4 = new Level4(this, canvas, player);
+                lv4.Play();
             }
 
             KeyDown += new KeyEventHandler(MyGrid_KeyDown);
