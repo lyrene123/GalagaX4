@@ -94,6 +94,23 @@ namespace GalagaX4
         {
             this.moveCounter = counter;
         }
+
+        public double getMinX()
+        {
+            return this.minX;
+        }
+        public double getMaxX()
+        {
+            return this.maxX;
+        }
+        public void setMaxX(double max)
+        {
+            this.maxX = max;
+        }
+        public void setMinX(double min)
+        {
+            this.minX = min;
+        }
         /// <summary>
         /// The setDive method sets the state of the diving movement of the enemies
         /// to true or false.

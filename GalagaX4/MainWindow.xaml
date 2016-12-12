@@ -11,7 +11,7 @@
             <Image x:Name="newGamePic" Source="pics/newGame_lightBlue.png"/>
         </Button>
         <Image x:Name="titlePic" HorizontalAlignment="Left" Height="123" Margin="123,165,0,0" VerticalAlignment="Top" Width="613" Source="pics/GameTitle_lightBlue.png"/>
-        <Button x:Name="loadGameBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="61" Margin="297,413,0,0" Click="button_Click" BorderBrush="{x:Null}" FontSize="36" Foreground="{x:Null}" Background="{x:Null}">
+        <Button x:Name="loadGameBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="61" Margin="297,413,0,0" Click="load_Click" BorderBrush="{x:Null}" FontSize="36" Foreground="{x:Null}" Background="{x:Null}">
             <Image x:Name="loadGamePic" Source="pics/loadGame_white.png"/>
         </Button>
 

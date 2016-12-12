@@ -36,17 +36,26 @@ namespace GalagaX4
         Bug[] redbugs;
         Image[] commanderPic;
         BitmapImage[] commanderImages = { UtilityMethods.LoadImage("pics/commander.png"), UtilityMethods.LoadImage("pics/commander2.png") };
-        int currentLevel;
+        int coins;
+        int level;
+        int lives;
 
         public LoadLevels(List<int> shipInt, List<Point> shipPoint, List<String> shipPath,
             List<int> commanderInt, List<Point> commanderPoint, List<String> commanderPath,
             List<int> bugInt, List<Point> bugPoint, List<String> bugPath,
-             Canvas canvas, Window window, int currentLevel)
+             Canvas canvas, Window window, List<double> minXShip,
+        List<double> maxXShip,
+        List<double> minXCom,
+        List<double> maxXCom,
+        List<double> minXBug,
+        List<double> maxXBug, int coins, int lives, int level)
         {
             this.canvas = canvas;
+            this.lives = lives;
+            this.coins = coins;
+            this.level = level;
             this.window = window;
-            this.commanderPic = new Image[commanderPath.Count];
-            this.currentLevel = currentLevel;
+
 
             Image playerPic = new Image();
             playerPic.Source = UtilityMethods.LoadImage("pics/galaga_ship.png");
@@ -56,26 +65,48 @@ namespace GalagaX4
             Canvas.SetLeft(playerPic, 405);
             Canvas.SetTop(playerPic, 500);
             Point playerPoint = new Point(27, 490);
-            player = new Player(playerPoint, playerPic, canvas, 15);
+            player = new Player(playerPoint, playerPic, canvas, 15, lives, coins);
 
+            staticPlayer = player;
+            player.setCurrentLevel(level);
+            player.setCoins(coins);
+            player.setLives(lives);
+            staticPlayer.setCurrentLevel(level);
+            staticPlayer.setCoins(coins);
+            staticPlayer.setLives(lives);
 
-
-            if (currentLevel == 1)
+            if (level < 4)
             {
-                loadCommanders(commanderInt, commanderPoint, commanderPath, player);
-                loadShip(shipInt, shipPoint, shipPath, player);
-                loadBug(bugInt, bugPoint, bugPath, player);
-                staticPlayer = player;
-                player.setCurrentLevel(currentLevel);
-                staticPlayer.setCurrentLevel(currentLevel);
+                this.commanderPic = new Image[commanderPath.Count];
+                loadCommanders(commanderInt, commanderPoint, commanderPath, minXCom, maxXCom, player);
+                loadShip(shipInt, shipPoint, shipPath, maxXShip, minXShip, player);
+                loadBug(bugInt, bugPoint, bugPath, maxXBug, minXBug, player);
+              
+                player.SetEnemyTarget(enemies);
 
+
+                newPlayer = new Player(player);
+                StartGame();
+            }
+            else
+            {
+                Level4 lv4 = new Level4(window, canvas, player);
+                lv4.Play();
             }
 
-            player.SetEnemyTarget(enemies);
+               
+       
 
+           
+        }
 
-            newPlayer = new Player(player);
-            StartGame();
+        public LoadLevels(int coins, int lives, int level)
+        {
+            if(level == 4)
+            {
+                Level4 lv4 = new Level4(window, canvas, player);
+                
+            }
         }
 
         void StartGame()
@@ -196,18 +227,21 @@ namespace GalagaX4
             }
 
             //----------------------------------------
-            if (enemies.Count == 0 && currentLevel == 1)
+            if (enemies.Count == 0 && level == 1)
             {
                 timerRandomShoot.Stop();
 
                 Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                 lv2.setLoad(true);
+                staticPlayer.updateCurrentLevel(2);
                 lv2.Play();
             }
-            else if (this.enemies.Count == 0 && currentLevel == 2)
+            else if (this.enemies.Count == 0 && level == 2)
             {
-                if (round < 3)
+                if (round < 2)
                 {
+                    timerRandomShoot.Stop();
+
                     round++;
                     Level2 lv2 = new Level2(this.window, this.canvas, this.player);
                     lv2.setRound(round);
@@ -216,12 +250,36 @@ namespace GalagaX4
                 }
                 else
                 {
-
-
-                    if (round == 3)
+                    if (round == 2)
                     {
+                        timerRandomShoot.Stop();
+
                         Level3 lv3 = new Level3(this.window, this.canvas, this.player);
                         lv3.Play();
+                    }
+                }
+            }
+            else if (this.enemies.Count == 0 && level == 3)
+                
+            {
+                if (round < 3)
+                {
+                    timerRandomShoot.Stop();
+
+                    round++;
+                    Level3 lv3 = new Level3(this.window, this.canvas, this.player);
+                    lv3.setRound(round);
+                    lv3.setLoad(true);
+                    lv3.Play();
+                }
+                else
+                {
+                    if (round == 3)
+                    {
+                        timerRandomShoot.Stop();
+
+                        Level4 lv4 = new Level4(this.window, this.canvas, this.player);
+                        lv4.Play();
                     }
                 }
             }
@@ -248,7 +306,8 @@ namespace GalagaX4
 
 
 
-        void loadCommanders(List<int> commanderInt, List<Point> commanderPoint, List<String> commanderPath, Player player)
+        void loadCommanders(List<int> commanderInt, List<Point> commanderPoint, List<String> commanderPath,
+            List<double> min, List<double> max, Player player)
         {
             int spaceX = 0;
             for (int i = 0; i < commanderInt.Count; i++)
@@ -268,6 +327,8 @@ namespace GalagaX4
                     commanderPos.Y = commanderPoint[i].Y;
                     Animation commanderAnimation = new Animation(commanderPic[i], commanderImages, true);
                     Commander commander = new Commander(commanderPos, commanderPic[i], canvas, commanderAnimation);
+                    commander.setMaxX(max[i]);
+                    commander.setMinX(min[i]);
                     commanders.Add(commander);
                     enemies.Add(commanders[i]);
                     commanders[i].setTarget(player);
@@ -280,7 +341,8 @@ namespace GalagaX4
         }
 
 
-        void loadShip(List<int> shipInt, List<Point> shipPoint, List<String> shipPath, Player player)
+        void loadShip(List<int> shipInt, List<Point> shipPoint, List<String> shipPath,
+            List<double> max, List<double> min, Player player)
         {
             Image[] shipsPic = new Image[shipPath.Count];
             int spaceX = 0;
@@ -305,6 +367,8 @@ namespace GalagaX4
                         shipPos.Y = shipPoint[i].Y;
 
                         SpaceShip ship = new SpaceShip(shipPos, shipsPic[i], canvas);
+                        ship.setMaxX(max[i]);
+                        ship.setMinX(max[i]);
                         ships.Add(ship);
                         enemies.Add(ships[i]);
                         ships[i].setTarget(player);
@@ -332,6 +396,8 @@ namespace GalagaX4
                         ufoPos.Y = shipPoint[i].Y;
 
                         SpaceShip ufo = new SpaceShip(ufoPos, ufoPics[i], canvas);
+                        ufo.setMaxX(max[i]);
+                        ufo.setMinX(max[i]);
                         ufos.Add(ufo);
 
 
@@ -349,7 +415,8 @@ namespace GalagaX4
 
         }
 
-        void loadBug(List<int> bugInt, List<Point> bugPoint, List<String> bugPath, Player player)
+        void loadBug(List<int> bugInt, List<Point> bugPoint, List<String> bugPath,
+            List<double> max, List<double> min, Player player)
         {
             BitmapImage[] beeImages = { UtilityMethods.LoadImage("pics/bee0.png"),
                     UtilityMethods.LoadImage("pics/bee1.png") };
@@ -381,6 +448,8 @@ namespace GalagaX4
                         beePos.Y = bugPoint[i].Y;
                         Animation beeAnimation = new Animation(beesPic[i], beeImages, true);
                         Bug bee = new Bug(beePos, beesPic[i], canvas, beeAnimation);
+                        bee.setMaxX(max[i]);
+                        bee.setMinX(min[i]);
                         bees[i] = bee;
                         enemies.Add(bees[i]);
                         bees[i].setTarget(player);
@@ -404,6 +473,8 @@ namespace GalagaX4
                         bugPos.Y = bugPoint[i].Y;
                         Animation bugAnimation = new Animation(bugsPic[i], bugImages, true);
                         Bug bug = new Bug(bugPos, bugsPic[i], canvas, bugAnimation);
+                        bug.setMaxX(max[i]);
+                        bug.setMinX(min[i]);
                         redbugs[i] = bug;
                         enemies.Add(redbugs[i]);
                         redbugs[i].setTarget(player);

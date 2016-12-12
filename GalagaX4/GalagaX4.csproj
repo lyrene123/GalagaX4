@@ -213,9 +213,6 @@
     <Resource Include="audio\Explosion.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="audio\Fireworks_Finale-SoundBible.com-370363529.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="audio\Game_Over.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -254,7 +251,9 @@
     <Resource Include="pics\boss\wing4\boss2Wing4.png" />
     <Resource Include="pics\boss\wing4\boss3Wing4.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="audio\Win.wav" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="pics\boss\wing5\boss1Wing5.png" />
     <Resource Include="pics\boss\wing5\boss2Wing5.png" />

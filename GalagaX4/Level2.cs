@@ -42,9 +42,8 @@ namespace GalagaX4
         bool exists2 = false;
         bool exists3 = false;
         List<Enemies> enemies;
-
         Image lv2Pic;
-
+        int level = 2;
         /// <summary>
         /// Level2 Class Constructor. It cosntructs the new window (screen),
         /// a new Canvas and the Player.
@@ -59,6 +58,21 @@ namespace GalagaX4
             this.player = player;
             this.player.updateCurrentLevel(2);
             enemies = new List<Enemies>();
+
+        }
+        public Level2(Window window, Canvas canvas, Player player, bool load)
+        {
+            this.load = load;
+            if (load)
+            {
+                Level2.loadLevel2(canvas, window, player);
+            }
+
+            this.window = window;
+            this.canvas = canvas;
+            this.player = player;
+            this.player.updateCurrentLevel(2);
+            enemies = new List<Enemies>();
         }
         /// <summary>
         /// The static timerRandom method returns 
@@ -68,6 +82,7 @@ namespace GalagaX4
         {
             get { return timerRandomShoot; }
         }
+       
         /// <summary>
         /// The DisplayLevel method displays an image on the canvas indicating the Level of the game.
         /// </summary>
@@ -435,46 +450,42 @@ namespace GalagaX4
             Stream stream = null;
             SerializeGameObj game = null;
 
-            List<int> playerInt = new List<int>();
             List<int> shipInt = new List<int>();
             List<int> commanderInt = new List<int>();
             List<int> bugInt = new List<int>();
 
-            List<Point> playerPoint = new List<Point>();
             List<Point> shipPoint = new List<Point>();
             List<Point> commanderPoint = new List<Point>();
             List<Point> bugPoint = new List<Point>();
 
-            List<String> playerPath = new List<string>();
             List<String> shipPath = new List<string>();
             List<String> commanderPath = new List<string>();
             List<String> bugPath = new List<string>();
-
-            if (load == true)
+            List<double> minXShip = new List<double>();
+            List<double> maxXShip = new List<double>();
+            List<double> minXCom = new List<double>();
+            List<double> maxXCom = new List<double>();
+            List<double> minXBug = new List<double>();
+            List<double> maxXBug = new List<double>();
+            int coins;
+            int lives;
+            int level;
+            if (load)
             {
-                for (int i = 0; i < LoadLevels.getStaticPlayer().getEnemiesList().Count; i++)
-                {
-                    if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(SpaceShip))
-                    {
-                        shipInt.Add(0);
-                        shipPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
-                        shipPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
-                    }
-                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Commander))
-                    {
-                        commanderInt.Add(1);
-                        commanderPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
-                        commanderPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
-                    }
-                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Bug))
-                    {
-                        bugInt.Add(2);
-                        bugPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
-                        bugPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
-                    }
-                }
+                 coins = LoadLevels.getStaticPlayer().getCoins();
+                 lives = LoadLevels.getStaticPlayer().GetLives();
+                 level = LoadLevels.getStaticPlayer().getCurrentLevel();
             }
             else
+            {
+                 coins = player.getCoins();
+                 lives = player.GetLives();
+                 level = player.getCurrentLevel();
+            }
+           
+
+
+            if (load == false)
             {
                 for (int i = 0; i < player.getEnemiesList().Count; i++)
                 {
@@ -483,25 +494,65 @@ namespace GalagaX4
                         shipInt.Add(0);
                         shipPoint.Add(player.getEnemiesList()[i].GetPoint());
                         shipPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXShip.Add(player.getEnemiesList()[i].getMaxX());
+                        minXShip.Add(player.getEnemiesList()[i].getMinX());
                     }
                     else if (player.getEnemiesList()[i].GetType() == typeof(Commander))
                     {
                         commanderInt.Add(1);
                         commanderPoint.Add(player.getEnemiesList()[i].GetPoint());
                         commanderPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXCom.Add(player.getEnemiesList()[i].getMaxX());
+                        minXCom.Add(player.getEnemiesList()[i].getMinX());
                     }
                     else if (player.getEnemiesList()[i].GetType() == typeof(Bug))
                     {
                         bugInt.Add(2);
                         bugPoint.Add(player.getEnemiesList()[i].GetPoint());
                         bugPath.Add(player.getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXBug.Add(player.getEnemiesList()[i].getMaxX());
+                        minXBug.Add(player.getEnemiesList()[i].getMinX());
                     }
                 }
+
+            }
+            else if (load)
+            {
+                for (int i = 0; i < LoadLevels.getStaticPlayer().getEnemiesList().Count; i++)
+                {
+                    if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(SpaceShip))
+                    {
+                        shipInt.Add(0);
+                        shipPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        shipPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXShip.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMaxX());
+                        minXShip.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMinX());
+                    }
+                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Commander))
+                    {
+                        commanderInt.Add(1);
+                        commanderPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        commanderPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXCom.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMaxX());
+                        minXCom.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMinX());
+                    }
+
+                    else if (LoadLevels.getStaticPlayer().getEnemiesList()[i].GetType() == typeof(Bug))
+                    {
+                        bugInt.Add(2);
+                        bugPoint.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetPoint());
+                        bugPath.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].GetImage().Source.ToString());
+                        maxXBug.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMaxX());
+                        minXBug.Add(LoadLevels.getStaticPlayer().getEnemiesList()[i].getMinX());
+
+                    }
+                }
+
             }
 
 
             game = new SerializeGameObj(shipInt, shipPoint, shipPath, commanderInt, commanderPoint, commanderPath,
-                bugInt, bugPoint, bugPath);
+                bugInt, bugPoint, bugPath, minXShip, maxXShip, minXCom, maxXCom, minXBug, maxXBug, coins, lives, level);
 
             try
             {
@@ -517,6 +568,9 @@ namespace GalagaX4
                 MessageBox.Show(e.Message);
             }
         }
+
+
+
         public static void loadLevel2(Canvas canvas, Window window, Player player)
         {
             String fileName = "GalagaSavedGame.bin";
@@ -526,6 +580,15 @@ namespace GalagaX4
             List<int> enemieInt = new List<int>();
             List<Point> pointArr = new List<Point>();
             List<String> pathArr = new List<string>();
+            List<double> minXShip = new List<double>();
+            List<double> maxXShip = new List<double>();
+            List<double> minXCom = new List<double>();
+            List<double> maxXCom = new List<double>();
+            List<double> minXBug = new List<double>();
+            List<double> maxXBug = new List<double>();
+            int coins = player.getCoins();
+            int lives = player.GetLives();
+            int level = player.getCurrentLevel();
 
             try
             {
@@ -537,7 +600,8 @@ namespace GalagaX4
 
                 LoadLevels loadlvl1 = new LoadLevels(game.GetShipInt, game.GetShipPoint, game.GetShipPath, game.GetCommanderInt,
                        game.GetCommanderPoint, game.GetCommanderPath, game.GetBugInt, game.GetBugPoint, game.GetBugPath,
-                        canvas, window, 2);
+                        canvas, window, game.GetShipMin, game.GetShipMax, game.GetComMin, game.GetComMax, game.GetBugMin, game.GetBugMax
+                        , game.GetCoins, game.GetLives, game.GetLevel);
                 player = loadlvl1.getPlayer();
             }
             catch (SerializationException e)
@@ -545,6 +609,7 @@ namespace GalagaX4
                 MessageBox.Show("An error occured and the current game was not able to be LOADED.");
                 MessageBox.Show(e.Message);
             }
+
 
 
         }
